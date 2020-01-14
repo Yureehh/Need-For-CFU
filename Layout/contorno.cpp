@@ -7,7 +7,7 @@ const char altezza = 30;
 class mappa{
 
 protected:
-    char layout[larghezza][altezza];
+    char layout[altezza][larghezza];
 
 public:
 
@@ -35,6 +35,7 @@ public:
             for (int j = 0; j < larghezza; j++) {
                 cout<<layout[i][j];
             }
+            cout<<endl;
                   }
             }
 
