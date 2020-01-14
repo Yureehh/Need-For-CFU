@@ -82,7 +82,7 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="C:/Users/Utente/Desktop/Need-For-CFU/Layout/main.cpp">
+		<Unit filename="C:/Users/Utente/Desktop/Need-For-CFU/Layout/contorno.cpp">
 			<Option target="Layout"/>
 		</Unit>
 		<Unit filename="C:/Users/Utente/Desktop/Need-For-CFU/Layout/CMakeLists.txt">

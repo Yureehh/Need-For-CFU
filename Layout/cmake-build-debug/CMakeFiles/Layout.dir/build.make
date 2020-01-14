@@ -56,27 +56,27 @@ include CMakeFiles/Layout.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/Layout.dir/flags.make
 
-CMakeFiles/Layout.dir/main.cpp.obj: CMakeFiles/Layout.dir/flags.make
-CMakeFiles/Layout.dir/main.cpp.obj: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Utente\Desktop\Need-For-CFU\Layout\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Layout.dir/main.cpp.obj"
-	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Layout.dir\main.cpp.obj -c C:\Users\Utente\Desktop\Need-For-CFU\Layout\main.cpp
+CMakeFiles/Layout.dir/contorno.cpp.obj: CMakeFiles/Layout.dir/flags.make
+CMakeFiles/Layout.dir/contorno.cpp.obj: ../contorno.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Utente\Desktop\Need-For-CFU\Layout\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Layout.dir/contorno.cpp.obj"
+	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Layout.dir\contorno.cpp.obj -c C:\Users\Utente\Desktop\Need-For-CFU\Layout\contorno.cpp
 
-CMakeFiles/Layout.dir/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Layout.dir/main.cpp.i"
-	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Utente\Desktop\Need-For-CFU\Layout\main.cpp > CMakeFiles\Layout.dir\main.cpp.i
+CMakeFiles/Layout.dir/contorno.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Layout.dir/contorno.cpp.i"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Utente\Desktop\Need-For-CFU\Layout\contorno.cpp > CMakeFiles\Layout.dir\contorno.cpp.i
 
-CMakeFiles/Layout.dir/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Layout.dir/main.cpp.s"
-	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Utente\Desktop\Need-For-CFU\Layout\main.cpp -o CMakeFiles\Layout.dir\main.cpp.s
+CMakeFiles/Layout.dir/contorno.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Layout.dir/contorno.cpp.s"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Utente\Desktop\Need-For-CFU\Layout\contorno.cpp -o CMakeFiles\Layout.dir\contorno.cpp.s
 
 # Object files for target Layout
 Layout_OBJECTS = \
-"CMakeFiles/Layout.dir/main.cpp.obj"
+"CMakeFiles/Layout.dir/contorno.cpp.obj"
 
 # External object files for target Layout
 Layout_EXTERNAL_OBJECTS =
 
-Layout.exe: CMakeFiles/Layout.dir/main.cpp.obj
+Layout.exe: CMakeFiles/Layout.dir/contorno.cpp.obj
 Layout.exe: CMakeFiles/Layout.dir/build.make
 Layout.exe: CMakeFiles/Layout.dir/linklibs.rsp
 Layout.exe: CMakeFiles/Layout.dir/objects1.rsp

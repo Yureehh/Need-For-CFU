@@ -45,4 +45,6 @@ public:
 int main(){
     mappa pista = mappa();
     pista.stampa();
+    cout<<endl<<"premi spazio per iniziare";
+    getchar();
 }

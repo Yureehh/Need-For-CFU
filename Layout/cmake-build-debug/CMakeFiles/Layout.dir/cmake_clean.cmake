@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/Layout.dir/main.cpp.obj"
+  "CMakeFiles/Layout.dir/contorno.cpp.obj"
   "Layout.exe"
   "Layout.exe.manifest"
   "Layout.pdb"

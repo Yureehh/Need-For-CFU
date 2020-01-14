@@ -122,32 +122,32 @@ Layout/fast:
 	$(MAKE) -f CMakeFiles\Layout.dir\build.make CMakeFiles/Layout.dir/build
 .PHONY : Layout/fast
 
-main.obj: main.cpp.obj
+contorno.obj: contorno.cpp.obj
 
-.PHONY : main.obj
+.PHONY : contorno.obj
 
 # target to build an object file
-main.cpp.obj:
-	$(MAKE) -f CMakeFiles\Layout.dir\build.make CMakeFiles/Layout.dir/main.cpp.obj
-.PHONY : main.cpp.obj
+contorno.cpp.obj:
+	$(MAKE) -f CMakeFiles\Layout.dir\build.make CMakeFiles/Layout.dir/contorno.cpp.obj
+.PHONY : contorno.cpp.obj
 
-main.i: main.cpp.i
+contorno.i: contorno.cpp.i
 
-.PHONY : main.i
+.PHONY : contorno.i
 
 # target to preprocess a source file
-main.cpp.i:
-	$(MAKE) -f CMakeFiles\Layout.dir\build.make CMakeFiles/Layout.dir/main.cpp.i
-.PHONY : main.cpp.i
+contorno.cpp.i:
+	$(MAKE) -f CMakeFiles\Layout.dir\build.make CMakeFiles/Layout.dir/contorno.cpp.i
+.PHONY : contorno.cpp.i
 
-main.s: main.cpp.s
+contorno.s: contorno.cpp.s
 
-.PHONY : main.s
+.PHONY : contorno.s
 
 # target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) -f CMakeFiles\Layout.dir\build.make CMakeFiles/Layout.dir/main.cpp.s
-.PHONY : main.cpp.s
+contorno.cpp.s:
+	$(MAKE) -f CMakeFiles\Layout.dir\build.make CMakeFiles/Layout.dir/contorno.cpp.s
+.PHONY : contorno.cpp.s
 
 # Help Target
 help:
@@ -158,9 +158,9 @@ help:
 	@echo ... Layout
 	@echo ... edit_cache
 	@echo ... rebuild_cache
-	@echo ... main.obj
-	@echo ... main.i
-	@echo ... main.s
+	@echo ... contorno.obj
+	@echo ... contorno.i
+	@echo ... contorno.s
 .PHONY : help
 
 
