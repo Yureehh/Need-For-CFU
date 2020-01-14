@@ -4,6 +4,13 @@ using namespace std;
 const char larghezza = 40;
 const char altezza = 30;
 
+
+// Pulisce lo schermo del terminale
+void cls(){
+    // system("clear");
+    cout << "\033[2J\033[1;1H";    
+}
+
 class mappa{
 
 protected:
@@ -31,6 +38,7 @@ public:
 
 
     void stampa(){
+        cls();
         for(int i=0; i< altezza;i++) {
             for (int j = 0; j < larghezza; j++) {
                 cout<<layout[i][j];
@@ -48,4 +56,5 @@ int main(){
     pista.stampa();
     cout<<endl<<"premi spazio per iniziare";
     getchar();
+    cls();
 }
