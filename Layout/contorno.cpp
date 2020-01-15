@@ -1,15 +1,9 @@
 #include <iostream>
+#include <ncurses.h>
 using namespace std;
 
 const char larghezza = 40;
 const char altezza = 30;
-
-
-// Pulisce lo schermo del terminale
-void cls(){
-    // system("clear");
-    cout << "\033[2J\033[1;1H";    
-}
 
 class mappa{
 
@@ -38,23 +32,27 @@ public:
 
 
     void stampa(){
-        cls();
         for(int i=0; i< altezza;i++) {
             for (int j = 0; j < larghezza; j++) {
-                cout<<layout[i][j];
+                printw( new char(layout[i][j]) );
             }
-            cout<<endl;
-                  }
-            }
+            printw("\n");
+        }
+    }
 
 
 };
 
 
 int main(){
+
+    initscr();
     mappa pista = mappa();
     pista.stampa();
-    cout<<endl<<"premi spazio per iniziare";
-    getchar();
-    cls();
+    printw("\npremi spazio per iniziare");
+    refresh();
+    getch();
+    endwin();
+
+    return 0;
 }
