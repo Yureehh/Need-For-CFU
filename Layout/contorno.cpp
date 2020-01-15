@@ -1,5 +1,5 @@
 #include <iostream>
-#include <conio.h>
+#include <ncurses.h>
 using namespace std;
 
 const char larghezza = 40;
@@ -34,19 +34,25 @@ public:
     void stampa(){
         for(int i=0; i< altezza;i++) {
             for (int j = 0; j < larghezza; j++) {
-                cout<< layout[i][j] ;
+                printw( new char(layout[i][j]) );
             }
-            cout<<endl;
+            printw("\n");
         }
     }
+
 
 };
 
 
 int main(){
+
+    initscr();
     mappa pista = mappa();
     pista.stampa();
-    cout<<"premi un tasto per iniziare";
+    printw("\npremi spazio per iniziare");
+    refresh();
     getch();
+    endwin();
+
     return 0;
 }
