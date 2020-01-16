@@ -5,17 +5,27 @@
 //  O
 // O O
 
-car::car(int asx = 12, int asy = 27,
-        int adx = 14, int ady = 27,
-        int bsx = 12, int bsy = 29,
-        int bdx = 14, int bdy = 29){
+car::car(int asx = 38, int asy = 23,
+        int adx = 40, int ady = 23,
+        int ccx=  39, int ccy = 24,
+        int bsx = 38, int bsy = 25,
+        int bdx = 40, int bdy = 25){
 
         as.x = asx; as.y = asy;
         ad.x = adx; ad.y = ady;
+        cc.x = ccx; cc.y = ccy;
         bs.x = bsx; bs.y = bsy;
         bd.x = bdx; bd.y = bdy;
 }
     
+void car::stampa(){
+    mvprintw(as.x, as.y, "O");
+    mvprintw(bs.x, as.y, "O");
+    mvprintw(cc.x, cc.y, "X");
+    mvprintw(ad.x, ad.y, "O");
+    mvprintw(bd.x, bd.y, "O");
+}
+
 bool car::destra(){
     if(ad.x < 26){
         as.x++;
