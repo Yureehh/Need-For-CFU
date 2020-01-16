@@ -16,7 +16,7 @@ car::car(int asx = 12, int asy = 27,
         bd.x = bdx; bd.y = bdy;
 }
     
-bool car::destra(){
+bool car::right(){
     if(ad.x < 26){
         as.x++;
         ad.x++;
@@ -29,7 +29,7 @@ bool car::destra(){
     } 
 }
 
-bool car::sinistra(){
+bool car::left(){
     if(as.x >2){
         as.x--;
         ad.x--;
