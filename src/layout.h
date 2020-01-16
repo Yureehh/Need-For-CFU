@@ -6,7 +6,7 @@ using namespace std;
 const char width = 80;
 const char height = 42;
 
-const char width_layout = 33;
+const char width_layout = 47;
 const char height_layout = 40;
 
 #ifndef LAYOUT_H
