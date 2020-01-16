@@ -34,7 +34,8 @@ public:
     void stampa(){
         for(int i=0; i< altezza;i++) {
             for (int j = 0; j < larghezza; j++) {
-                printw( new char(layout[i][j]) );
+                mvprintw(i, j, new char(layout[i][j]));
+                //printw( new char(layout[i][j]) );
             }
             printw("\n");
         }
@@ -44,9 +45,11 @@ public:
 };
 
 
-int main(){
+int main(int argc, char *argv[]){
 
     initscr();
+    noecho();
+    curs_set(FALSE);
     mappa pista = mappa();
     pista.stampa();
     printw("\npremi spazio per iniziare");
