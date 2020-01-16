@@ -3,11 +3,11 @@
 using namespace std;
 
 // # User Interface geometry (UI)
-const char larghezza = 80;
-const char altezza = 42;
+const char width = 80;
+const char height = 42;
 
-const char larghezza_layout = 33;
-const char altezza_layout = 40;
+const char width_layout = 33;
+const char height_layout = 40;
 
 #ifndef LAYOUT_H
 #define LAYOUT_H
@@ -15,8 +15,8 @@ const char altezza_layout = 40;
 class layout {
 
     protected:
-        char UI[altezza][larghezza];
-        char mappa[altezza_layout][larghezza_layout];
+        char UI[height][width];
+        char mappa[height_layout][width_layout];
 
     public:
         layout();
