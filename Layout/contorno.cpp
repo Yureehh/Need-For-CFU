@@ -2,59 +2,71 @@
 #include <ncurses.h>
 using namespace std;
 
-const char larghezza = 40;
-const char altezza = 30;
 
-class mappa{
+// # User Interface geometry (UI)
+const char larghezza = 80;
+const char altezza = 42;
 
-protected:
-    char layout[altezza][larghezza];
+const char larghezza_layout = 33;
+const char altezza_layout = 40;
 
 public:
 
-    mappa(){
-        for(int i=0; i< altezza;i++) {
-            for (int j = 0; j < larghezza; j++) {
-                    if(i==0 || i== altezza -1) {
-                    layout[i][j] = '-';
-                }
-                    else{
-                        if(j==0 || j == larghezza -1)
-                            layout[i][j] = '|';
-                        else if(j==1 || j==27)
-                            layout[i][j] = '#';
-                        else
-                            layout[i][j] =' ';
+class layout{
+
+    protected:
+        char UI[altezza][larghezza];
+        char mappa[altezza_layout][larghezza_layout];
+
+    public:
+
+        layout(){
+            for(int i=0; i< altezza;i++) {
+                for (int j = 0; j < larghezza; j++) {
+                        if(i==0 || i== altezza -1) {
+                            UI[i][j] = '-';
+                        }
+                        else{
+                            if(j==0 || j == larghezza -1)
+                                UI[i][j] = '|';
+                            else if(j==1 || j== larghezza_layout + 2 )
+                                UI[i][j] = '#';
+                            else
+                                UI[i][j] =' ';
+                        }
                     }
                 }
             }
-        }
 
 
-    void stampa(){
-        for(int i=0; i< altezza;i++) {
-            for (int j = 0; j < larghezza; j++) {
-                mvprintw(i, j, new char(layout[i][j]));
-                //printw( new char(layout[i][j]) );
+        void stampa_UI(){
+            for(int i=0; i< altezza;i++) {
+                for (int j = 0; j < larghezza; j++) {
+                    mvprintw(i, j, new char(UI[i][j]));
+                }
+                printw("\n");
             }
-            printw("\n");
         }
-    }
-
-
+        
 };
 
 
 int main(int argc, char *argv[]){
 
+    // _ Setup ncurses
     initscr();
     noecho();
     curs_set(FALSE);
-    mappa pista = mappa();
-    pista.stampa();
+    
+    // _ Stamp the layout and UI
+    layout l = layout();
+    l.stampa_UI();
+
     printw("\npremi spazio per iniziare");
+    
     refresh();
     getch();
+    
     endwin();
 
     return 0;
