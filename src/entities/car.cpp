@@ -6,11 +6,11 @@
 // O O
 
 car::car(int asx = 38, int asy = 23,
-        int adx = 40, int ady = 23,
-        int ccx=  39, int ccy = 24,
-        int bsx = 38, int bsy = 25,
-        int bdx = 40, int bdy = 25){
-
+         int adx = 40, int ady = 23,
+         int ccx=  39, int ccy = 24,
+         int bsx = 38, int bsy = 25,
+         int bdx = 40, int bdy = 25)
+         {
         as.x = asx; as.y = asy;
         ad.x = adx; ad.y = ady;
         cc.x = ccx; cc.y = ccy;
