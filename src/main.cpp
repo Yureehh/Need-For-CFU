@@ -5,7 +5,6 @@
 #include "layout.h"
 #include "car.h"
 
-
 int main(int argc, char *argv[]){
 
     // _ Setup ncurses
@@ -30,7 +29,7 @@ int main(int argc, char *argv[]){
     //Stamp the UI and the car
     layout l = layout();
     l.stampa_UI();   
-    car c = car();
+    car c = car(38,23,40,23,39,24,38,25,40,25);
     c.stampa();
     refresh();
     int ch = getch();
@@ -39,8 +38,8 @@ int main(int argc, char *argv[]){
             c.sinistra();
         if(ch == 'd' || ch == KEY_RIGHT)
             c.destra();
-        usleep(1500);
         c.stampa();
+        refresh();
     }
 
     endwin();
