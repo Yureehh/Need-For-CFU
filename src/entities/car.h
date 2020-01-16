@@ -25,8 +25,8 @@ class car{
         car(int, int, int, int ,
             int, int, int, int);
         
-        bool destra();
-        bool sinistra();
+        bool right();
+        bool left();
 };
 
 #endif
