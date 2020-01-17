@@ -22,6 +22,7 @@ class car{
         // Default Constructor
         car(int, int, int, int, int, int, int, int, int, int);
         
+        void clean();
         void stampa();
         bool destra();
         bool sinistra();

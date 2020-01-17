@@ -6,8 +6,8 @@ using namespace std;
 const char width = 80;
 const char height = 42;
 
-const char width_layout = 47;
-const char height_layout = 40;
+const char width_layout = 47; //centro 24
+const char height_layout = 40; // centro 19
 
 #ifndef LAYOUT_H
 #define LAYOUT_H
@@ -21,6 +21,7 @@ class layout {
     public:
         layout();
         void stampa_UI();
+        void clean();
 
 };
 
