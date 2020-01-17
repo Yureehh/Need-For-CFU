@@ -3,7 +3,14 @@
 #include <cstdlib>
 #include <unistd.h>
 #include "layout.h"
-#include "entities\car.h"
+
+#ifdef __linux__ 
+    #include "entities/car.h"
+#elif _WIN32
+    #include "entities\car.h"
+#else
+    cout << "Hai un OS sfigato cosa ti posso dire"
+#endif
 
 int main(int argc, char *argv[]){
 
