@@ -20,8 +20,9 @@ class layout {
 
     public:
         layout();
-        void stampa_UI();
+        void stampaUI();
         void clean();
+        void stampaScore();
 
 };
 

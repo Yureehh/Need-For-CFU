@@ -18,7 +18,8 @@ int main(int argc, char *argv[]){
     erase();
     //Stamp the UI and the car
     layout l = layout();
-    l.stampa_UI();
+    l.stampaUI();
+    l.stampaScore();
     mvprintw(21, 24, "3");
     refresh();
     sleep(1);
@@ -37,11 +38,11 @@ int main(int argc, char *argv[]){
     int ch ='7';
     while(ch != ' '){
         ch= getch();
-        if(ch == 'a' || ch == KEY_LEFT){
+        if(ch == 'a' || ch == 68){
             c.clean();
             c.sinistra();
         }   
-        if(ch == 'd' || ch == KEY_RIGHT){
+        if(ch == 'd' || ch == 67){
             c.clean();
             c.destra();
         }
