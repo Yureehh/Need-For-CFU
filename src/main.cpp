@@ -5,6 +5,7 @@
 #include "layout.h"
 #include "scorestage.h"
 #include "entities\car.h"
+
 /*
 #ifdef __linux__ 
     #include "entities/car.h"
@@ -21,7 +22,9 @@ int main(int argc, char *argv[]){
     initscr();
     noecho();
     curs_set(FALSE);
+
     /*
+    unlucky tentativo di far rosso se prendi danno
     start_color();
     init_pair(1, COLOR_BLACK, COLOR_RED);
     init_pair(2, COLOR_WHITE, COLOR_BLACK);
@@ -31,12 +34,14 @@ int main(int argc, char *argv[]){
     mvprintw(21, 11, "Press Any Key To Start!");
     getch();
     erase();
-    //Stamp the UI and the car
+    //Stamp the UI 
     layout l = layout();
     l.stampaUI();
     l.stampaScore();
+    //inizialize points
     scorestage s = scorestage(2300);
     s.PrintScoreStage();
+    //countdown
     mvprintw(21, 24, "3");
     refresh();
     sleep(1);
@@ -48,12 +53,14 @@ int main(int argc, char *argv[]){
     sleep(1);
     mvprintw(21, 24, " ");
 
-       
-    car c = car(38,23,40,23,39,24,38,25,40,25); //never cancellare pls 
+    //prints the car
+    car c = car(38,23,40,23,39,24,38,25,40,25); //should fix the default constructor later
     c.stampa();
     refresh();
     int ch ='7';
     bool spostamento = true, loss = false;
+    
+    //the game itself, for now u can only move the car
     while(ch != ' ' && !loss){
         ch= getch();
         if(ch == 'a' || ch == 68){
@@ -64,6 +71,8 @@ int main(int argc, char *argv[]){
             c.clean();
             spostamento = c.destra();
         }
+
+        //if u hit something trying to move u lose points
         if(!spostamento){
             spostamento = true;
             s.SubScore(500);
@@ -76,6 +85,7 @@ int main(int argc, char *argv[]){
         refresh();
     }
 
+    //2 possible endings: u lost or u pressed spacebar
     if(loss){
         erase();
         mvprintw(21, 11, "Take the L!");

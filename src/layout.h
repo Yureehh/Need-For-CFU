@@ -19,9 +19,16 @@ class layout {
         char mappa[height_layout][width_layout];
 
     public:
+        //Initialize the layout
         layout();
+        
+        //prints the layout
         void stampaUI();
+
+        //clears the map
         void clean();
+
+        //Prints the words
         void stampaScore();
 
 };

@@ -1,5 +1,6 @@
 #include "layout.h"
 
+//Initialize the layout
 layout::layout(){
     for(int i = 0; i< height; i++) {
         for (int j = 0; j < width; j++) {
@@ -18,6 +19,7 @@ layout::layout(){
         }
 }
 
+//prints the layout
 void layout::stampaUI(){
     for(int i = 0; i< height;i++) {
         for (int j = 0; j < width; j++) {
@@ -26,6 +28,8 @@ void layout::stampaUI(){
         printw("\n");
     }
 }
+
+//Prints the words
 void layout::stampaScore(){
     mvprintw(20,58,"Stage: ");
     mvprintw(22,58,"Score: ");
