@@ -3,7 +3,7 @@ CFLAGS = -lncurses
 
 all : game
 
-game : main.o layout.o car.o
+game : main.o layout.o car.o scorestage.o
 	$(CC) bin/*.o -o game $(CFLAGS)
 
 main.o : layout.o car.o
@@ -14,6 +14,9 @@ layout.o :
 
 car.o : 
 	$(CC) -c src/entities/car.cpp -o bin/car.o
+
+scorestage.o :
+	$(CC) -c src/scorestage.cpp -o bin/scorestage.o $(CFLAGS)
 
 run : 
 	./game

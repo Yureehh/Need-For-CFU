@@ -27,8 +27,7 @@ void layout::stampaUI(){
     }
 }
 void layout::stampaScore(){
-    int score=0 ,level=1;
-    mvprintw(20,58,"Stage: %d",level);
-    mvprintw(22,58,"Score: %d",score);
+    mvprintw(20,58,"Stage: ");
+    mvprintw(22,58,"Score: ");
 
 }
