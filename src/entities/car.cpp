@@ -4,6 +4,8 @@
 //  O
 // O O
 // x verticale - y orizzontale
+
+//Initialize the car
 car::car(int asx , int asy ,
          int adx , int ady ,
          int ccx , int ccy ,
@@ -17,6 +19,7 @@ car::car(int asx , int asy ,
         bd.x = bdx; bd.y = bdy;
 }
  
+//prints the car
 void car::stampa(){
     mvprintw(as.x, as.y, "O");
     mvprintw(ad.x, ad.y, "O");
@@ -25,6 +28,8 @@ void car::stampa(){
     mvprintw(bd.x, bd.y, "O");
     refresh();
 }
+
+//deletes the car
 void car::clean(){
     mvprintw(as.x, as.y, " ");
     mvprintw(ad.x, ad.y, " ");
@@ -34,6 +39,7 @@ void car::clean(){
     refresh();
 }
 
+//Moves the car 1 to the right
 bool car::destra(){
     if(ad.y < 46){
         as.y++;
@@ -48,6 +54,7 @@ bool car::destra(){
     } 
 }
 
+//Moves the car 1 to the left
 bool car::sinistra(){
     if(as.y >2){
         as.y--;
