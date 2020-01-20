@@ -1,5 +1,8 @@
 #include <iostream>
 #include <ncurses.h>
+#include "entities\obstacle1x1.h"
+#include "entities\obstacle1x2.h"
+#include "entities\obstacle2x2.h"
 using namespace std;
 
 // # User Interface geometry (UI)
@@ -30,6 +33,9 @@ class layout {
 
         //Prints the words
         void stampaScore();
+
+        //Prints test map
+        void stampaOstacoli();
 
 };
 
