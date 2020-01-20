@@ -6,6 +6,7 @@
 #include "scorestage.h"
 #include "entities\car.h"
 
+
 /*
 #ifdef __linux__ 
     #include "entities/car.h"
@@ -34,12 +35,17 @@ int main(int argc, char *argv[]){
     mvprintw(21, 11, "Press Any Key To Start!");
     getch();
     erase();
-    //Stamp the UI 
+
+    //Print the UI 
     layout l = layout();
     l.stampaUI();
     l.stampaScore();
+
+    //Print obstacles
+    l.stampaOstacoli();
+
     //inizialize points
-    scorestage s = scorestage(2300);
+    scorestage s = scorestage(1);
     s.PrintScoreStage();
     //countdown
     mvprintw(21, 24, "3");
@@ -62,6 +68,7 @@ int main(int argc, char *argv[]){
     
     //the game itself, for now u can only move the car
     while(ch != ' ' && !loss){
+        
         ch= getch();
         if(ch == 'a' || ch == 68){
             c.clean();
@@ -71,7 +78,6 @@ int main(int argc, char *argv[]){
             c.clean();
             spostamento = c.destra();
         }
-
         //if u hit something trying to move u lose points
         if(!spostamento){
             spostamento = true;
@@ -80,6 +86,9 @@ int main(int argc, char *argv[]){
                 loss = true;
             }
         }
+        
+        
+
         s.PrintScoreStage();
         c.stampa();
         refresh();
