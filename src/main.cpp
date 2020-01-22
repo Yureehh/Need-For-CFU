@@ -41,8 +41,7 @@ int main(int argc, char *argv[]){
     l.stampaUI();
     l.stampaScore();
 
-    //Print obstacles
-    l.stampaOstacoli();
+
 
     //inizialize points
     scorestage s = scorestage(1);
@@ -58,6 +57,9 @@ int main(int argc, char *argv[]){
     refresh();
     sleep(1);
     mvprintw(21, 24, " ");
+    
+    //Print obstacles
+    l.stampaOstacoli();
 
     //prints the car
     car c = car(38,23,40,23,39,24,38,25,40,25); //should fix the default constructor later
