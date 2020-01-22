@@ -5,7 +5,6 @@
 #include "layout.h"
 #include "scorestage.h"
 #include "utilities.h"
-#include <chrono>
 
 
 #ifdef __linux__ 
@@ -14,6 +13,7 @@
     #include "entities\car.h"
 #endif
 
+bool urto();
 
 int main(int argc, char *argv[]){
 
@@ -65,6 +65,7 @@ int main(int argc, char *argv[]){
     refresh();
 
     bool spostamento = true, loss = false;
+    bool danno = (!spostamento || urto());
     char ch=' ';
     int timer = 0;
     int t;
@@ -83,14 +84,6 @@ int main(int argc, char *argv[]){
                 spostamento = c.destra();
             }
 
-            //if u hit something trying to move u lose points
-            if(!spostamento){
-                spostamento = true;
-                s.SubScore(500);
-                if(s.GetScore() <= 0){
-                    loss = true;
-                }
-            }
         }
 
         if(timer<=0){
@@ -101,6 +94,18 @@ int main(int argc, char *argv[]){
         }
         else 
             timer--;
+
+        //if u hit something trying to move u lose points
+        if(danno){
+            if(!spostamento)
+                s.SubScore(500);
+            if(urto())
+                s.SubScore(200);
+            spostamento = true;
+            if(s.GetScore() <= 0){
+                loss = true;
+            }
+        }
 
         c.stampa();    
         refresh();
