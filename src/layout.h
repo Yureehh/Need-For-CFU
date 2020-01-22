@@ -1,5 +1,6 @@
 #include <iostream>
 #include <ncurses.h>
+#include "scorestage.h"
 #include "entities\obstacle1x1.h"
 #include "entities\obstacle1x2.h"
 #include "entities\obstacle2x2.h"

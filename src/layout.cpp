@@ -90,7 +90,9 @@ void generateObstacles();
          for(int j=0; j<width_layout; j++){
              if(riga >= 40)
                 riga = 0;
-             mvprintw(i+1,j+2, new char(mappa[riga][j]) );
+            if(i >=3 && i <40){
+                mvprintw(i+1,j+2, new char(mappa[riga][j]) );
+            }
          }
          riga++;
      } 

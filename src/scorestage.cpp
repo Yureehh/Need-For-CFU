@@ -4,16 +4,23 @@
 //constructor to inizialize points
 scorestage::scorestage(int s=1){
         score = s;
+        record = score;
     }
 
 //getter for the score
 int scorestage::GetScore(){
-        return this->score;
+        return score;
+    }
+
+int scorestage::GetMaxScore(){
+        return record;
     }
 
 //add points
 int scorestage::AddScore(int x){
         score = score + x;
+        if(score > record)
+            record = score;
     }
 
 //sub points

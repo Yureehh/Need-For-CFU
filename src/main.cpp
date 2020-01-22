@@ -5,6 +5,7 @@
 #include "layout.h"
 #include "scorestage.h"
 #include "utilities.h"
+#include <chrono>
 
 
 #ifdef __linux__ 
@@ -42,7 +43,7 @@ int main(int argc, char *argv[]){
 
 
     //inizialize points
-    scorestage s = scorestage(1);
+    scorestage s = scorestage(0);
     s.PrintScoreStage();
     //countdown
     mvprintw(21, 24, "3");
@@ -70,7 +71,7 @@ int main(int argc, char *argv[]){
 
     //the game itself, for now u can only move the car
     while(ch != 113 && !loss){
-        sleep(1);
+        usleep(6250);
         if(kbhit()){
             ch = getch();
             if(ch == 'a' || ch == 68){
@@ -94,21 +95,22 @@ int main(int argc, char *argv[]){
 
         if(timer<=0){
             l.downMap();
+            s.AddScore(20);
             s.PrintScoreStage();
-            timer = 1;
-
+            timer = 400;
         }
         else 
             timer--;
 
-         c.stampa();    
+        c.stampa();    
         refresh();
     }
 
     //2 possible endings: u lost or u pressed spacebar
     if(loss){
         erase();
-        mvprintw(21, 11, "Take the L!");
+        mvprintw(21, 17, "Take the L!");
+        mvprintw(23, 5, "Your record this run has been %d points!", s.GetMaxScore());
         while(!kbhit());
     }
 
