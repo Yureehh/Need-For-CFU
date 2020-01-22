@@ -1,7 +1,16 @@
 #include "layout.h"
+#include <unistd.h>
 
 //Initialize the layout
 layout::layout(){
+    start_map = 0;
+    for(int i = 0; i< height_layout; i++) {
+        for (int j = 0; j < width_layout; j++) {
+                mappa[i][j] =' ';  
+        }
+    }
+    mappa[20][20]= 'K';
+
     for(int i = 0; i< height; i++) {
         for (int j = 0; j < width; j++) {
                 if(i == 0 || i == height-1) {
@@ -12,12 +21,13 @@ layout::layout(){
                         UI[i][j] = '|';
                     else if(j == 1 || j == width_layout + 2 )
                         UI[i][j] = '#';
-                    else
+                    else 
                         UI[i][j] =' ';
                 }
             }
         }
 }
+
 
 //prints the layout
 void layout::stampaUI(){
@@ -36,10 +46,11 @@ void layout::stampaScore(){
 
 }
 
+/*
 //Prints test map
 void layout::stampaOstacoli(){
     int x, y;
-    for(int i=1;i<47;i++){
+    for(int i=3;i<47;i++){
         for(int j=3;j<37;j++){
             x=rand()%20;
             if(x == 1){
@@ -66,4 +77,26 @@ void layout::stampaOstacoli(){
         }
     }
 }
+*/
 
+void generateObstacles();
+
+
+//Downs the obstacles of 1 line
+ void layout::downMap(){  
+     int riga = start_map;
+
+     for(int i = 0; i<height_layout; i++){
+         for(int j=0; j<width_layout; j++){
+             if(riga >= 40)
+                riga = 0;
+             mvprintw(i+1,j+2, new char(mappa[riga][j]) );
+         }
+         riga++;
+     } 
+    start_map--;
+    if(start_map < 0){
+         start_map=39;
+     }
+
+}

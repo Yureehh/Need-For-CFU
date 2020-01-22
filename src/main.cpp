@@ -4,18 +4,15 @@
 #include <unistd.h>
 #include "layout.h"
 #include "scorestage.h"
-#include "entities\car.h"
+#include "utilities.h"
 
 
-/*
 #ifdef __linux__ 
     #include "entities/car.h"
 #elif _WIN32
     #include "entities\car.h"
-#else
-    cout << "Hai un OS sfigato cosa ti posso dire"
 #endif
-*/
+
 
 int main(int argc, char *argv[]){
 
@@ -23,6 +20,7 @@ int main(int argc, char *argv[]){
     initscr();
     noecho();
     curs_set(FALSE);
+    nodelay(stdscr, TRUE);
 
     /*
     unlucky tentativo di far rosso se prendi danno
@@ -32,8 +30,8 @@ int main(int argc, char *argv[]){
     */
 
     //Starting the game
-    mvprintw(21, 11, "Press Any Key To Start!");
-    getch();
+    mvprintw(21, 11, "Press Key To Start!");
+    while(!kbhit());
     erase();
 
     //Print the UI 
@@ -58,41 +56,52 @@ int main(int argc, char *argv[]){
     sleep(1);
     mvprintw(21, 24, " ");
     
-    //Print obstacles
-    l.stampaOstacoli();
 
-    //prints the car
+    //prints the starting map with the car and obstacles
     car c = car(38,23,40,23,39,24,38,25,40,25); //should fix the default constructor later
+    l.downMap();
     c.stampa();
     refresh();
-    int ch ='7';
+
     bool spostamento = true, loss = false;
-    
+    char ch=' ';
+    int timer = 0;
+    int t;
+
     //the game itself, for now u can only move the car
-    while(ch != ' ' && !loss){
-        
-        ch= getch();
-        if(ch == 'a' || ch == 68){
-            c.clean();
-            spostamento = c.sinistra();
-        }   
-        if(ch == 'd' || ch == 67){
-            c.clean();
-            spostamento = c.destra();
-        }
-        //if u hit something trying to move u lose points
-        if(!spostamento){
-            spostamento = true;
-            s.SubScore(500);
-            if(s.GetScore() <= 0){
-                loss = true;
+    while(ch != 113 && !loss){
+        sleep(1);
+        if(kbhit()){
+            ch = getch();
+            if(ch == 'a' || ch == 68){
+                c.clean();
+                spostamento = c.sinistra();
+            }   
+            if(ch == 'd' || ch == 67){
+                c.clean();
+                spostamento = c.destra();
+            }
+
+            //if u hit something trying to move u lose points
+            if(!spostamento){
+                spostamento = true;
+                s.SubScore(500);
+                if(s.GetScore() <= 0){
+                    loss = true;
+                }
             }
         }
-        
-        
 
-        s.PrintScoreStage();
-        c.stampa();
+        if(timer<=0){
+            l.downMap();
+            s.PrintScoreStage();
+            timer = 1;
+
+        }
+        else 
+            timer--;
+
+         c.stampa();    
         refresh();
     }
 
@@ -100,7 +109,7 @@ int main(int argc, char *argv[]){
     if(loss){
         erase();
         mvprintw(21, 11, "Take the L!");
-        getch();
+        while(!kbhit());
     }
 
     endwin();

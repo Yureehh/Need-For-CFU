@@ -9,8 +9,9 @@ using namespace std;
 const char width = 80;
 const char height = 42;
 
-const char width_layout = 47; //centro 24
-const char height_layout = 40; // centro 19
+const char width_layout = 47; //0-46        centro 24
+const char height_layout = 40; // 0-39      centro 19
+
 
 #ifndef LAYOUT_H
 #define LAYOUT_H
@@ -20,6 +21,7 @@ class layout {
     protected:
         char UI[height][width];
         char mappa[height_layout][width_layout];
+        int  start_map; //linea in cui starta la mappa
 
     public:
         //Initialize the layout
@@ -35,7 +37,14 @@ class layout {
         void stampaScore();
 
         //Prints test map
-        void stampaOstacoli();
+        //void stampaOstacoli();
+
+        //creates the obstacles
+        void generateObstacles();
+
+
+        //Downs the obstacler of 1 line
+        void downMap();
 
 };
 

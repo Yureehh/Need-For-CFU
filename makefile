@@ -3,7 +3,7 @@ CFLAGS = -lncurses
 
 all : game
 
-game : main.o layout.o car.o scorestage.o obstacle1x1.o obstacle2x2.o obstacle1x2.o
+game : main.o layout.o car.o scorestage.o obstacle1x1.o obstacle2x2.o obstacle1x2.o utilities.o
 	$(CC) bin/*.o -o game $(CFLAGS)
 
 main.o : layout.o car.o
@@ -26,6 +26,9 @@ obstacle1x2.o :
 
 obstacle2x2.o : 
 	$(CC) -c src/entities/obstacle2x2.cpp -o bin/obstacle2x2.o
+
+utilities.o :
+	$(CC) -c src/utilities.cpp -o bin/utilities.o $(CFLAGS)
 
 run : 
 	./game

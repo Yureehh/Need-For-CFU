@@ -47,6 +47,7 @@ bool car::destra(){
         cc.y++;
         bs.y++;
         bd.y++;
+        refresh();
         return true;
     }
     else{
@@ -62,6 +63,7 @@ bool car::sinistra(){
         cc.y--;
         bs.y--;
         bd.y--;
+        refresh();
         return true;
     }
     else{
