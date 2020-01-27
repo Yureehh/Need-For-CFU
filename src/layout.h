@@ -6,7 +6,7 @@
     #include "entities/obstacle.h"
     #include "entities/obstacle1x2.h"
     #include "entities/obstacle2x2.h"
-#elif _WIN32    
+#else   
     #include "entities\obstacle.h"
     #include "entities\obstacle1x2.h"
     #include "entities\obstacle2x2.h"

@@ -9,7 +9,7 @@
 
 #ifdef __linux__ 
     #include "entities/car.h"
-#elif _WIN32
+#else
     #include "entities\car.h"
 #endif
 

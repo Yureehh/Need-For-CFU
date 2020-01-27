@@ -1,6 +1,5 @@
 #include <iostream>
 #include <ncurses.h>
-#include "car.h"
 using namespace std;
 
 #ifndef OBSTACLE_H
