@@ -13,7 +13,7 @@
     #include "entities\car.h"
 #endif
 
-bool urto();
+//bool urto();
 
 int main(int argc, char *argv[]){
 
@@ -59,13 +59,13 @@ int main(int argc, char *argv[]){
     
 
     //prints the starting map with the car and obstacles
-    car c = car(38,23,40,23,39,24,38,25,40,25); //should fix the default constructor later
+    car c = car(38,23); //should fix the default constructor later
     l.downMap();
     c.stampa();
     refresh();
 
     bool spostamento = true, loss = false;
-    bool danno = (!spostamento || urto());
+    // bool danno = (!spostamento);
     char ch=' ';
     int timer = 0;
     int t;
@@ -90,22 +90,22 @@ int main(int argc, char *argv[]){
             l.downMap();
             s.AddScore(20);
             s.PrintScoreStage();
-            timer = 400;
+            timer = 50; //400 
         }
         else 
             timer--;
 
         //if u hit something trying to move u lose points
-        if(danno){
+        //if(danno){
             if(!spostamento)
                 s.SubScore(500);
-            if(urto())
-                s.SubScore(200);
+            /*if(urto())
+                s.SubScore(200);*/
             spostamento = true;
             if(s.GetScore() <= 0){
                 loss = true;
             }
-        }
+        //}
 
         c.stampa();    
         refresh();

@@ -16,11 +16,11 @@ class car{
 
     // # Car has 4 position for each tire
     protected:
-        posizione as, ad, cc, bs, bd;
+        posizione c;
 
     public:
         // Default Constructor
-        car(int, int, int, int, int, int, int, int, int, int);
+        car(int, int);
         
         //prints the car
         void stampa();
