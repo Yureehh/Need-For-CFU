@@ -1,14 +1,14 @@
 #include "obstacle.h"
 
 //set the obstacle position
-obstacle::obstacle(int x, int y){
-    position.x=x;
-    position.y=y;
+obstacle::obstacle(int x=0, int y=0){
+    this->x=x;
+    this->y=y;
 }
 
 //getter for the coordinates
 posizione obstacle::getPosition(){
-    return position;
+    return [position];
 }
 
 //fa scendere di 1 riga l'ostacolo

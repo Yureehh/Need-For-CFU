@@ -1,5 +1,6 @@
 #include <iostream>
 #include <ncurses.h>
+
 using namespace std;
 
 #ifndef OBSTACLE_H
@@ -8,7 +9,7 @@ using namespace std;
 class obstacle{
 
 protected:
-    posizione position;
+    int x, y;
 
 public:
 
