@@ -59,7 +59,7 @@ int main(int argc, char *argv[]){
     
 
     //prints the starting map with the car and obstacles
-    car c = car(38,23); //should fix the default constructor later
+    car c = car(23,38); //should fix the default constructor later
     l.downMap();
     c.stampa();
     refresh();
