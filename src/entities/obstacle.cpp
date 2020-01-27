@@ -1,29 +1,29 @@
-#include "obstacle1x1.h"
+#include "obstacle.h"
 
 //set the obstacle position
-obstacle1x1::obstacle1x1(int x, int y){
+obstacle::obstacle(int x, int y){
     position.x=x;
     position.y=y;
 }
 
 //getter for the coordinates
-posizione obstacle1x1::getPosition(){
+posizione obstacle::getPosition(){
     return position;
 }
 
 //fa scendere di 1 riga l'ostacolo
-void obstacle1x1::down(){
+void obstacle::down(){
     position.x++;
 }
 
 //prints the ob
-void obstacle1x1::stampa(){
+void obstacle::stampa(){
     mvprintw(position.x, position.y, "%c", 79);
     refresh();
 }
 
 //deletes the ob
-void obstacle1x1::clean(){
+void obstacle::clean(){
     mvprintw(position.x, position.y, " ");
     refresh();
 }

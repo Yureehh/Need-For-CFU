@@ -6,14 +6,14 @@ using namespace std;
 #ifndef OBSTACLE_H
 #define OBSTACLE_H
 
-class obstacle1x1{
+class obstacle{
 
 protected:
     posizione position;
 
 public:
 
-    obstacle1x1(int, int);          //costruttore per l'ostacolo
+    obstacle(int, int);          //costruttore per l'ostacolo
 
     posizione getPosition();        //restituisce la posizione del quadratino
 
