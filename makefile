@@ -1,11 +1,11 @@
 CC = g++
 CFLAGS = -c
-SRC = main layout utilities scorestage
-SRC_ENT = car obstacle
+SRC = main game utilities scorestage level
+SRC_ENT = car 
 
-all : game
+all : outrun
 
-game : $(SRC) $(addprefix entities/,$(SRC_ENT))
+outrun : $(addprefix entities/,$(SRC_ENT)) $(SRC)
 	$(CC) bin/*.o -o game -lncurses
 
 %: src/%.cpp

@@ -2,7 +2,8 @@
 #include <iostream>
 #include <cstdlib>
 #include <unistd.h>
-#include "layout.h"
+#include "game.h"
+#include "level.h"
 #include "scorestage.h"
 #include "utilities.h"
 
@@ -13,6 +14,7 @@
     #include "entities\car.h"
 #endif
 
+// ! Usare mvinch(x,y) per sapere che char è fatto vedere in x,y
 //bool urto();
 
 int main(int argc, char *argv[]){
@@ -35,12 +37,12 @@ int main(int argc, char *argv[]){
     while(!kbhit());
     erase();
 
-    //Print the UI 
-    layout l = layout();
+    //Print the UI
+    level lev = level(1);
+    game l = game();
     l.stampaUI();
     l.stampaScore();
-
-
+    
 
     //inizialize points
     scorestage s = scorestage(0);
@@ -58,9 +60,9 @@ int main(int argc, char *argv[]){
     mvprintw(21, 24, " ");
     
 
-    //prints the starting map with the car and obstacles
+    //prints the starting Track with the car and obstacles
     car c = car(23,38); //should fix the default constructor later
-    l.downMap();
+    l.downTrack();
     c.stampa();
     refresh();
 
@@ -87,7 +89,7 @@ int main(int argc, char *argv[]){
         }
 
         if(timer<=0){
-            l.downMap();
+            l.downTrack();
             s.AddScore(20);
             s.PrintScoreStage();
             timer = 50; //400 
@@ -117,6 +119,7 @@ int main(int argc, char *argv[]){
         mvprintw(21, 17, "Take the L!");
         mvprintw(23, 5, "Your record this run has been %d points!", s.GetMaxScore());
         while(!kbhit());
+
     }
 
     endwin();
