@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <ncurses.h>
+
 using namespace std;
 
 #ifndef CAR_H
@@ -13,8 +14,6 @@ struct posizione{
 
 class car{
 
-
-    // # Car has 4 position for each tire
     protected:
         posizione c;
 
