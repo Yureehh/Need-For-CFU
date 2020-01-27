@@ -18,9 +18,9 @@ public:
     //Record of the run
    int GetMaxScore();
     //add points
-   int AddScore(int);
+   void AddScore(int);
     //sub points
-   int SubScore(int);
+   void SubScore(int);
     //prints score and level
    void PrintScoreStage();
 };
