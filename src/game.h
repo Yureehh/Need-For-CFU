@@ -2,6 +2,11 @@
 #include <ncurses.h>
 #include "level.h"
 #include "scorestage.h"
+#ifdef __linux__ 
+    #include "entities/car.h"
+#else
+    #include "entities\car.h"
+#endif
 
 using namespace std;
 
@@ -21,6 +26,7 @@ class game {
     protected:
         char Track[height_Track][width_Track];
         int  start_Track; //linea in cui starta la pista
+        car c;
 
     public:
         //Initialize the game
@@ -34,6 +40,14 @@ class game {
 
         //Prints the words
         void stampaScore();
+
+        void stampaCar();
+
+        void cleanCar();
+
+        bool sinistraCar();
+
+        bool destraCar();
 
         //Prints test Track
         //void stampaOstacoli();

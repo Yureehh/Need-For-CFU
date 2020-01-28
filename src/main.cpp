@@ -7,13 +7,6 @@
 #include "scorestage.h"
 #include "utilities.h"
 
-
-#ifdef __linux__ 
-    #include "entities/car.h"
-#else
-    #include "entities\car.h"
-#endif
-
 // ! Usare mvinch(x,y) per sapere che char è fatto vedere in x,y
 //bool urto();
 
@@ -39,9 +32,9 @@ int main(int argc, char *argv[]){
 
     //Print the UI
     level lev = level(1);
-    game l = game();
-    l.stampaUI();
-    l.stampaScore();
+    game g = game();
+    g.stampaUI();
+    g.stampaScore();
     
 
     //inizialize points
@@ -61,9 +54,8 @@ int main(int argc, char *argv[]){
     
 
     //prints the starting Track with the car and obstacles
-    car c = car(23,38); //should fix the default constructor later
-    l.downTrack();
-    c.stampa();
+    g.downTrack();
+    g.stampaCar();
     refresh();
 
     bool spostamento = true, loss = false;
@@ -78,18 +70,18 @@ int main(int argc, char *argv[]){
         if(kbhit()){
             ch = getch();
             if(ch == 'a' || ch == 68){
-                c.clean();
-                spostamento = c.sinistra();
+                g.cleanCar();
+                spostamento = g.sinistraCar();
             }   
             if(ch == 'd' || ch == 67){
-                c.clean();
-                spostamento = c.destra();
+                g.cleanCar();
+                spostamento = g.destraCar();
             }
 
         }
 
         if(timer<=0){
-            l.downTrack();
+            g.downTrack();
             s.AddScore(20);
             s.PrintScoreStage();
             timer = 50; //400 
@@ -109,7 +101,7 @@ int main(int argc, char *argv[]){
             }
         //}
 
-        c.stampa();    
+        g.stampaCar();    
         refresh();
     }
 

@@ -19,20 +19,19 @@ class car{
 
     public:
         // Default Constructor
+        car();
+
         car(int, int);
         
+        posizione getPosition();
+
         //prints the car
         void stampa();
         
         //deletes the car
         void clean();
 
-
-        //Moves the car 1 to the right
-        bool destra();
-
-        //Moves the car 1 to the left
-        bool sinistra();
+        void move(int, int);
 };
 
 #endif

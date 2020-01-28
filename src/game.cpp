@@ -11,6 +11,9 @@ game::game(){
         }
     }
     Track[20][20]= 'K';
+
+    c = car();
+
 }
 
 
@@ -35,11 +38,38 @@ void game::stampaUI(){
 
 }
 
+void game::stampaCar(){
+    c.stampa();
+}
+
+void game::cleanCar(){
+    c.clean();
+}
+
 //Prints the words
 void game::stampaScore(){
     mvprintw(20,58,"Stage: ");
     mvprintw(22,58,"Score: ");
+}
 
+bool game::sinistraCar(){    
+    if(c.getPosition().x > 2){
+        c.move( 0, -1 );
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+bool game::destraCar(){
+    if(c.getPosition().x < 46){
+        c.move( 0, +1);
+        return true;
+    }
+    else{
+        return false;
+    }
 }
 
 void generateObstacles();
