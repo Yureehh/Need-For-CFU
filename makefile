@@ -1,12 +1,12 @@
 CC = g++
 CFLAGS = -c
-SRC = main game utilities scorestage level
+SRC = utilities scorestage level game main
 SRC_ENT = car 
 
 all : outrun
 
 outrun : $(addprefix entities/,$(SRC_ENT)) $(SRC)
-	$(CC) bin/*.o -o game -lncurses
+	$(CC) bin/*.o -o outrun -lncurses
 
 %: src/%.cpp
 	$(CC) $(CFLAGS) $< -o bin/$@.o -lncurses
@@ -15,7 +15,7 @@ entities/% : src/entities/%.cpp
 	$(CC) $(CFLAGS) $< -o bin/$(subst entities/,,$@).o -lncurses
 
 run : 
-	./game
+	./outrun
 
 clean :
 	rm -rf bin/*.o
