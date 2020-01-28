@@ -3,7 +3,7 @@ CFLAGS = -c
 SRC = utilities scorestage level game main
 SRC_ENT = car 
 
-all : outrun
+all : clean outrun
 
 outrun : $(addprefix entities/,$(SRC_ENT)) $(SRC)
 	$(CC) bin/*.o -o outrun -lncurses

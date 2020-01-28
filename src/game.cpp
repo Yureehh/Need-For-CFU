@@ -10,7 +10,7 @@ game::game(){
                 Track[i][j] =' ';
         }
     }
-    Track[20][20]= 'K';
+    Track[30][20]= 'K';
 
     c = car();
 
@@ -52,24 +52,58 @@ void game::stampaScore(){
     mvprintw(22,58,"Score: ");
 }
 
-bool game::sinistraCar(){    
-    if(c.getPosition().x > 2){
+bool game::sinistraCar(){
+    // Actually move if not going outside the map
+    if ( c.getPosition().x > 2 ){
         c.move( 0, -1 );
         return true;
-    }
-    else{
+    } else
         return false;
-    }
 }
 
 bool game::destraCar(){
-    if(c.getPosition().x < 46){
+    // Actually move if not going outside the map
+    if ( c.getPosition().x < 46 ){
         c.move( 0, +1);
         return true;
-    }
-    else{
+    } else
         return false;
+}
+
+// True if the car is going to hit something
+
+int game::hit(int pos){
+
+    /* Left -> p -1
+    ** Center -> p 0
+    ** Right -> p 1 */
+    chtype ch[3];
+
+    if ( pos == -1 ) {
+        ch[0] = mvinch(c.getPosition().y, c.getPosition().x - 1);
+        ch[1] = mvinch(c.getPosition().y + 1, c.getPosition().x - 1);
+        ch[2] = mvinch(c.getPosition().y + 2, c.getPosition().x - 1);
+    } else if ( pos == 1 ) {
+        ch[0] = mvinch(c.getPosition().y, c.getPosition().x + 3);
+        ch[1] = mvinch(c.getPosition().y + 1, c.getPosition().x + 3);
+        ch[2] = mvinch(c.getPosition().y + 2, c.getPosition().x + 3);
+    } else if ( pos == 0 ) {
+        ch[0] = mvinch(c.getPosition().y - 1, c.getPosition().x);
+        ch[1] = mvinch(c.getPosition().y - 1, c.getPosition().x + 1);
+        ch[2] = mvinch(c.getPosition().y - 1, c.getPosition().x + 2);
     }
+
+    // If just one of the char checked is different than " ", then hit something
+    return calcScore(ch) ;
+}
+
+int game::calcScore(chtype ch[3]){
+    int score = 0;
+    for (int i = 0; i < 3; i++){
+        score += obstacles[ch[i]];
+    }
+    mvprintw(25,58, "Add: %c + %c + %c = %d ", ch[0], ch[1], ch[2], score );
+    return score;
 }
 
 void generateObstacles();

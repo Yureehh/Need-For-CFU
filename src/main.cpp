@@ -4,7 +4,6 @@
 #include <unistd.h>
 #include "game.h"
 #include "level.h"
-#include "scorestage.h"
 #include "utilities.h"
 
 // ! Usare mvinch(x,y) per sapere che char è fatto vedere in x,y
@@ -58,48 +57,46 @@ int main(int argc, char *argv[]){
     g.stampaCar();
     refresh();
 
-    bool spostamento = true, loss = false;
-    // bool danno = (!spostamento);
+    bool loss = false;
+    int spostamento;
     char ch=' ';
     int timer = 0;
     int t;
 
     //the game itself, for now u can only move the car
     while(ch != 113 && !loss){
+        spostamento = 0;
         usleep(6250);
         if(kbhit()){
             ch = getch();
             if(ch == 'a' || ch == 68){
                 g.cleanCar();
-                spostamento = g.sinistraCar();
+                spostamento += g.hit(-1);
+                g.sinistraCar();
             }   
             if(ch == 'd' || ch == 67){
                 g.cleanCar();
-                spostamento = g.destraCar();
+                spostamento += g.hit(1);
+                g.destraCar();
             }
 
         }
 
         if(timer<=0){
             g.downTrack();
+            spostamento += g.hit(0);
             s.AddScore(20);
-            s.PrintScoreStage();
             timer = 50; //400 
-        }
-        else 
+        } else
             timer--;
+            
+        s.AddScore( spostamento );
+        
 
-        //if u hit something trying to move u lose points
-        //if(danno){
-            if(!spostamento)
-                s.SubScore(500);
-            /*if(urto())
-                s.SubScore(200);*/
-            spostamento = true;
-            if(s.GetScore() <= 0){
-                loss = true;
-            }
-        //}
+        s.PrintScoreStage();
+        if(s.GetScore() <= 0){
+            loss = true;
+        }
 
         g.stampaCar();    
         refresh();

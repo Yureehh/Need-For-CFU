@@ -1,5 +1,6 @@
 #include <iostream>
 #include <ncurses.h>
+#include <map>
 #include "level.h"
 #include "scorestage.h"
 #ifdef __linux__ 
@@ -27,6 +28,12 @@ class game {
         char Track[height_Track][width_Track];
         int  start_Track; //linea in cui starta la pista
         car c;
+        std::map<char, int> obstacles = {
+            { '#', -500 }, // End of map
+            { 'K', -50 }, // Obstacle
+            { 'A', 100 }, // Boost
+            { 'O', -100 } // Another Car
+        };
 
     public:
         //Initialize the game
@@ -41,6 +48,7 @@ class game {
         //Prints the words
         void stampaScore();
 
+        // Car controls and Render
         void stampaCar();
 
         void cleanCar();
@@ -49,12 +57,15 @@ class game {
 
         bool destraCar();
 
+        int hit(int);
+
+        int calcScore(chtype *);
+
         //Prints test Track
         //void stampaOstacoli();
 
         //creates the obstacles
         void generateObstacles();
-
 
         //Downs the obstacler of 1 line
         void downTrack();
