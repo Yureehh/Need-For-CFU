@@ -12,6 +12,11 @@ int scorestage::GetScore(){
     return score;
 }
 
+//getter for the stage
+int scorestage::GetStage(){
+    return score/1000 + 1;
+}
+
 int scorestage::GetMaxScore(){
     return record;
 }

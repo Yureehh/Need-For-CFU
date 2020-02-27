@@ -14,15 +14,17 @@ public:
     //constructor to inizialize points
    scorestage(int);
     //getter for the score
-   int GetScore();
+    int GetScore();
+    //getter for the stage
+    int GetStage();
     //Record of the run
-   int GetMaxScore();
+    int GetMaxScore();
     //add points
-   void AddScore(int);
+    void AddScore(int);
     //sub points
-   void SubScore(int);
+    void SubScore(int);
     //prints score and level
-   void PrintScoreStage();
+    void PrintScoreStage();
 };
 
 
