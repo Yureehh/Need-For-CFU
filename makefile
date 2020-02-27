@@ -1,7 +1,7 @@
 CC = g++
 CFLAGS = -c
 SRC = utilities scorestage level game main
-SRC_ENT = car 
+SRC_ENT = car obstacle
 
 all : clean outrun
 

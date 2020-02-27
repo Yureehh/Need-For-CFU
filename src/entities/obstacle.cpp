@@ -1,30 +1,19 @@
 #include "obstacle.h"
 
-//set the obstacle position
-obstacle::obstacle(int x=0, int y=0){
-    this->x=x;
-    this->y=y;
+obstacle::obstacle(){
+    this->c = " ";
+    this->score = 0;
 }
 
-//getter for the coordinates
-posizione obstacle::getPosition(){
-    return [position];
+obstacle::obstacle(const char *c = " ", int score=0){
+    this->c = c;
+    this->score = score;
 }
 
-//fa scendere di 1 riga l'ostacolo
-void obstacle::down(){
-    position.x++;
+const char *obstacle::getChar(){
+    return c;
 }
 
-//prints the ob
-void obstacle::stampa(){
-    mvprintw(position.x, position.y, "%c", 79);
-    refresh();
+int obstacle::getScore(){
+    return score;
 }
-
-//deletes the ob
-void obstacle::clean(){
-    mvprintw(position.x, position.y, " ");
-    refresh();
-}
-
