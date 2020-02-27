@@ -5,7 +5,7 @@ SRC_ENT = car
 
 all : clean outrun
 
-outrun : $(addprefix entities/,$(SRC_ENT)) $(SRC)
+outrun : $(addprefix entities/,$(SRC_ENT)) $(SRC)	
 	$(CC) bin/*.o -o outrun -lncurses
 
 %: src/%.cpp
@@ -18,4 +18,5 @@ run :
 	./outrun
 
 clean :
-	rm -rf bin/*.o
+	rm -rf bin
+	mkdir bin
