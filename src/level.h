@@ -1,24 +1,36 @@
+#include <iostream>
+#ifdef __linux__ 
+    #include "entities/obstacle.h"
+#else
+    #include "entities\obstacle.h"
+#endif
+
 #ifndef LEVEL_H
 #define LEVEL_H
 
+using namespace std;
 
 class level{
 
     protected:
-        struct obstacle{
-            char c;
-            int score;
-        };
-
-        char** track;
-        
+        int length;
         // this->prev->next = this;
         level *prev;
         level *next;
 
     public:
+        obstacle*** track;
+        obstacle oneXone;
+        
         level(int, int, level*);
-        char get_Pos(int, int);
+        level();
+        
+        bool is_Free(int, int);
+        const char* get_Char(int, int);
+        
+        int get_Length();
+        
+        void generateObstacles();
 
 };
 

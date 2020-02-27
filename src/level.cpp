@@ -1,28 +1,50 @@
-#include <iostream>
 #include "level.h"
 
-level::level(int stage, int length, level *prev = NULL){
-
+level::level(){
     this->next = NULL;
-    this->prev = prev;
+    this->prev = NULL;
+    this->track = NULL;
+    oneXone = obstacle(" ", 0);
+}
 
-    track = new char*[47];
-    for (int i = 0; i < 47; i++){
-        track[i] = new char[length];
+level::level(int stage, int length, level *prev){    
+
+    oneXone = obstacle("K", -50);
+
+    this->length = length;
+    this->next = NULL;
+    this->prev = NULL;
+
+    if(prev){
+        this->prev = new level;
+        this->prev = prev;
+    }
+
+    track = new obstacle**[length];
+    for (int i = 0; i < length; i++){
+        track[i] = new obstacle*[47];
     }
 
     for (int i = 0; i < length; i++){
         for (int j = 0; j < 47; j++){
             if ( i%12 == 0 && j == 23)
-                track[i][j] = 'K';
+                track[i][j] = &oneXone;
             else
-                track[i][j] = ' ';
+                track[i][j] = NULL;
         }
 
     }
 
 }
 
-char level::get_Pos(int x, int y){
-    return track[x][y];
+bool level::is_Free(int y, int x){
+    return track[y][x] == NULL ;
+}
+
+const char *level::get_Char(int y, int x){
+    return track[y][x]->getChar();
+}
+
+int level::get_Length(){
+    return length;
 }
