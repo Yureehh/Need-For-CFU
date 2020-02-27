@@ -1,18 +1,13 @@
 #include "game.h"
+#include "level.h"
 #include <unistd.h>
 
 //Initialize the game
 game::game(){
 
-    start_Track = 0;
-    for(int i = 0; i< height_Track; i++) {
-        for (int j = 0; j < width_Track; j++) {
-                Track[i][j] =' ';
-        }
-    }
-    Track[30][20]= 'K';
-
     c = car();
+
+    current_Level = new level(1, 100, NULL);
 
 }
 
@@ -100,7 +95,7 @@ int game::hit(int pos){
 int game::calcScore(chtype ch[3]){
     int score = 0;
     for (int i = 0; i < 3; i++){
-        score += obstacles[ch[i]];
+        //score += obstacles[ch[i]];
     }
     mvprintw(25,58, "Add: %c + %c + %c = %d ", ch[0], ch[1], ch[2], score );
     return score;
@@ -110,7 +105,7 @@ void generateObstacles();
 
 
 //Downs the obstacles of 1 line
- void game::downTrack(){  
+void game::downTrack(){  
     int riga = start_Track;
 
     for(int i = 0; i<height_Track; i++){
@@ -118,7 +113,7 @@ void generateObstacles();
             if(riga >= 40)
                 riga = 0;
             if(i >=3 && i <40){
-                mvprintw(i+1,j+2, new char(Track[riga][j]) );
+                mvprintw(i+1,j+2, new char(current_Level->get_Pos(j, i)) );
             }
         }
         riga++;

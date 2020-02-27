@@ -8,20 +8,16 @@ using namespace std;
 
 class obstacle{
 
-protected:
-    int x, y;
+    protected:
 
-public:
+        char c;
+        int score;
+        // int dim
 
-    obstacle(int, int);          //costruttore per l'ostacolo
+    public:
 
-    posizione getPosition();        //restituisce la posizione del quadratino
+        obstacle(int, int, int);          //costruttore per l'ostacolo
 
-    void down();                    //abbassa di 1 il quadratino
-
-    void stampa();                  //prints the ob
-        
-    void clean();                   //deletes the ob
 };
 
 #endif

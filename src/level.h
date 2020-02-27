@@ -5,10 +5,21 @@
 class level{
 
     protected:
-        int diff;
+        struct obstacle{
+            char c;
+            int score;
+        };
+
+        char** track;
+        
+        // this->prev->next = this;
+        level *prev;
+        level *next;
+
     public:
-        level(int);
-        char l[40][47];
+        level(int, int, level*);
+        char get_Pos(int, int);
+
 };
 
 #endif                                       

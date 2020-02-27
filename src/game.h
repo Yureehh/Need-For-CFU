@@ -25,15 +25,10 @@ const char width_Track = 47; //0-46        centro 24
 class game {
 
     protected:
-        char Track[height_Track][width_Track];
+        // char Track[height_Track][width_Track];
         int  start_Track; //linea in cui starta la pista
+        level *current_Level;
         car c;
-        std::map<char, int> obstacles = {
-            { '#', -500 }, // End of map
-            { 'K', -50 }, // Obstacle
-            { 'A', 100 }, // Boost
-            { 'O', -100 } // Another Car
-        };
 
     public:
         //Initialize the game

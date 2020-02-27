@@ -30,7 +30,6 @@ int main(int argc, char *argv[]){
     erase();
 
     //Print the UI
-    level lev = level(1);
     game g = game();
     g.stampaUI();
     g.stampaScore();
