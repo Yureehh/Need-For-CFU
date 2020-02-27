@@ -1,14 +1,10 @@
 #include "game.h"
-#include "level.h"
 #include <unistd.h>
 
 //Initialize the game
 game::game(){
-
     c = car();
-
     current_Level = new level(1, 100, NULL);
-
 }
 
 
@@ -67,6 +63,7 @@ bool game::destraCar(){
 
 // True if the car is going to hit something
 
+// ! REFACTOR
 int game::hit(int pos){
 
     /* Left -> p -1
@@ -101,27 +98,32 @@ int game::calcScore(chtype ch[3]){
     return score;
 }
 
-void generateObstacles();
-
 
 //Downs the obstacles of 1 line
-void game::downTrack(){  
-    int riga = start_Track;
+void game::downTrack(){
 
-    for(int i = 0; i<height_Track; i++){
-        for(int j=0; j<width_Track; j++){
-            if(riga >= 40)
-                riga = 0;
-            if(i >=3 && i <40){
-                mvprintw(i+1,j+2, new char(current_Level->get_Pos(j, i)) );
-            }
+    int r = start_Track;
+
+    for (int i = height_Track; i > 0; i--){
+        for (int j = 0; j < width_Track; j++){
+            // Loop when u finish the map
+            if ( r > current_Level->get_Length() )
+                r = 0;
+
+            // Stamp the CHAR only when there is an obstacle -> !is_Free
+            if ( current_Level->is_Free(r, j) )
+                mvprintw(i, j+2, " " );
+            else
+                mvprintw(i, j+2, current_Level->get_Char( r , j) );
         }
-        riga++;
-    }
+        
+        r++;
 
-    start_Track--;
-    if(start_Track < 0){
-        start_Track=39;
     }
+    
+    start_Track ++;
+
+    if( start_Track > current_Level->get_Length() )
+        start_Track = 0;
 
 }

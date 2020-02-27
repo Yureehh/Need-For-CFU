@@ -25,7 +25,6 @@ const char width_Track = 47; //0-46        centro 24
 class game {
 
     protected:
-        // char Track[height_Track][width_Track];
         int  start_Track; //linea in cui starta la pista
         level *current_Level;
         car c;
@@ -55,12 +54,6 @@ class game {
         int hit(int);
 
         int calcScore(chtype *);
-
-        //Prints test Track
-        //void stampaOstacoli();
-
-        //creates the obstacles
-        void generateObstacles();
 
         //Downs the obstacler of 1 line
         void downTrack();
