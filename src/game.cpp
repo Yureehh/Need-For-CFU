@@ -107,7 +107,7 @@ void game::downTrack(){
     for (int i = height_Track; i > 0; i--){
         for (int j = 0; j < width_Track; j++){
             // Loop when u finish the map
-            if ( r > current_Level->get_Length() )
+            if ( r >= current_Level->get_Length() )
                 r = 0;
 
             // Stamp the CHAR only when there is an obstacle -> !is_Free
