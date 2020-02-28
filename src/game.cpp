@@ -114,7 +114,7 @@ void game::downTrack(){
             if ( current_Level->is_Free(r, j) )
                 mvprintw(i, j+2, " " );
             else
-                mvprintw(i, j+2, current_Level->get_Char( r , j) );
+                mvprintw(i, j+2, current_Level->get_Char(r, j) );
         }
         
         r++;

@@ -9,7 +9,9 @@ level::level(){
 
 level::level(int stage, int length, level *prev){    
 
-    oneXone = obstacle("K", -50);
+    oneXone = obstacle("K", -100);
+    twoXtwo = obstacle("T", -50);
+    boost = obstacle("H", 50);
 
     this->length = length;
     this->next = NULL;
@@ -20,17 +22,17 @@ level::level(int stage, int length, level *prev){
         this->prev = prev;
     }
 
-    track = new obstacle**[length];
+    track = new ptrObstacle*[length];
     for (int i = 0; i < length; i++){
-        track[i] = new obstacle*[47];
+        track[i] = new ptrObstacle[47];
     }
 
     for (int i = 0; i < length; i++){
         for (int j = 0; j < 47; j++){
             if ( i%12 == 0 && j == 23)
-                track[i][j] = &oneXone;
+                track[i][j] = {true, &oneXone};
             else
-                track[i][j] = NULL;
+                track[i][j] = {false, NULL};
         }
 
     }
@@ -38,11 +40,11 @@ level::level(int stage, int length, level *prev){
 }
 
 bool level::is_Free(int y, int x){
-    return track[y][x] == NULL ;
+    return track[y][x].obst == NULL ;
 }
 
 const char *level::get_Char(int y, int x){
-    return track[y][x]->getChar();
+    return track[y][x].obst->getChar();
 }
 
 int level::get_Length(){

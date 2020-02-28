@@ -13,14 +13,21 @@ using namespace std;
 class level{
 
     protected:
+        struct ptrObstacle{
+            bool visible;
+            obstacle *obst;
+        };
+
         int length;
         // this->prev->next = this;
         level *prev;
         level *next;
+        obstacle oneXone;
+        obstacle boost;
+        obstacle twoXtwo;
 
     public:
-        obstacle*** track;
-        obstacle oneXone;
+        ptrObstacle** track;
         
         level(int, int, level*);
         level();
