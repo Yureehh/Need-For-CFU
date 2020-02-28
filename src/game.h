@@ -25,7 +25,7 @@ const char width_Track = 47; //0-46        centro 24
 class game {
 
     protected:
-        int  start_Track; //linea in cui starta la pista
+        int  start_Track = 0; //linea in cui starta la pista
         level *current_Level;
         car c;
 
