@@ -56,49 +56,49 @@ int main(int argc, char *argv[]){
     g.stampaCar();
     refresh();
 
-    bool loss = false;
-    int spostamento;
+    bool loss = false, dannoMuro = true;
+    int dannoOstacoli=0, timer =0;
     char ch=' ';
-    int timer = 0;
-    int t;
+
 
     //the game itself, for now u can only move the car
     while(ch != 113 && !loss){
-        spostamento = 0;
         usleep(6250);
         if(kbhit()){
             ch = getch();
             if(ch == 'a' || ch == 68){
                 g.cleanCar();
-                spostamento += g.hit(-1);
-                g.sinistraCar();
-            }   
+                dannoMuro = g.sinistraCar();
+            }  
+
             if(ch == 'd' || ch == 67){
                 g.cleanCar();
-                spostamento += g.hit(1);
-                g.destraCar();
+                dannoMuro = g.destraCar();
             }
 
+            if(!dannoMuro){
+            dannoMuro = true;
+            s.SubScore(500);
+            if(s.GetScore() <= 0){
+                loss = true;
+                }
+            }
         }
 
         if(timer<=0){
             g.downTrack();
-            spostamento += g.hit(0);
             s.AddScore(20);
             timer = 50; //400 
         } else
             timer--;
             
-        s.AddScore( spostamento );
         
 
         s.PrintScoreStage();
-        if(s.GetScore() <= 0){
-            loss = true;
-        }
-
         g.stampaCar();    
         refresh();
+        if(s.GetScore() <= 0)
+            loss = true;
     }
 
     //2 possible endings: u lost or u pressed spacebar

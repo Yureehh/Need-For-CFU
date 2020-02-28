@@ -32,12 +32,16 @@ class level{
         level(int, int, level*);
         level();
         
+        bool isVisible(int, int);
+
         bool is_Free(int, int);
+
         const char* get_Char(int, int);
+
+        int get_Score(int , int);
         
         int get_Length();
-        
-        void generateObstacles();
+    
 
 };
 

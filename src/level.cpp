@@ -39,12 +39,20 @@ level::level(int stage, int length, level *prev){
 
 }
 
+bool level::isVisible(int y, int x){
+    return track[y][x].visible ;
+}
+
 bool level::is_Free(int y, int x){
     return track[y][x].obst == NULL ;
 }
 
 const char *level::get_Char(int y, int x){
     return track[y][x].obst->getChar();
+}
+
+int level::get_Score(int y, int x){
+    return track[y][x].obst->getScore();
 }
 
 int level::get_Length(){
