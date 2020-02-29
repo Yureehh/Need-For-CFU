@@ -36,7 +36,7 @@ level::level(int stage, int length, level *prev){
         }
 
     }
-
+    track[39][1] = {true, &oneXone};
 }
 
 bool level::isVisible(int y, int x){

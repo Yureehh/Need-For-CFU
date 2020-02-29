@@ -3,6 +3,7 @@
 #include <map>
 #include "level.h"
 #include "scorestage.h"
+#include "math.h"
 #ifdef __linux__ 
     #include "entities/car.h"
 #else
@@ -51,12 +52,22 @@ class game {
 
         bool destraCar();
 
+        void avantiCar();
+
+        int getCarX();
+
+        int getCarY();
+
         int hit(int);
 
         int calcScore(chtype *);
 
         //Downs the obstacler of 1 line
         void downTrack();
+
+        void primaStampa();
+
+        int collisioni();
 
 };
 

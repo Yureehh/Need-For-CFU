@@ -4,7 +4,7 @@
 //Initialize the game
 game::game(){
     c = car();
-    current_Level = new level(1, 100, NULL);
+    current_Level = new level(1, height_Track, NULL);
 }
 
 
@@ -60,6 +60,24 @@ bool game::destraCar(){
     } else
         return false;
 }
+
+int game::getCarX(){
+    return c.getPosition().x;
+}
+
+int game::getCarY(){
+    return c.getPosition().y;
+}
+
+void game::avantiCar(){
+    if(c.getPosition().y > 0)
+        c.move( -1, 0);
+    else{
+        c.move(height_Track, 0);
+    }
+}
+
+
 
 // True if the car is going to hit something
 
@@ -126,4 +144,36 @@ void game::downTrack(){
     if( start_Track > current_Level->get_Length() )
         start_Track = 0;
 
+}
+
+void game::primaStampa(){
+
+    int q = start_Track;
+
+    for (int i = height_Track; i > 0; i--){
+        for (int j = 0; j < width_Track; j++){
+            // Stamp the CHAR only when there is an obstacle -> !is_Free
+            if ( current_Level->is_Free(q, j) )
+                mvprintw(i, j+2, " " );
+            else
+                mvprintw(i, j+2, current_Level->get_Char(q, j) );
+             }
+        q++;
+    }  
+}
+
+
+int game::collisioni(){
+    int malus = 0, bonus = 0;
+    if( ! (current_Level->is_Free( abs(c.getPosition().y - 39 ), abs(c.getPosition().x ) - 2 ) ) ){
+
+        if( current_Level->get_Score(abs(c.getPosition().y - 39 ), abs(c.getPosition().x ) - 2) >= 0 )
+            bonus += current_Level->get_Score(abs(c.getPosition().y - 39 ), abs(c.getPosition().x - 2 ));
+
+        else{
+            if( abs (current_Level->get_Score( abs(c.getPosition().y - 39 ), abs(c.getPosition().x - 2) ) )  > abs(malus) )
+                malus = current_Level->get_Score(abs(c.getPosition().y - 39 ), abs(c.getPosition().x - 2) );
+        }
+    }
+    return malus + bonus;
 }
