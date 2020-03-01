@@ -29,18 +29,27 @@ level::level(int stage, int length, level *prev){
 
     for (int i = 0; i < length; i++){
         for (int j = 0; j < 47; j++){
-            if ( i%12 == 0 && j == 23)
+            if ( i%12 == 0 && i!=0 && j == 23)
                 track[i][j] = {true, &oneXone};
             else
                 track[i][j] = {false, NULL};
         }
 
     }
-    track[39][1] = {true, &oneXone};
+    track[24][23] = {true, &boost};
+    track[24][21] = {true, &oneXone};
+    track[12][21] = {true, &boost};
+    track[12][19] = {true, &boost};
+    track[36][19] = {true, &twoXtwo};
+    track[36][19] = {true, &twoXtwo};
 }
 
 bool level::isVisible(int y, int x){
     return track[y][x].visible ;
+}
+
+void level::hasHit(int y, int x){
+     track[y][x].visible = false ;
 }
 
 bool level::is_Free(int y, int x){

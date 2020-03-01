@@ -62,6 +62,8 @@ class game {
 
         int calcScore(chtype *);
 
+        bool robo();
+
         //Downs the obstacler of 1 line
         void downTrack();
 

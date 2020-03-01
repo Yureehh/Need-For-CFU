@@ -25,14 +25,16 @@ class level{
         obstacle oneXone;
         obstacle boost;
         obstacle twoXtwo;
+        ptrObstacle** track;
 
     public:
-        ptrObstacle** track;
         
         level(int, int, level*);
         level();
         
         bool isVisible(int, int);
+
+        void hasHit(int, int);
 
         bool is_Free(int, int);
 

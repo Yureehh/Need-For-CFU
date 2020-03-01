@@ -36,7 +36,7 @@ int main(int argc, char *argv[]){
     
 
     //inizialize points
-    scorestage s = scorestage(1000);
+    scorestage s = scorestage(10000);
     s.PrintScoreStage();
     //countdown
     mvprintw(21, 24, "3");
@@ -64,7 +64,7 @@ int main(int argc, char *argv[]){
 
     //the game itself, for now u can only move the car
     while(ch != 113 && !loss){
-        usleep(3120);
+        usleep(3125);
         if(kbhit()){
             ch = getch();
             if(ch == 'a' || ch == 68){
@@ -77,11 +77,13 @@ int main(int argc, char *argv[]){
                 dannoMuro = g.destraCar();
             }
             
+                        
             
             dannoOstacoli = g.collisioni();
             s.AddScore(dannoOstacoli);
             dannoOstacoli = 0;
             
+
            
             if(!dannoMuro)
                 s.SubScore(500);
@@ -96,15 +98,13 @@ int main(int argc, char *argv[]){
         if(timer<=0){
             g.downTrack();
             g.avantiCar();
-            cout<<g.getCarY()<<endl;
-            
             
             dannoOstacoli = g.collisioni();
             s.AddScore(dannoOstacoli);
             dannoOstacoli = 0;  
             
 
-            timer = 100; //400
+            timer = 200; //800
              
         } else
             timer--;

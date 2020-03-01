@@ -132,7 +132,8 @@ void game::downTrack(){
             if ( current_Level->is_Free(r, j) )
                 mvprintw(i, j+2, " " );
             else
-                mvprintw(i, j+2, current_Level->get_Char(r, j) );
+                if ( current_Level->isVisible(r, j) )
+                    mvprintw(i, j+2, current_Level->get_Char(r, j) );
         }
         
         r++;
@@ -162,10 +163,18 @@ void game::primaStampa(){
     }  
 }
 
+bool game::robo(){
+    return current_Level->isVisible(abs( c.getPosition().y - 37 ), abs(c.getPosition().x ) );
+}
 
 int game::collisioni(){
     int malus = 0, bonus = 0;
-    if( ! (current_Level->is_Free( abs(c.getPosition().y - 39 ), abs(c.getPosition().x ) - 2 ) ) ){
+
+    //ruota in alto a sx
+    if( ! (current_Level->is_Free( abs(c.getPosition().y - 39 ), abs(c.getPosition().x ) - 2 ) ) && 
+        current_Level->isVisible(abs( c.getPosition().y - 39 ), abs(c.getPosition().x ) - 2 ) ){
+
+        current_Level->hasHit( abs(c.getPosition().y - 39 ), abs(c.getPosition().x ) - 2 );
 
         if( current_Level->get_Score(abs(c.getPosition().y - 39 ), abs(c.getPosition().x ) - 2) >= 0 )
             bonus += current_Level->get_Score(abs(c.getPosition().y - 39 ), abs(c.getPosition().x - 2 ));
@@ -174,6 +183,71 @@ int game::collisioni(){
             if( abs (current_Level->get_Score( abs(c.getPosition().y - 39 ), abs(c.getPosition().x - 2) ) )  > abs(malus) )
                 malus = current_Level->get_Score(abs(c.getPosition().y - 39 ), abs(c.getPosition().x - 2) );
         }
+
     }
+
+
+    //ruota in alto a dx
+    if( ! (current_Level->is_Free( abs(c.getPosition().y - 39 ), abs(c.getPosition().x ) ) )  && 
+        current_Level->isVisible(abs( c.getPosition().y - 39 ), abs(c.getPosition().x ) ) ){
+
+            current_Level->hasHit( abs(c.getPosition().y - 39 ), abs(c.getPosition().x ) );
+
+        if( current_Level->get_Score(abs(c.getPosition().y - 39 ), abs(c.getPosition().x ) ) >= 0 )
+            bonus += current_Level->get_Score(abs(c.getPosition().y - 39 ), abs(c.getPosition().x ));
+
+        else{
+            if( abs (current_Level->get_Score( abs(c.getPosition().y - 39 ), abs(c.getPosition().x ) ) )  > abs(malus) )
+                malus = current_Level->get_Score(abs(c.getPosition().y - 39 ), abs(c.getPosition().x ) );
+        }
+    }
+
+
+    //ruota in basso a sx
+    if( ! (current_Level->is_Free( abs(c.getPosition().y - 37 ), abs(c.getPosition().x ) - 2 ) )  && 
+        current_Level->isVisible(abs( c.getPosition().y - 37 ), abs(c.getPosition().x ) - 2 ) ){
+
+            current_Level->hasHit( abs(c.getPosition().y - 37 ), abs(c.getPosition().x ) - 2 );
+
+        if( current_Level->get_Score(abs(c.getPosition().y - 37 ), abs(c.getPosition().x ) - 2) >= 0 )
+            bonus += current_Level->get_Score(abs(c.getPosition().y - 37 ), abs(c.getPosition().x - 2 ));
+
+        else{
+            if( abs (current_Level->get_Score( abs(c.getPosition().y - 37 ), abs(c.getPosition().x - 2) ) )  > abs(malus) )
+                malus = current_Level->get_Score(abs(c.getPosition().y - 37 ), abs(c.getPosition().x - 2) );
+        }
+    }
+
+    //ruota in basso a dx
+    if( ! (current_Level->is_Free( abs(c.getPosition().y - 37 ), abs(c.getPosition().x ) ) )  &&
+        current_Level->isVisible(abs( c.getPosition().y - 37 ), abs(c.getPosition().x ) ) ){
+
+            current_Level->hasHit( abs(c.getPosition().y - 37 ), abs(c.getPosition().x ) );
+
+        if( current_Level->get_Score(abs(c.getPosition().y - 37 ), abs(c.getPosition().x ) ) >= 0 )
+            bonus += current_Level->get_Score(abs(c.getPosition().y - 37 ), abs(c.getPosition().x ));
+
+        else{
+            if( abs (current_Level->get_Score( abs(c.getPosition().y - 37 ), abs(c.getPosition().x) ) )  > abs(malus) )
+                malus = current_Level->get_Score(abs(c.getPosition().y - 37 ), abs(c.getPosition().x ) );
+        }
+    }
+
+    //pilota
+    if( ! (current_Level->is_Free( abs(c.getPosition().y - 38 ), abs(c.getPosition().x ) - 1 ) )  && 
+        current_Level->isVisible(abs( c.getPosition().y - 38 ), abs(c.getPosition().x ) - 1 ) ){
+
+            current_Level->hasHit( abs(c.getPosition().y - 38 ), abs(c.getPosition().x ) - 1 );
+
+        if( current_Level->get_Score(abs(c.getPosition().y - 38 ), abs(c.getPosition().x ) - 1) >= 0 )
+            bonus += current_Level->get_Score(abs(c.getPosition().y - 38 ), abs(c.getPosition().x - 1 ));
+
+        else{
+            if( abs (current_Level->get_Score( abs(c.getPosition().y - 38 ), abs(c.getPosition().x - 1) ) )  > abs(malus) )
+                malus = current_Level->get_Score(abs(c.getPosition().y - 38 ), abs(c.getPosition().x - 1) );
+        }
+    }
+     
+
     return malus + bonus;
 }
