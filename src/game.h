@@ -71,6 +71,11 @@ class game {
 
         int collisioni();
 
+        void forwardLevel(int);
+
+        void backLevel();
+
+
 };
 
 #endif

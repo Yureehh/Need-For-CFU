@@ -36,7 +36,7 @@ int main(int argc, char *argv[]){
     
 
     //inizialize points
-    scorestage s = scorestage(10000);
+    scorestage s = scorestage(901);
     s.PrintScoreStage();
     //countdown
     mvprintw(21, 24, "3");
@@ -64,7 +64,10 @@ int main(int argc, char *argv[]){
 
     //the game itself, for now u can only move the car
     while(ch != 113 && !loss){
+    
+        
         usleep(3125);
+
         if(kbhit()){
             ch = getch();
             if(ch == 'a' || ch == 68){
@@ -100,16 +103,34 @@ int main(int argc, char *argv[]){
             g.avantiCar();
             
             dannoOstacoli = g.collisioni();
-            s.AddScore(dannoOstacoli);
+            s.AddScore(dannoOstacoli + 25);
             dannoOstacoli = 0;  
-            
 
-            timer = 200; //800
+            timer = 100; //800
              
         } else
             timer--;
             
-        
+
+        if(s.GetStage() != s.Getlevelprec()){
+            erase();
+            g.stampaUI();
+            if(s.GetStage() > s.Getlevelprec()){
+                s.setLevelPrec();
+
+                g.forwardLevel(s.GetStage());
+            }
+            else{
+                s.setLevelPrec();
+                g.backLevel();
+            }
+        }
+
+
+
+         //inserire animazione cambio livello w la figa O:
+
+
 
         s.PrintScoreStage();
         g.stampaCar();    

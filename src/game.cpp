@@ -7,6 +7,18 @@ game::game(){
     current_Level = new level(1, height_Track, NULL);
 }
 
+void game::forwardLevel(int s){
+    start_Track = 0;
+    c = car();
+    current_Level -> next = new level(s, height_Track, current_Level );
+    current_Level = current_Level -> next;
+}
+
+void game::backLevel(){
+    start_Track = 0;
+    c = car();
+    current_Level = current_Level -> prev;
+}
 
 //prints the game
 void game::stampaUI(){
@@ -28,6 +40,7 @@ void game::stampaUI(){
     }
 
 }
+
 
 void game::stampaCar(){
     c.stampa();

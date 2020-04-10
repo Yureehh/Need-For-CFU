@@ -5,11 +5,16 @@
 scorestage::scorestage(int s=1){
     score = s;
     record = score;
+    livelloprec = 1;
 }
 
 //getter for the score
 int scorestage::GetScore(){
     return score;
+}
+
+int scorestage::Getlevelprec(){
+    return livelloprec;
 }
 
 //getter for the stage
@@ -33,9 +38,27 @@ void scorestage::SubScore(int x){
     score = score - x;
 }
 
+void scorestage::setLevelPrec(){
+    livelloprec = GetStage();
+};
+
 //prints score and level
 void scorestage::PrintScoreStage(){
-    mvprintw(20 ,66, "%d", score/1000);
+    mvprintw(20 ,66, "%d", GetStage());
     mvprintw(22 ,66, "%d ",this->score);
+}
+
+//check the change of level
+int scorestage::LevelChange(){
+    if( GetStage() == livelloprec)
+        return 0;
+    else {
+        if( GetStage() > livelloprec )
+            return 1;
+        else
+            return -1;
+        livelloprec = GetStage();
+    }
+    
 }
 

@@ -36,12 +36,14 @@ level::level(int stage, int length, level *prev){
         }
 
     }
-    track[24][23] = {true, &boost};
-    track[24][21] = {true, &oneXone};
-    track[12][21] = {true, &boost};
-    track[12][19] = {true, &boost};
-    track[36][19] = {true, &twoXtwo};
-    track[36][19] = {true, &twoXtwo};
+
+    int count = 10*stage;
+        cout<<count;
+    track[count][count] = {true, &boost}; 
+    track[count][count] = {true, &boost};
+    track[count][count] = {true, &boost};
+
+    
 }
 
 bool level::isVisible(int y, int x){
@@ -66,4 +68,8 @@ int level::get_Score(int y, int x){
 
 int level::get_Length(){
     return length;
+}
+
+void level::setNext(int s, int h, level *l){
+    this -> next = new level(s, h, l );
 }

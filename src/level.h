@@ -20,14 +20,15 @@ class level{
 
         int length;
         // this->prev->next = this;
-        level *prev;
-        level *next;
         obstacle oneXone;
         obstacle boost;
         obstacle twoXtwo;
         ptrObstacle** track;
 
     public:
+        
+        level *prev;
+        level *next;
         
         level(int, int, level*);
         level();
@@ -44,6 +45,7 @@ class level{
         
         int get_Length();
     
+        void setNext(int, int, level*);
 
 };
 

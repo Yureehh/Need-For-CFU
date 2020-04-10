@@ -10,6 +10,7 @@ protected:
     int score;
     int stage;
     int record;
+    int livelloprec;
 public:
     //constructor to inizialize points
    scorestage(int);
@@ -25,6 +26,12 @@ public:
     void SubScore(int);
     //prints score and level
     void PrintScoreStage();
+    //check the change of level
+    int LevelChange();
+
+    void setLevelPrec();
+    
+    int Getlevelprec ();
 };
 
 
