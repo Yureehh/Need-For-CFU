@@ -22,7 +22,7 @@ class level{
         // this->prev->next = this;
         obstacle oneXone;
         obstacle boost;
-        obstacle twoXtwo;
+        obstacle twoXone;
         ptrObstacle** track;
 
     public:
