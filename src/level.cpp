@@ -37,7 +37,7 @@ level::level(int stage, int length, level *prev){
         maxSpawnPerLine=3;
         for (int j = 0; j < 47; j++){
             influence=rand()%20;
-            if(true){
+            if(i>25){
                 switch (influence)
                 {
                 case 0:
