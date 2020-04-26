@@ -7,7 +7,6 @@
 #include "utilities.h"
 
 // ! Usare mvinch(x,y) per sapere che char è fatto vedere in x,y
-//bool urto();
 
 int main(int argc, char *argv[]){
 
@@ -58,13 +57,12 @@ int main(int argc, char *argv[]){
     refresh();
 
     bool loss = false, dannoMuro = true;
-    int dannoOstacoli=0, timer =0;
+    int timer =0;
     char ch=' ';
 
 
     //the game itself, for now u can only move the car
     while(ch != 113 && !loss){
-    
         
         usleep(3125);
 
@@ -79,14 +77,8 @@ int main(int argc, char *argv[]){
                 g.cleanCar();
                 dannoMuro = g.destraCar();
             }
-            
-                        
-            
-            dannoOstacoli = g.collisioni();
-            s.AddScore(dannoOstacoli);
-            dannoOstacoli = 0;
-            
 
+            s.AddScore(g.collisioni());
            
             if(!dannoMuro)
                 s.SubScore(500);
@@ -102,10 +94,7 @@ int main(int argc, char *argv[]){
             g.downTrack();
             g.avantiCar();
             
-            
-            dannoOstacoli = g.collisioni();
-            s.AddScore(dannoOstacoli + 25);
-            dannoOstacoli = 0;  
+            s.AddScore(g.collisioni() + 25);
 
             timer = 100; //800
              
