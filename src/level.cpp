@@ -4,15 +4,15 @@ level::level(){
     this->next = NULL;
     this->prev = NULL;
     this->track = NULL;
-    oneXone = obstacle(" ", 0);
+    oneXone = obstacle(" ", 0, 1);
 }
 
 level::level(int stage, int length, level *prev){ 
     srand((stage+time(0))/2);   
     int influence;
-    oneXone = obstacle("K", -1000);
-    twoXone = obstacle("T", -1500);
-    boost = obstacle("H", 200);
+    oneXone = obstacle("K", -1000, 1);
+    twoXone = obstacle("T", -1500, 1);
+    boost = obstacle("H", 200, 2);
 
     this->length = length;
     this->next = NULL;
@@ -130,6 +130,10 @@ const char *level::getChar(int y, int x){
 
 int level::getScore(int y, int x){
     return track[y][x].obst->getScore();
+}
+
+int level::getColor(int y, int x){
+    return track[y][x].obst->getColor();
 }
 
 int level::getLength(){

@@ -12,16 +12,16 @@ int main(int argc, char *argv[]){
 
     // _ Setup ncurses
     initscr();
+    start_color();
+
+    use_default_colors();
+
+    init_pair(1, COLOR_RED, -1);
+    init_pair(2, COLOR_GREEN, -1);
+
     noecho();
     curs_set(FALSE);
     nodelay(stdscr, TRUE);
-
-    /*
-    unlucky tentativo di far rosso se prendi danno
-    start_color();
-    init_pair(1, COLOR_BLACK, COLOR_RED);
-    init_pair(2, COLOR_WHITE, COLOR_BLACK);
-    */
 
     //Starting the game
     mvprintw(21, 11, "Press Key To Start!");
@@ -32,7 +32,6 @@ int main(int argc, char *argv[]){
     game g = game();
     g.stampaUI();
     g.stampaScore();
-    
 
     //inizialize points
     scorestage s = scorestage(901);

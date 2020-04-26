@@ -12,14 +12,16 @@ class obstacle{
 
         const char *c;
         int score;
+        int color;
         // int dim
 
     public:
 
-        obstacle(const char*, int);          //costruttore per l'ostacolo
+        obstacle(const char*, int, int);          //costruttore per l'ostacolo
         obstacle();
         const char* getChar();
         int getScore();
+        int getColor();
 };
 
 #endif

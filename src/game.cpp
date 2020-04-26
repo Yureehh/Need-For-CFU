@@ -174,9 +174,13 @@ void game::downTrack(){
             // Stamp the CHAR only when there is an obstacle -> !isFree
             if ( current_Level->isFree(r, j) )
                 mvprintw(i, j+2, " " );
-            else
-                if ( current_Level->isVisible(r, j) )
+            else{
+                if ( current_Level->isVisible(r, j) ){
+                    attron(COLOR_PAIR(current_Level->getColor(r, j)));
                     mvprintw(i, j+2, current_Level->getChar(r, j) );
+                    attroff(COLOR_PAIR(current_Level->getColor(r, j)));
+                }
+            }
         }
         
         r++;

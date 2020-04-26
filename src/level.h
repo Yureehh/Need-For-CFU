@@ -44,6 +44,8 @@ class level{
         const char* getChar(int, int);
 
         int getScore(int, int);
+
+        int getColor(int, int);
         
         int getLength();
     
