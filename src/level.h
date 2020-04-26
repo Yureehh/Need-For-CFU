@@ -39,13 +39,13 @@ class level{
 
         void hasHit(int, int);
 
-        bool is_Free(int, int);
+        bool isFree(int, int);
 
-        const char* get_Char(int, int);
+        const char* getChar(int, int);
 
-        int get_Score(int , int);
+        int getScore(int, int);
         
-        int get_Length();
+        int getLength();
     
         void setNext(int, int, level*);
 

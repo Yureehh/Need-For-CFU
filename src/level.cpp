@@ -120,19 +120,19 @@ void level::hasHit(int y, int x){
      track[y][x].visible = false ;
 }
 
-bool level::is_Free(int y, int x){
+bool level::isFree(int y, int x){
     return track[y][x].obst == NULL ;
 }
 
-const char *level::get_Char(int y, int x){
+const char *level::getChar(int y, int x){
     return track[y][x].obst->getChar();
 }
 
-int level::get_Score(int y, int x){
+int level::getScore(int y, int x){
     return track[y][x].obst->getScore();
 }
 
-int level::get_Length(){
+int level::getLength(){
     return length;
 }
 
