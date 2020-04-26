@@ -18,7 +18,7 @@ level::level(int stage, int length, level *prev){
     this->next = NULL;
     this->prev = NULL;
 
-    if(prev){
+    if(prev!=NULL){
         this->prev = new level;
         this->prev = prev;
     }
@@ -106,11 +106,14 @@ level::level(int stage, int length, level *prev){
     }
 
 //---------
-    
 }
 
 bool level::isVisible(int y, int x){
     return track[y][x].visible ;
+}
+
+void level::setVisibile(int y, int x){
+     track[y][x].visible = true ;
 }
 
 void level::hasHit(int y, int x){

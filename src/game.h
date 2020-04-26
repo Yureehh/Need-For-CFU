@@ -29,6 +29,7 @@ class game {
         int  start_Track = 0; //linea in cui starta la pista
         level *current_Level;
         car c;
+        int counter = 0;
 
     public:
         //Initialize the game
@@ -71,10 +72,15 @@ class game {
 
         int collisioni();
 
-        void forwardLevel(int);
+        void forwardNewLevel(int);
+
+        void forwardLevel();
 
         void backLevel();
 
+        void clearLevel();
+
+        void clearLine();
 
 };
 

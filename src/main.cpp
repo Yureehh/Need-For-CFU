@@ -102,6 +102,7 @@ int main(int argc, char *argv[]){
             g.downTrack();
             g.avantiCar();
             
+            
             dannoOstacoli = g.collisioni();
             s.AddScore(dannoOstacoli + 25);
             dannoOstacoli = 0;  
@@ -113,18 +114,26 @@ int main(int argc, char *argv[]){
             
 
         if(s.GetStage() != s.Getlevelprec()){
+            g.clearLevel();
             erase();
             g.stampaUI();
-            if(s.GetStage() > s.Getlevelprec()){
-                s.setLevelPrec();
 
-                g.forwardLevel(s.GetStage());
+            if(s.GetStage() > s.Getlevelprec()){
+                if(s.GetScore() == s.GetMaxScore() )
+                    g.forwardNewLevel(s.GetStage());
+                else
+                    g.forwardLevel();
             }
+
             else{
-                s.setLevelPrec();
                 g.backLevel();
             }
+
+            s.setLevelPrec();
         }
+        else
+            g.clearLine();
+        
 
 
 

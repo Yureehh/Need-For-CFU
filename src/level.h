@@ -35,6 +35,8 @@ class level{
         
         bool isVisible(int, int);
 
+        void setVisibile(int, int);
+
         void hasHit(int, int);
 
         bool is_Free(int, int);

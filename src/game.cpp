@@ -7,15 +7,45 @@ game::game(){
     current_Level = new level(1, height_Track, NULL);
 }
 
-void game::forwardLevel(int s){
-    start_Track = 0;
+
+
+void game::clearLevel(){
+    for(int i=0;i<height_Track;i++){
+        for(int j=0;j<width_Track;j++){
+            if(!current_Level->is_Free(i,j) && (i!= 22 && j!= 7 && j!=11) ){
+                current_Level->setVisibile(i,j);
+                //cout<<"("<<i<<","<<j<<")"<<endl;
+                //k++;
+            }
+                
+        }
+    }
+}
+
+void game::clearLine(){
+    int i= abs(c.getPosition().y - 37 );
+    for(int j=0; j<width_Track; j++){
+        if(!current_Level->is_Free(i,j) && (i!= 22 && j!= 7 && j!=11) )
+                current_Level->setVisibile(i,j);
+        
+    }
+}
+
+void game::forwardNewLevel(int s){
+    start_Track = 1;
     c = car();
     current_Level -> next = new level(s, height_Track, current_Level );
     current_Level = current_Level -> next;
 }
 
+void game::forwardLevel(){
+    start_Track = 1;
+    c = car();
+    current_Level = current_Level -> next;
+}
+
 void game::backLevel(){
-    start_Track = 0;
+    start_Track = 1;
     c = car();
     current_Level = current_Level -> prev;
 }
@@ -157,8 +187,9 @@ void game::downTrack(){
 
     if( start_Track > current_Level->get_Length() )
         start_Track = 0;
-
+        
 }
+
 
 void game::primaStampa(){
 
