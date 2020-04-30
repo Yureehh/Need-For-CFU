@@ -108,20 +108,16 @@ level::level(int stage, int length, level *prev){
 //---------
 }
 
-bool level::isVisible(int y, int x){
-    return track[y][x].visible ;
-}
-
-void level::setVisibile(int y, int x){
-     track[y][x].visible = true ;
-}
-
-void level::hasHit(int y, int x){
-     track[y][x].visible = false ;
-}
-
 bool level::isFree(int y, int x){
     return track[y][x].obst == NULL ;
+}
+
+void level::setVisible(int y, int x, bool b){
+     track[y][x].visible = b ;
+}
+
+bool level::isVisible(int y, int x){
+    return track[y][x].visible ;
 }
 
 const char *level::getChar(int y, int x){

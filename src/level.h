@@ -33,13 +33,11 @@ class level{
         level(int, int, level*);
         level();
         
-        bool isVisible(int, int);
-
-        void setVisibile(int, int);
-
-        void hasHit(int, int);
-
         bool isFree(int, int);
+
+        void setVisible(int, int, bool);
+
+        bool isVisible(int, int);
 
         const char* getChar(int, int);
 

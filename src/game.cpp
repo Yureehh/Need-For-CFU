@@ -1,92 +1,68 @@
 #include "game.h"
-#include <unistd.h>
+
 
 //Initialize the game
 game::game(){
     c = car();
-    current_Level = new level(1, height_Track, NULL);
+    currentLevel = new level(1, HEIGHT_TRACK, NULL);
 }
 
 
-
 void game::clearLevel(){
-    for(int i=0;i<height_Track;i++){
-        for(int j=0;j<width_Track;j++){
-            if(!current_Level->isFree(i,j) && (i!= 22 && j!= 7 && j!=11) ){
-                current_Level->setVisibile(i,j);
-                //cout<<"("<<i<<","<<j<<")"<<endl;
-                //k++;
-            }
-                
+    for(int i=0;i<HEIGHT_TRACK;i++){
+        for(int j=0;j<WIDTH_TRACK;j++){
+            if(!currentLevel->isFree(i,j) && (i!= 22 && j!= 7 && j!=11) )
+                currentLevel->setVisible(i,j, true);  
         }
     }
 }
 
 void game::clearLine(){
     int i= abs(c.getPosition().y - 37 );
-    for(int j=0; j<width_Track; j++){
-        if(!current_Level->isFree(i,j) && (i!= 22 && j!= 7 && j!=11) )
-                current_Level->setVisibile(i,j);
-        
+    for(int j=0; j<WIDTH_TRACK; j++){
+        if(!currentLevel->isFree(i,j) && (i!= 22 && j!= 7 && j!=11) )
+                currentLevel->setVisible(i,j, true);
     }
 }
 
-void game::forwardNewLevel(int s){
-    start_Track = 1;
-    c = car();
-    current_Level -> next = new level(s, height_Track, current_Level );
-    current_Level = current_Level -> next;
-}
 
-void game::forwardLevel(){
-    start_Track = 1;
-    c = car();
-    current_Level = current_Level -> next;
-}
-
-void game::backLevel(){
-    start_Track = 1;
-    c = car();
-    current_Level = current_Level -> prev;
-}
 
 //prints the game
-void game::stampaUI(){
+void game::printUI(){
 
-    for(int i = 0; i< height_UI; i++) {
-        for (int j = 0; j < width_UI; j++) {
-            if(i == 0 || i == height_UI-1) {
+    for(int i = 0; i< HEIGHT_UI; i++) {
+        for (int j = 0; j < WIDTH_UI; j++) {
+            if(i == 0 || i == HEIGHT_UI-1) {
                 mvprintw(i, j, new char('-'));
             }
             else {
-                if(j == 0 || j == width_UI -1)
+                if(j == 0 || j == WIDTH_UI -1)
                     mvprintw(i, j, new char('|'));
-                else if(j == 1 || j == width_Track + 2 )
+                else if(j == 1 || j == WIDTH_TRACK + 2 )
                     mvprintw(i, j, new char('#'));
                 else
                     mvprintw(i, j, new char(' ')); 
             }
         }
     }
-
 }
 
 
-void game::stampaCar(){
+void game::carPrint(){
     c.stampa();
 }
 
-void game::cleanCar(){
+void game::carClean(){
     c.clean();
 }
 
 //Prints the words
-void game::stampaScore(){
+void game::printScore(){
     mvprintw(20,58,"Stage: ");
     mvprintw(22,58,"Score: ");
 }
 
-bool game::sinistraCar(){
+bool game::carLeft(){
     // Actually move if not going outside the map
     if ( c.getPosition().x > 2 ){
         c.move( 0, -1 );
@@ -95,7 +71,7 @@ bool game::sinistraCar(){
         return false;
 }
 
-bool game::destraCar(){
+bool game::carRight(){
     // Actually move if not going outside the map
     if ( c.getPosition().x < 46 ){
         c.move( 0, +1);
@@ -104,59 +80,12 @@ bool game::destraCar(){
         return false;
 }
 
-int game::getCarX(){
-    return c.getPosition().x;
-}
-
-int game::getCarY(){
-    return c.getPosition().y;
-}
-
-void game::avantiCar(){
+void game::carForward(){
     if(c.getPosition().y > 0)
         c.move( -1, 0);
     else{
-        c.move(height_Track, 0);
+        c.move(HEIGHT_TRACK, 0);
     }
-}
-
-
-
-// True if the car is going to hit something
-
-// ! REFACTOR
-int game::hit(int pos){
-
-    /* Left -> p -1
-    ** Center -> p 0
-    ** Right -> p 1 */
-    chtype ch[3];
-
-    if ( pos == -1 ) {
-        ch[0] = mvinch(c.getPosition().y, c.getPosition().x - 1);
-        ch[1] = mvinch(c.getPosition().y + 1, c.getPosition().x - 1);
-        ch[2] = mvinch(c.getPosition().y + 2, c.getPosition().x - 1);
-    } else if ( pos == 1 ) {
-        ch[0] = mvinch(c.getPosition().y, c.getPosition().x + 3);
-        ch[1] = mvinch(c.getPosition().y + 1, c.getPosition().x + 3);
-        ch[2] = mvinch(c.getPosition().y + 2, c.getPosition().x + 3);
-    } else if ( pos == 0 ) {
-        ch[0] = mvinch(c.getPosition().y - 1, c.getPosition().x);
-        ch[1] = mvinch(c.getPosition().y - 1, c.getPosition().x + 1);
-        ch[2] = mvinch(c.getPosition().y - 1, c.getPosition().x + 2);
-    }
-
-    // If just one of the char checked is different than " ", then hit something
-    return calcScore(ch) ;
-}
-
-int game::calcScore(chtype ch[3]){
-    int score = 0;
-    for (int i = 0; i < 3; i++){
-        //score += obstacles[ch[i]];
-    }
-    mvprintw(25,58, "Add: %c + %c + %c = %d ", ch[0], ch[1], ch[2], score );
-    return score;
 }
 
 
@@ -165,20 +94,20 @@ void game::downTrack(){
 
     int r = start_Track;
 
-    for (int i = height_Track; i > 0; i--){
-        for (int j = 0; j < width_Track; j++){
+    for (int i = HEIGHT_TRACK; i > 0; i--){
+        for (int j = 0; j < WIDTH_TRACK; j++){
             // Loop when u finish the map
-            if ( r >= current_Level->getLength() )
+            if ( r >= currentLevel->getLength() )
                 r = 0;
 
             // Stamp the CHAR only when there is an obstacle -> !isFree
-            if ( current_Level->isFree(r, j) )
+            if ( currentLevel->isFree(r, j) )
                 mvprintw(i, j+2, " " );
             else{
-                if ( current_Level->isVisible(r, j) ){
-                    attron(COLOR_PAIR(current_Level->getColor(r, j)));
-                    mvprintw(i, j+2, current_Level->getChar(r, j) );
-                    attroff(COLOR_PAIR(current_Level->getColor(r, j)));
+                if ( currentLevel->isVisible(r, j) ){
+                    attron(COLOR_PAIR(currentLevel->getColor(r, j)));
+                    mvprintw(i, j+2, currentLevel->getChar(r, j) );
+                    attroff(COLOR_PAIR(currentLevel->getColor(r, j)));
                 }
             }
         }
@@ -189,113 +118,166 @@ void game::downTrack(){
     
     start_Track ++;
 
-    if( start_Track > current_Level->getLength() )
+    if( start_Track > currentLevel->getLength() )
         start_Track = 0;
         
 }
 
 
-void game::primaStampa(){
 
-    int q = start_Track;
-
-    for (int i = height_Track; i > 0; i--){
-        for (int j = 0; j < width_Track; j++){
-            // Stamp the CHAR only when there is an obstacle -> !isFree
-            if ( current_Level->isFree(q, j) )
-                mvprintw(i, j+2, " " );
-            else
-                mvprintw(i, j+2, current_Level->getChar(q, j) );
-             }
-        q++;
-    }  
-}
-
-bool game::robo(){
-    return current_Level->isVisible(abs( c.getPosition().y - 37 ), abs(c.getPosition().x ) );
-}
-
-int game::collisioni(){
+int game::collisionCheck(int y, int x){
+       
     int malus = 0, bonus = 0;
 
-    //ruota in alto a sx
-    if( ! (current_Level->isFree( abs(c.getPosition().y - 39 ), abs(c.getPosition().x ) - 2 ) ) && 
-        current_Level->isVisible(abs( c.getPosition().y - 39 ), abs(c.getPosition().x ) - 2 ) ){
 
-        current_Level->hasHit( abs(c.getPosition().y - 39 ), abs(c.getPosition().x ) - 2 );
+    if( ! (currentLevel->isFree(y, x) && currentLevel->isVisible(y, x) ) ){
 
-        if( current_Level->getScore(abs(c.getPosition().y - 39 ), abs(c.getPosition().x ) - 2) >= 0 )
-            bonus += current_Level->getScore(abs(c.getPosition().y - 39 ), abs(c.getPosition().x - 2 ));
+        currentLevel->setVisible( y, x, false);
+
+        if(currentLevel->getScore(y, x)  > 0)
+            bonus += currentLevel->getScore(y, x);
+
+
+    /*
+      
+        if( (abs (currentLevel->getScore( y, x) ) )  > ( abs(malus) ) )
+            malus = currentLevel->getScore(y, x);
+        */
+
+
+    }
+    
+    
+    return malus + bonus;   
+    
+}
+
+
+int game::collisions(){
+    
+        /*    int tot=0;
+
+            tot = collisionCheck( abs(c.getPosition().y - 39 ), abs(c.getPosition().x  - 2) );  //ruota in alto a sx
+            //collisionCheck( abs(c.getPosition().y - 39 ) , c.getPosition().x , 0 ) +  //ruota in alto a dx
+
+            //collisionCheck( abs(c.getPosition().y - 37 ), c.getPosition().x , 2 ) +  //ruota in basso a sx
+            //collisionCheck( abs(c.getPosition().y - 37 ), c.getPosition().x , 0 ) +  //ruota in basso a dx
+
+            //collisionCheck( abs(c.getPosition().y - 38 ), c.getPosition().x , 1 );   //pilota
+      return tot;
+
+*/
+
+    int malus=0, bonus=0;
+    if( ! (currentLevel->isFree( abs(c.getPosition().y - 39 ), abs(c.getPosition().x -2)  ) ) && 
+        currentLevel->isVisible(abs( c.getPosition().y - 39 ), abs(c.getPosition().x -2)  ) ){
+
+        currentLevel->setVisible( abs(c.getPosition().y - 39 ), abs(c.getPosition().x -2) , false );
+
+        if( currentLevel->getScore(abs(c.getPosition().y - 39 ), abs(c.getPosition().x -2) ) >= 0 )
+            bonus += currentLevel->getScore(abs(c.getPosition().y - 39 ), abs(c.getPosition().x - 2 ));
 
         else{
-            if( abs (current_Level->getScore( abs(c.getPosition().y - 39 ), abs(c.getPosition().x - 2) ) )  > abs(malus) )
-                malus = current_Level->getScore(abs(c.getPosition().y - 39 ), abs(c.getPosition().x - 2) );
+            if( abs (currentLevel->getScore( abs(c.getPosition().y - 39 ), abs(c.getPosition().x - 2) ) )  > abs(malus) )
+                malus = currentLevel->getScore(abs(c.getPosition().y - 39 ), abs(c.getPosition().x - 2) );
         }
 
     }
 
 
-    //ruota in alto a dx
-    if( ! (current_Level->isFree( abs(c.getPosition().y - 39 ), abs(c.getPosition().x ) ) )  && 
-        current_Level->isVisible(abs( c.getPosition().y - 39 ), abs(c.getPosition().x ) ) ){
+    
+    if( ! (currentLevel->isFree( abs(c.getPosition().y - 39 ), abs(c.getPosition().x ) ) )  && 
+        currentLevel->isVisible(abs( c.getPosition().y - 39 ), abs(c.getPosition().x ) ) ){
 
-            current_Level->hasHit( abs(c.getPosition().y - 39 ), abs(c.getPosition().x ) );
+            currentLevel->setVisible( abs(c.getPosition().y - 39 ), abs(c.getPosition().x ), false );
 
-        if( current_Level->getScore(abs(c.getPosition().y - 39 ), abs(c.getPosition().x ) ) >= 0 )
-            bonus += current_Level->getScore(abs(c.getPosition().y - 39 ), abs(c.getPosition().x ));
+        if( currentLevel->getScore(abs(c.getPosition().y - 39 ), abs(c.getPosition().x ) ) >= 0 )
+            bonus += currentLevel->getScore(abs(c.getPosition().y - 39 ), abs(c.getPosition().x ));
 
         else{
-            if( abs (current_Level->getScore( abs(c.getPosition().y - 39 ), abs(c.getPosition().x ) ) )  > abs(malus) )
-                malus = current_Level->getScore(abs(c.getPosition().y - 39 ), abs(c.getPosition().x ) );
+            if( abs (currentLevel->getScore( abs(c.getPosition().y - 39 ), abs(c.getPosition().x ) ) )  > abs(malus) )
+                malus = currentLevel->getScore(abs(c.getPosition().y - 39 ), abs(c.getPosition().x ) );
         }
     }
 
 
     //ruota in basso a sx
-    if( ! (current_Level->isFree( abs(c.getPosition().y - 37 ), abs(c.getPosition().x ) - 2 ) )  && 
-        current_Level->isVisible(abs( c.getPosition().y - 37 ), abs(c.getPosition().x ) - 2 ) ){
+    if( ! (currentLevel->isFree( abs(c.getPosition().y - 37 ), abs(c.getPosition().x - 2 ) ) )  && 
+        currentLevel->isVisible(abs( c.getPosition().y - 37 ), abs(c.getPosition().x - 2 ) ) ){
 
-            current_Level->hasHit( abs(c.getPosition().y - 37 ), abs(c.getPosition().x ) - 2 );
+            currentLevel->setVisible( abs(c.getPosition().y - 37 ), abs(c.getPosition().x - 2), false );
 
-        if( current_Level->getScore(abs(c.getPosition().y - 37 ), abs(c.getPosition().x ) - 2) >= 0 )
-            bonus += current_Level->getScore(abs(c.getPosition().y - 37 ), abs(c.getPosition().x - 2 ));
+        if( currentLevel->getScore(abs(c.getPosition().y - 37 ), abs(c.getPosition().x  - 2) ) >= 0 )
+            bonus += currentLevel->getScore(abs(c.getPosition().y - 37 ), abs(c.getPosition().x - 2 ));
 
         else{
-            if( abs (current_Level->getScore( abs(c.getPosition().y - 37 ), abs(c.getPosition().x - 2) ) )  > abs(malus) )
-                malus = current_Level->getScore(abs(c.getPosition().y - 37 ), abs(c.getPosition().x - 2) );
+            if( abs (currentLevel->getScore( abs(c.getPosition().y - 37 ), abs(c.getPosition().x - 2) ) )  > abs(malus) )
+                malus = currentLevel->getScore(abs(c.getPosition().y - 37 ), abs(c.getPosition().x - 2) );
         }
     }
 
     //ruota in basso a dx
-    if( ! (current_Level->isFree( abs(c.getPosition().y - 37 ), abs(c.getPosition().x ) ) )  &&
-        current_Level->isVisible(abs( c.getPosition().y - 37 ), abs(c.getPosition().x ) ) ){
+    if( ! (currentLevel->isFree( abs(c.getPosition().y - 37 ), abs(c.getPosition().x ) ) )  &&
+        currentLevel->isVisible(abs( c.getPosition().y - 37 ), abs(c.getPosition().x ) ) ){
 
-            current_Level->hasHit( abs(c.getPosition().y - 37 ), abs(c.getPosition().x ) );
+            currentLevel->setVisible( abs(c.getPosition().y - 37 ), abs(c.getPosition().x ), false );
 
-        if( current_Level->getScore(abs(c.getPosition().y - 37 ), abs(c.getPosition().x ) ) >= 0 )
-            bonus += current_Level->getScore(abs(c.getPosition().y - 37 ), abs(c.getPosition().x ));
+        if( currentLevel->getScore(abs(c.getPosition().y - 37 ), abs(c.getPosition().x ) ) >= 0 )
+            bonus += currentLevel->getScore(abs(c.getPosition().y - 37 ), abs(c.getPosition().x ));
 
         else{
-            if( abs (current_Level->getScore( abs(c.getPosition().y - 37 ), abs(c.getPosition().x) ) )  > abs(malus) )
-                malus = current_Level->getScore(abs(c.getPosition().y - 37 ), abs(c.getPosition().x ) );
+            if( abs (currentLevel->getScore( abs(c.getPosition().y - 37 ), abs(c.getPosition().x) ) )  > abs(malus) )
+                malus = currentLevel->getScore(abs(c.getPosition().y - 37 ), abs(c.getPosition().x ) );
         }
     }
 
     //pilota
-    if( ! (current_Level->isFree( abs(c.getPosition().y - 38 ), abs(c.getPosition().x ) - 1 ) )  && 
-        current_Level->isVisible(abs( c.getPosition().y - 38 ), abs(c.getPosition().x ) - 1 ) ){
+    if( ! (currentLevel->isFree( abs(c.getPosition().y - 38 ), abs(c.getPosition().x  - 1 ) ) )  && 
+        currentLevel->isVisible(abs( c.getPosition().y - 38 ), abs(c.getPosition().x  - 1 ) ) ) {
 
-            current_Level->hasHit( abs(c.getPosition().y - 38 ), abs(c.getPosition().x ) - 1 );
+            currentLevel->setVisible( abs(c.getPosition().y - 38 ), abs(c.getPosition().x  - 1), false );
 
-        if( current_Level->getScore(abs(c.getPosition().y - 38 ), abs(c.getPosition().x ) - 1) >= 0 )
-            bonus += current_Level->getScore(abs(c.getPosition().y - 38 ), abs(c.getPosition().x - 1 ));
+        if( currentLevel->getScore(abs(c.getPosition().y - 38 ), abs(c.getPosition().x ) - 1) >= 0 )
+            bonus += currentLevel->getScore(abs(c.getPosition().y - 38 ), abs(c.getPosition().x - 1 ));
 
         else{
-            if( abs (current_Level->getScore( abs(c.getPosition().y - 38 ), abs(c.getPosition().x - 1) ) )  > abs(malus) )
-                malus = current_Level->getScore(abs(c.getPosition().y - 38 ), abs(c.getPosition().x - 1) );
+            if( abs (currentLevel->getScore( abs(c.getPosition().y - 38 ), abs(c.getPosition().x - 1) ) )  > abs(malus) )
+                malus = currentLevel->getScore(abs(c.getPosition().y - 38 ), abs(c.getPosition().x - 1) );
         }
     }
      
 
-    return malus + bonus;
+    return malus + bonus; 
+    
+}
+
+void game::forwardNewLevel(int s){
+    start_Track = 1;
+    c = car();
+    currentLevel -> next = new level(s, HEIGHT_TRACK, currentLevel );
+    currentLevel = currentLevel -> next;
+}
+
+void game::forwardLevel(){
+    start_Track = 1;
+    c = car();
+    currentLevel = currentLevel -> next;
+}
+
+void game::backLevel(){
+    start_Track = 1;
+    c = car();
+    currentLevel = currentLevel -> prev;
+}
+
+bool game::loss(scorestage s){
+
+    if(s.getScore() <= 0){
+        erase();
+        mvprintw(21, 17, "Take the L!");
+        mvprintw(23, 5, "Your record this run has been %d points!", s.getMaxScore());
+        while(!kbhit());
+        return true;
+    }
+    return false;
 }

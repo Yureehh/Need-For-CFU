@@ -110,14 +110,16 @@ int main(int argc, char *argv[]){
 
     erase();
 
-    //Print the UI
-    game g = game();
-    g.stampaUI();
-    g.stampaScore();
-
     //inizialize points
     scorestage s = scorestage(901);
-    s.PrintScoreStage();
+    s.printScoreStage();
+
+    //Print the UI
+    game g = game();
+    g.printUI();
+    g.printScore();
+
+  
     //countdown
     mvprintw(21, 24, "3");
     refresh();
@@ -134,48 +136,46 @@ int main(int argc, char *argv[]){
     //prints the starting Track with the car and obstacles
     g.downTrack();
     //g.primaStampa();
-    g.stampaCar();
+    g.carPrint();
     refresh();
 
-    bool loss = false, dannoMuro = true;
-    int timer =0;
+    int timer=0;
     char ch=' ';
 
 
     //the game itself, for now u can only move the car
-    while(ch != 113 && !loss){
+    while(ch != 113 ){
         
         usleep(3125);
 
         if(kbhit()){
             ch = getch();
             if(ch == 'a' || ch == 68){
-                g.cleanCar();
-                dannoMuro = g.sinistraCar();
+                g.carClean();
+                if(!g.carLeft())
+                    s.SubScore(500);
+                
             }  
 
             if(ch == 'd' || ch == 67){
-                g.cleanCar();
-                dannoMuro = g.destraCar();
+                g.carClean();
+                if(!g.carRight())
+                    s.SubScore(500);
             }
 
-            s.AddScore(g.collisioni());
-           
-            if(!dannoMuro)
-                s.SubScore(500);
-            dannoMuro = true;
-
-            
-            if(s.GetScore() <= 0)
-                loss = true;
+            s.AddScore(g.collisions());
+        
+            if(s.getScore() <= 0)
+                if( g.loss(s) )
+                    break;
 
         }
 
         if(timer<=0){
             g.downTrack();
-            g.avantiCar();
+            g.carForward();
             
-            s.AddScore(g.collisioni() + 25);
+            s.AddScore(g.collisions() + 25);
 
             timer = 100; //800
              
@@ -183,14 +183,14 @@ int main(int argc, char *argv[]){
             timer--;
             
 
-        if(s.GetStage() != s.Getlevelprec()){
+        if(s.getStage() != s.getLastLevel()){
             g.clearLevel();
             erase();
-            g.stampaUI();
+            g.printUI();
 
-            if(s.GetStage() > s.Getlevelprec()){
-                if(s.GetScore() == s.GetMaxScore() )
-                    g.forwardNewLevel(s.GetStage());
+            if(s.getStage() > s.getLastLevel()){
+                if(s.getScore() == s.getMaxScore() )
+                    g.forwardNewLevel(s.getStage());
                 else
                     g.forwardLevel();
             }
@@ -199,7 +199,7 @@ int main(int argc, char *argv[]){
                 g.backLevel();
             }
 
-            s.setLevelPrec();
+            s.setlastLevel();
         }
         else
             g.clearLine();
@@ -210,24 +210,15 @@ int main(int argc, char *argv[]){
          //inserire animazione cambio livello w la figa O:
 
 
-
-        s.PrintScoreStage();
-        g.stampaCar();    
+        s.printScoreStage();
+        g.carPrint();    
         refresh();
-        if(s.GetScore() <= 0)
-            loss = true;
-    }
-
-    //2 possible endings: u lost or u pressed spacebar
-    if(loss){
-        erase();
-        mvprintw(21, 17, "Take the L!");
-        mvprintw(23, 5, "Your record this run has been %d points!", s.GetMaxScore());
-        while(!kbhit());
+        if( g.loss(s) )
+            break;
 
     }
+
 
     endwin();
-
     return 0;
 }

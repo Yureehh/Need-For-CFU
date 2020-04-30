@@ -1,9 +1,10 @@
 #include <iostream>
 #include <ncurses.h>
-#include <map>
+#include <unistd.h>
 #include "level.h"
 #include "scorestage.h"
 #include "math.h"
+#include "utilities.h"
 #ifdef __linux__ 
     #include "entities/car.h"
 #else
@@ -13,11 +14,11 @@
 using namespace std;
 
 // # User Interface geometry (UI)
-const char height_UI = 42;
-const char width_UI = 80;
+const char HEIGHT_UI = 42;
+const char WIDTH_UI = 80;
 
-const char height_Track = 40; // 0-39      centro 19
-const char width_Track = 47; //0-46        centro 24
+const char HEIGHT_TRACK = 40; // 0-39      centro 19
+const char WIDTH_TRACK = 47; //0-46        centro 24
 
 
 #ifndef GAME_H
@@ -27,50 +28,41 @@ class game {
 
     protected:
         int  start_Track = 0; //linea in cui starta la pista
-        level *current_Level;
+        level *currentLevel;
         car c;
-        int counter = 0;
+
 
     public:
         //Initialize the game
         game();
         
         //prints the game
-        void stampaUI();
+        void printUI();
 
-        //clears the Track
-        void clean();
+        void clearLevel();
+
+        void clearLine();
 
         //Prints the words
-        void stampaScore();
+        void printScore();
 
         // Car controls and Render
-        void stampaCar();
+        void carPrint();
 
-        void cleanCar();
+        void carClean();
 
-        bool sinistraCar();
+        bool carLeft();
 
-        bool destraCar();
+        bool carRight();
 
-        void avantiCar();
-
-        int getCarX();
-
-        int getCarY();
-
-        int hit(int);
-
-        int calcScore(chtype *);
-
-        bool robo();
+        void carForward();
 
         //Downs the obstacler of 1 line
         void downTrack();
 
-        void primaStampa();
+        int collisionCheck(int, int);
 
-        int collisioni();
+        int collisions();
 
         void forwardNewLevel(int);
 
@@ -78,9 +70,7 @@ class game {
 
         void backLevel();
 
-        void clearLevel();
-
-        void clearLine();
+        bool loss(scorestage);
 
 };
 
