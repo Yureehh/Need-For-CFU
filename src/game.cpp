@@ -18,7 +18,7 @@ void game::clearLevel(){
 }
 
 void game::clearLine(){
-    int i= abs(c.getPosition().y - 37 );
+    int i= abs(c.getPosition().y - (HEIGHT_TRACK - 3) );
     for(int j=0; j<WIDTH_TRACK; j++){
         if(!currentLevel->isFree(i,j) && (i!= 22 && j!= 7 && j!=11) )
                 currentLevel->setVisible(i,j, true);
