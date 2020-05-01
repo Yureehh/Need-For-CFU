@@ -2,10 +2,10 @@
 
 
 //constructor to inizialize points
-scorestage::scorestage(int s=1){
+scorestage::scorestage(int s){
     score = s;
-    record = score;
-    lastLevel = 1;
+    record = lowest = score;
+    lastLevel = getStage();
 }
 
 //getter for the score
@@ -15,6 +15,10 @@ int scorestage::getScore(){
 
 int scorestage::getMaxScore(){
     return record;
+}
+
+int scorestage::getLowestScore(){
+    return lowest;
 }
 
 //getter for the stage
@@ -31,34 +35,17 @@ void scorestage::setlastLevel(){
 }
 
 //add points
-void scorestage::AddScore(int x){
+void scorestage::addScore(int x){
     score = score + x;
     if(score > record)
         record = score;
-}
-
-//sub points
-void scorestage::SubScore(int x){
-    score = score - x;
+    if(score < lowest)
+        lowest = score;
 }
 
 //prints score and level
 void scorestage::printScoreStage(){
     mvprintw(20 ,66, "%d", getStage());
     mvprintw(22 ,66, "%d ",this->score);
-}
-
-//check the change of level
-int scorestage::LevelChange(){
-    if( getStage() == lastLevel)
-        return 0;
-    else {
-        if( getStage() > lastLevel )
-            return 1;
-        else
-            return -1;
-        lastLevel = getStage();
-    }
-    
 }
 

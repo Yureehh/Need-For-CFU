@@ -10,6 +10,7 @@ protected:
     int score;
     int stage;
     int record;
+    int lowest;
     int lastLevel;
 public:
     //constructor to inizialize points
@@ -20,14 +21,12 @@ public:
     int getStage();
     //Record of the run
     int getMaxScore();
+    //Lowest record
+    int getLowestScore();
     //add points
-    void AddScore(int);
-    //sub points
-    void SubScore(int);
+    void addScore(int);
     //prints score and level
     void printScoreStage();
-    //check the change of level
-    int LevelChange();
 
     void setlastLevel();
     

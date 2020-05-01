@@ -7,7 +7,7 @@ bool kbhit(void)
     if (ch != ERR) {
         ungetch(ch);
         return true;
-    } else {
+    } else 
         return false;
-    }
+    
 }

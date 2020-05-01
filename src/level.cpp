@@ -7,7 +7,7 @@ level::level(){
     oneXone = obstacle(" ", 0, 1);
 }
 
-level::level(int stage, int length, level *prev){ 
+level::level(int stage, int length, level *l, bool b){ 
     srand((stage+time(0))/2);   
     int influence;
     oneXone = obstacle("K", -100, 1);
@@ -18,15 +18,24 @@ level::level(int stage, int length, level *prev){
     this->next = NULL;
     this->prev = NULL;
 
-    if(prev!=NULL){
+    if(b){
+        if(l!=NULL){
         this->prev = new level;
-        this->prev = prev;
+        this->prev = l;
+        }   
+    } else {
+        if(l!=NULL){
+        this->next = new level;
+        this->next = l;
+        }
     }
+
 
     track = new ptrObstacle*[length];
     for (int i = 0; i < length; i++){
         track[i] = new ptrObstacle[47];
     }
+/*
 
     // Test Pilota
     track[length/2][20] = {true, &oneXone};
@@ -37,17 +46,17 @@ level::level(int stage, int length, level *prev){
     track[length/2 - 1][28] = {true, &oneXone};
     track[length/2 + 1][16] = {true, &oneXone};
     track[length/2 + 1][30] = {true, &oneXone};
-    track[0][20] = {true, &oneXone};
-    track[39][30] = {true, &oneXone};
-
-  /*  
+    track[0][10 * stage] = {true, &oneXone};
+    track[39][15*stage] = {true, &oneXone};
+*/
+   
 //-------start here
     int lastspawn=0;
     int maxH=2;
     int maxK=stage*3;
     int maxT=stage;
     int maxSpawnPerLine=2;
-    for (int i = 0; i < length; i++){
+    for (int i = 0; i < length-1; i++){
         maxSpawnPerLine=3;
         for (int j = 0; j < 47; j++){
             influence=rand()%20;
@@ -110,7 +119,7 @@ level::level(int stage, int length, level *prev){
                     break;
                 }
             }
-            
+           
             if ( i%12 == 0 && i!=0 && j == 23)
                 track[i][j] = {true, &oneXone};
             else
@@ -118,7 +127,7 @@ level::level(int stage, int length, level *prev){
                 
         }
     }
-*/
+
 //---------
 }
 
@@ -148,8 +157,4 @@ int level::getColor(int y, int x){
 
 int level::getLength(){
     return length;
-}
-
-void level::setNext(int s, int h, level *l){
-    this -> next = new level(s, h, l );
 }

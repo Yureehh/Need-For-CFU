@@ -109,26 +109,26 @@ int main(int argc, char *argv[]){
     erase();
 
     //inizialize points
-    scorestage s = scorestage(901);
+    scorestage s = scorestage(1500);
     s.printScoreStage();
 
     //Print the UI
-    game g = game();
+    game g = game( s.getStage() );
     g.printUI();
     g.printScore();
 
   
     //countdown
-    mvprintw(21, 24, "3");
+    mvprintw(21, 22, "Ready");
     refresh();
     sleep(1);
-    mvprintw(21, 24, "2");
+    mvprintw(21, 22, " Set ");
     refresh();
     sleep(1);
-    mvprintw(21, 24, "1");
+    mvprintw(21, 22, " Go! ");
     refresh();
     sleep(1);
-    mvprintw(21, 24, " ");
+    //mvprintw(21, 24, " ");
     
 
     //prints the starting Track with the car and obstacles
@@ -144,43 +144,44 @@ int main(int argc, char *argv[]){
     //the game itself, for now u can only move the car
     while(ch != 113){
         
+        //number of milliseconds the game gets paused every cicle
         usleep(3125);
 
+        //checks if lateral displacements collides with walls or obstacles
         if(kbhit()){
             ch = getch();
-            if(ch == 'a' || ch == 68){
+            if(ch == 'a'){
                 g.carClean();
                 if(!g.carLeft())
-                    s.SubScore(500);
-                
+                    s.addScore(-500);   
             }  
 
-            if(ch == 'd' || ch == 67){
+            if(ch == 'd'){
                 g.carClean();
                 if(!g.carRight())
-                    s.SubScore(500);
+                    s.addScore(-500);
             }
 
-            s.AddScore(g.collisions());
-        
+            s.addScore( g.collisions() );
+
             if(s.getScore() <= 0)
                 if( g.loss(s) )
                     break;
-
         }
 
-
+        //if the right amount of seconds has passed the obstacles are lowered by 1 line and collisions are checked
         if(timer<=0){
             g.downTrack();
             
-            s.AddScore(g.collisions()); // + 25);
+            s.addScore(g.collisions() + 10 ); // + 25);
 
-            timer = 200; //800
+            timer = 100; //!960 fa 3 secondi di pausa  
+
              
         } else
-            timer--;
+            timer--;    //combination of timer and usleep creates the clock of the map's sliding
 
-
+        //checks if u have enough points to swap level
         if(s.getStage() != s.getLastLevel()){
             g.clearLevel();
             erase();
@@ -188,18 +189,25 @@ int main(int argc, char *argv[]){
 
             if(s.getStage() > s.getLastLevel()){
                 if(s.getScore() == s.getMaxScore() )
-                    g.forwardNewLevel(s.getStage());
+                    g.NewLevel(s.getStage(), true );
                 else
                     g.forwardLevel();
             }
 
-            else
-                g.backLevel();
+            else{
+                if(s.getScore() == s.getLowestScore() ){
+                    g.NewLevel(s.getStage(), false );
+                }
+
+                else
+                    g.backLevel();
+            }
 
             s.setlastLevel();
         }
         else
             g.clearLine();
+        
      
 
 
@@ -217,5 +225,4 @@ int main(int argc, char *argv[]){
 
 
     endwin();
-    return 0;
 }

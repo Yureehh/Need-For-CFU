@@ -2,8 +2,8 @@
 
 
 //Initialize the game
-game::game(){
-    currentLevel = new level(1, HEIGHT_TRACK, NULL);
+game::game(int s){
+    currentLevel = new level(s, HEIGHT_TRACK, NULL, true);
     start_Track = currentLevel->getLength() - HEIGHT_TRACK;
     c = car(currentLevel->getLength() - 2, 23);
 }
@@ -46,9 +46,13 @@ void game::printUI(){
             }
         }
     }
-
 }
 
+//Prints the words
+void game::printScore(){
+    mvprintw(20,58,"Stage: ");
+    mvprintw(22,58,"Score: ");
+}
 
 void game::carPrint(){
     c.stampa();
@@ -56,12 +60,6 @@ void game::carPrint(){
 
 void game::carClean(){
     c.clean();
-}
-
-//Prints the words
-void game::printScore(){
-    mvprintw(20,58,"Stage: ");
-    mvprintw(22,58,"Score: ");
 }
 
 bool game::carLeft(){
@@ -85,9 +83,8 @@ bool game::carRight(){
 void game::carForward(){
     if(c.getPosition().y > 0)
         c.move( -1, 0);
-    else{
+    else
         c.move(HEIGHT_TRACK - 1, 0);
-    }
 }
 
 void game::printTrack(){
@@ -114,7 +111,6 @@ void game::printTrack(){
         }
 
         mvprintw(i + 1, WIDTH_TRACK + 2, "%d ", r);
-        
         r++;
 
     }
@@ -131,7 +127,6 @@ void game::downTrack(){
 
     printTrack();
     carForward();
-
 }
 
 
@@ -273,10 +268,26 @@ int game::collisions(){
     
 }
 
+/*
 void game::forwardNewLevel(int s){
     c = car();
     currentLevel -> next = new level(s, HEIGHT_TRACK, currentLevel );
     currentLevel = currentLevel -> next;
+    start_Track = currentLevel->getLength() - HEIGHT_TRACK;
+}
+*/
+
+void game::NewLevel(int s, bool b){
+    c = car();
+    if(b){
+        currentLevel -> next = new level(s, HEIGHT_TRACK, currentLevel, b );
+        currentLevel = currentLevel -> next;
+        }
+    else{
+        currentLevel -> prev = new level(s, HEIGHT_TRACK, currentLevel, b );
+        currentLevel = currentLevel -> prev;
+    }
+
     start_Track = currentLevel->getLength() - HEIGHT_TRACK;
 }
 
@@ -293,7 +304,6 @@ void game::backLevel(){
 }
 
 bool game::loss(scorestage s){
-
     if(s.getScore() <= 0){
         erase();
         mvprintw(21, 17, "Take the L!");

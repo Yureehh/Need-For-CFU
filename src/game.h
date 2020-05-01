@@ -34,7 +34,7 @@ class game {
 
     public:
         //Initialize the game
-        game();
+        game(int);
         
         //prints the game
         void printUI();
@@ -66,7 +66,7 @@ class game {
 
         int collisions();
 
-        void forwardNewLevel(int);
+        void NewLevel(int, bool);
 
         void forwardLevel();
 

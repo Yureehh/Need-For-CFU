@@ -30,7 +30,7 @@ class level{
         level *prev;
         level *next;
         
-        level(int, int, level*);
+        level(int, int, level*, bool);
         level();
         
         bool isFree(int, int);
@@ -46,8 +46,6 @@ class level{
         int getColor(int, int);
         
         int getLength();
-    
-        void setNext(int, int, level*);
 
 };
 
