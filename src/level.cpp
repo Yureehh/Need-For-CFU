@@ -10,7 +10,7 @@ level::level(){
 level::level(int stage, int length, level *prev){ 
     srand((stage+time(0))/2);   
     int influence;
-    oneXone = obstacle("K", -1000, 1);
+    oneXone = obstacle("K", -100, 1);
     twoXone = obstacle("T", -1500, 1);
     boost = obstacle("H", 200, 2);
 
@@ -27,6 +27,18 @@ level::level(int stage, int length, level *prev){
     for (int i = 0; i < length; i++){
         track[i] = new ptrObstacle[47];
     }
+
+    // Test Pilota
+    track[length/2][20] = {true, &oneXone};
+    track[length/2][26] = {true, &oneXone};
+
+    // Test Route
+    track[length/2 - 1][18] = {true, &oneXone};
+    track[length/2 - 1][28] = {true, &oneXone};
+    track[length/2 + 1][16] = {true, &oneXone};
+    track[length/2 + 1][30] = {true, &oneXone};
+
+  /*  
 //-------start here
     int lastspawn=0;
     int maxH=2;
@@ -37,7 +49,7 @@ level::level(int stage, int length, level *prev){
         maxSpawnPerLine=3;
         for (int j = 0; j < 47; j++){
             influence=rand()%20;
-            if(i>25){
+            if(i < length - 25 && i > 5){
                 switch (influence)
                 {
                 case 0:
@@ -96,15 +108,15 @@ level::level(int stage, int length, level *prev){
                     break;
                 }
             }
-            /*
+            
             if ( i%12 == 0 && i!=0 && j == 23)
                 track[i][j] = {true, &oneXone};
             else
                 track[i][j] = {false, NULL};
-                */
+                
         }
     }
-
+*/
 //---------
 }
 

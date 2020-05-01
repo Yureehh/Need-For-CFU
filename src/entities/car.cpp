@@ -7,7 +7,7 @@
 
 //Initialize the car
 car::car(){
-    c.y = 37;
+    c.y = 38;
     c.x = 23;
 }
 
@@ -22,19 +22,19 @@ posizione car::getPosition(){
 
 //prints the car
 void car::stampa(){
-    mvprintw(38, c.x, "O");
-    mvprintw(38, c.x+2, "O");
-    mvprintw(39, c.x + 1, "X");
-    mvprintw(40, c.x, "O");
-    mvprintw(40, c.x+2, "O");
+    mvprintw(38, c.x - 1 + 2, "O");
+    mvprintw(38, c.x + 1 + 2, "O");
+    mvprintw(39, c.x + 2, "X");
+    mvprintw(40, c.x - 1 + 2, "O");
+    mvprintw(40, c.x + 1 + 2, "O");
     refresh();
 }
 
 //deletes the car
 void car::clean(){
-    mvprintw(38, c.x, "   ");
-    mvprintw(39, c.x + 1, " ");
-    mvprintw(40, c.x, "   ");
+    mvprintw(38, c.x - 1 + 2, "   ");
+    mvprintw(39, c.x + 2, " ");
+    mvprintw(40, c.x - 1 + 2, "   ");
     refresh();
 }
 

@@ -47,8 +47,6 @@ int main(int argc, char *argv[]){
     // ? Set window
     WINDOW *my_menu_win = newwin(termY, termX, 0, 0);
 
-    
-
     keypad(my_menu_win, TRUE);
 
     // ? Print title
@@ -134,17 +132,17 @@ int main(int argc, char *argv[]){
     
 
     //prints the starting Track with the car and obstacles
-    g.downTrack();
+    g.printTrack();
     //g.primaStampa();
     g.carPrint();
     refresh();
 
-    int timer=0;
+    int timer = 0;
     char ch=' ';
 
 
     //the game itself, for now u can only move the car
-    while(ch != 113 ){
+    while(ch != 113){
         
         usleep(3125);
 
@@ -171,18 +169,18 @@ int main(int argc, char *argv[]){
 
         }
 
+
         if(timer<=0){
             g.downTrack();
-            g.carForward();
             
-            s.AddScore(g.collisions() + 25);
+            s.AddScore(g.collisions()); // + 25);
 
-            timer = 100; //800
+            timer = 200; //800
              
         } else
             timer--;
-            
 
+/*
         if(s.getStage() != s.getLastLevel()){
             g.clearLevel();
             erase();
@@ -202,8 +200,9 @@ int main(int argc, char *argv[]){
             s.setlastLevel();
         }
         else
-            g.clearLine();
         
+            g.clearLine();
+*/        
 
 
 

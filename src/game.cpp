@@ -3,8 +3,9 @@
 
 //Initialize the game
 game::game(){
-    c = car();
     currentLevel = new level(1, HEIGHT_TRACK, NULL);
+    start_Track = currentLevel->getLength() - HEIGHT_TRACK;
+    c = car(currentLevel->getLength() - 2, 23);
 }
 
 
@@ -18,9 +19,9 @@ void game::clearLevel(){
 }
 
 void game::clearLine(){
-    int i= abs(c.getPosition().y - (HEIGHT_TRACK - 3) );
+    int i = (c.getPosition().y + 2) % currentLevel->getLength();
     for(int j=0; j<WIDTH_TRACK; j++){
-        if(!currentLevel->isFree(i,j) && (i!= 22 && j!= 7 && j!=11) )
+        if(!currentLevel->isFree(i,j))
                 currentLevel->setVisible(i,j, true);
     }
 }
@@ -36,7 +37,7 @@ void game::printUI(){
                 mvprintw(i, j, new char('-'));
             }
             else {
-                if(j == 0 || j == WIDTH_UI -1)
+                if(j == 0 || j == WIDTH_UI - 1)
                     mvprintw(i, j, new char('|'));
                 else if(j == 1 || j == WIDTH_TRACK + 2 )
                     mvprintw(i, j, new char('#'));
@@ -45,6 +46,7 @@ void game::printUI(){
             }
         }
     }
+
 }
 
 
@@ -64,7 +66,7 @@ void game::printScore(){
 
 bool game::carLeft(){
     // Actually move if not going outside the map
-    if ( c.getPosition().x > 2 ){
+    if ( c.getPosition().x > 1 ){
         c.move( 0, -1 );
         return true;
     } else
@@ -73,7 +75,7 @@ bool game::carLeft(){
 
 bool game::carRight(){
     // Actually move if not going outside the map
-    if ( c.getPosition().x < 46 ){
+    if ( c.getPosition().x < 45 ){
         c.move( 0, +1);
         return true;
     } else
@@ -84,43 +86,52 @@ void game::carForward(){
     if(c.getPosition().y > 0)
         c.move( -1, 0);
     else{
-        c.move(HEIGHT_TRACK, 0);
+        c.move(HEIGHT_TRACK - 1, 0);
     }
 }
 
-
-//Downs the obstacles of 1 line
-void game::downTrack(){
+void game::printTrack(){
 
     int r = start_Track;
 
-    for (int i = HEIGHT_TRACK; i > 0; i--){
+    mvprintw( 24, 66, "%d ", start_Track);
+
+    for (int i = 0; i < HEIGHT_TRACK; i++){
         for (int j = 0; j < WIDTH_TRACK; j++){
             // Loop when u finish the map
             if ( r >= currentLevel->getLength() )
                 r = 0;
-
             // Stamp the CHAR only when there is an obstacle -> !isFree
             if ( currentLevel->isFree(r, j) )
-                mvprintw(i, j+2, " " );
+                mvprintw( i+1, j+2, " " );
             else{
                 if ( currentLevel->isVisible(r, j) ){
                     attron(COLOR_PAIR(currentLevel->getColor(r, j)));
-                    mvprintw(i, j+2, currentLevel->getChar(r, j) );
+                    mvprintw(i+1, j+2, currentLevel->getChar(r, j) );
                     attroff(COLOR_PAIR(currentLevel->getColor(r, j)));
                 }
             }
         }
+
+        mvprintw(i + 1, WIDTH_TRACK + 2, "%d ", r);
         
         r++;
 
     }
-    
-    start_Track ++;
 
-    if( start_Track > currentLevel->getLength() )
-        start_Track = 0;
-        
+}
+
+//Downs the obstacles of 1 line
+void game::downTrack(){
+
+    start_Track --;
+
+    if( start_Track < 0)
+        start_Track = currentLevel->getLength() - 1;
+
+    printTrack();
+    carForward();
+
 }
 
 
@@ -168,106 +179,117 @@ int game::collisions(){
 
 */
 
-    int malus=0, bonus=0;
-    if( ! (currentLevel->isFree( abs(c.getPosition().y - 39 ), abs(c.getPosition().x -2)  ) ) && 
-        currentLevel->isVisible(abs( c.getPosition().y - 39 ), abs(c.getPosition().x -2)  ) ){
+    int malus=0, bonus=0, score=0;
 
-        currentLevel->setVisible( abs(c.getPosition().y - 39 ), abs(c.getPosition().x -2) , false );
-
-        if( currentLevel->getScore(abs(c.getPosition().y - 39 ), abs(c.getPosition().x -2) ) >= 0 )
-            bonus += currentLevel->getScore(abs(c.getPosition().y - 39 ), abs(c.getPosition().x - 2 ));
-
-        else{
-            if( abs (currentLevel->getScore( abs(c.getPosition().y - 39 ), abs(c.getPosition().x - 2) ) )  > abs(malus) )
-                malus = currentLevel->getScore(abs(c.getPosition().y - 39 ), abs(c.getPosition().x - 2) );
-        }
-
-    }
-
-
+    int x = c.getPosition().x;
+    int y = c.getPosition().y;
     
-    if( ! (currentLevel->isFree( abs(c.getPosition().y - 39 ), abs(c.getPosition().x ) ) )  && 
-        currentLevel->isVisible(abs( c.getPosition().y - 39 ), abs(c.getPosition().x ) ) ){
-
-            currentLevel->setVisible( abs(c.getPosition().y - 39 ), abs(c.getPosition().x ), false );
-
-        if( currentLevel->getScore(abs(c.getPosition().y - 39 ), abs(c.getPosition().x ) ) >= 0 )
-            bonus += currentLevel->getScore(abs(c.getPosition().y - 39 ), abs(c.getPosition().x ));
-
-        else{
-            if( abs (currentLevel->getScore( abs(c.getPosition().y - 39 ), abs(c.getPosition().x ) ) )  > abs(malus) )
-                malus = currentLevel->getScore(abs(c.getPosition().y - 39 ), abs(c.getPosition().x ) );
-        }
-    }
-
-
-    //ruota in basso a sx
-    if( ! (currentLevel->isFree( abs(c.getPosition().y - 37 ), abs(c.getPosition().x - 2 ) ) )  && 
-        currentLevel->isVisible(abs( c.getPosition().y - 37 ), abs(c.getPosition().x - 2 ) ) ){
-
-            currentLevel->setVisible( abs(c.getPosition().y - 37 ), abs(c.getPosition().x - 2), false );
-
-        if( currentLevel->getScore(abs(c.getPosition().y - 37 ), abs(c.getPosition().x  - 2) ) >= 0 )
-            bonus += currentLevel->getScore(abs(c.getPosition().y - 37 ), abs(c.getPosition().x - 2 ));
-
-        else{
-            if( abs (currentLevel->getScore( abs(c.getPosition().y - 37 ), abs(c.getPosition().x - 2) ) )  > abs(malus) )
-                malus = currentLevel->getScore(abs(c.getPosition().y - 37 ), abs(c.getPosition().x - 2) );
-        }
-    }
-
-    //ruota in basso a dx
-    if( ! (currentLevel->isFree( abs(c.getPosition().y - 37 ), abs(c.getPosition().x ) ) )  &&
-        currentLevel->isVisible(abs( c.getPosition().y - 37 ), abs(c.getPosition().x ) ) ){
-
-            currentLevel->setVisible( abs(c.getPosition().y - 37 ), abs(c.getPosition().x ), false );
-
-        if( currentLevel->getScore(abs(c.getPosition().y - 37 ), abs(c.getPosition().x ) ) >= 0 )
-            bonus += currentLevel->getScore(abs(c.getPosition().y - 37 ), abs(c.getPosition().x ));
-
-        else{
-            if( abs (currentLevel->getScore( abs(c.getPosition().y - 37 ), abs(c.getPosition().x) ) )  > abs(malus) )
-                malus = currentLevel->getScore(abs(c.getPosition().y - 37 ), abs(c.getPosition().x ) );
-        }
-    }
+    mvprintw( 26, 66, "%d - %d ", x, y );
 
     //pilota
-    if( ! (currentLevel->isFree( abs(c.getPosition().y - 38 ), abs(c.getPosition().x  - 1 ) ) )  && 
-        currentLevel->isVisible(abs( c.getPosition().y - 38 ), abs(c.getPosition().x  - 1 ) ) ) {
+    if( ! (currentLevel->isFree(y, x) )  && 
+        currentLevel->isVisible(y, x) ) {
 
-            currentLevel->setVisible( abs(c.getPosition().y - 38 ), abs(c.getPosition().x  - 1), false );
+            currentLevel->setVisible(y, x, false );
 
-        if( currentLevel->getScore(abs(c.getPosition().y - 38 ), abs(c.getPosition().x ) - 1) >= 0 )
-            bonus += currentLevel->getScore(abs(c.getPosition().y - 38 ), abs(c.getPosition().x - 1 ));
+            score = currentLevel->getScore(y, x);
 
-        else{
-            if( abs (currentLevel->getScore( abs(c.getPosition().y - 38 ), abs(c.getPosition().x - 1) ) )  > abs(malus) )
-                malus = currentLevel->getScore(abs(c.getPosition().y - 38 ), abs(c.getPosition().x - 1) );
-        }
+            if( score >= 0 )
+                bonus += score;
+
+            else if( score < malus )
+                    malus = score;
     }
-     
+
+    if( y <= 0 )
+        y = currentLevel->getLength() - 1;
+
+    // Up-Sx
+    if( ! (currentLevel->isFree(y - 1, x - 1) )  && 
+        currentLevel->isVisible(y - 1 , x - 1) ) {
+
+            currentLevel->setVisible(y - 1, x - 1, false );
+
+            score = currentLevel->getScore(y - 1, x - 1);            
+
+            if( score >= 0 )
+                    bonus += score;
+
+                else if( score < malus )
+                        malus = score;
+    }
+
+
+    // Up-Dx
+    if( ! (currentLevel->isFree(y - 1, x + 1) )  && 
+        currentLevel->isVisible(y - 1 , x + 1) ) {
+
+            currentLevel->setVisible(y - 1, x + 1, false );
+
+            score = currentLevel->getScore(y - 1, x + 1);
+
+            if( score >= 0 )
+                    bonus += score;
+
+                else if( score < malus )
+                        malus = score;
+    }
+
+    y = c.getPosition().y;
+    if( y >= currentLevel->getLength() - 1)
+        y = 0;
+
+    // Down-Dx
+    if( ! (currentLevel->isFree(y + 1, x + 1) )  && 
+        currentLevel->isVisible(y + 1 , x + 1) ) {
+
+            currentLevel->setVisible(y + 1, x + 1, false );
+
+            score = currentLevel->getScore(y + 1, x + 1);
+
+            if( score >= 0 )
+                    bonus += score;
+
+                else if( score < malus )
+                        malus = score;
+    }
+
+    // Down-Sx
+    if( ! (currentLevel->isFree(y + 1, x - 1) )  && 
+        currentLevel->isVisible(y + 1 , x - 1) ) {
+
+            currentLevel->setVisible(y + 1, x - 1, false );
+
+            score = currentLevel->getScore(y + 1 , x - 1);
+
+            if( score >= 0 )
+                    bonus += score;
+
+                else if( score < malus )
+                        malus = score;
+    }
 
     return malus + bonus; 
     
 }
 
 void game::forwardNewLevel(int s){
-    start_Track = 1;
     c = car();
     currentLevel -> next = new level(s, HEIGHT_TRACK, currentLevel );
     currentLevel = currentLevel -> next;
+    start_Track = currentLevel->getLength() - HEIGHT_TRACK;
 }
 
 void game::forwardLevel(){
-    start_Track = 1;
     c = car();
     currentLevel = currentLevel -> next;
+    start_Track = currentLevel->getLength() - HEIGHT_TRACK;
 }
 
 void game::backLevel(){
-    start_Track = 1;
     c = car();
     currentLevel = currentLevel -> prev;
+    start_Track = currentLevel->getLength() - HEIGHT_TRACK;
 }
 
 bool game::loss(scorestage s){

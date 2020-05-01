@@ -18,7 +18,7 @@ const char HEIGHT_UI = 42;
 const char WIDTH_UI = 80;
 
 const char HEIGHT_TRACK = 40; // 0-39      centro 19
-const char WIDTH_TRACK = 47; //0-46        centro 24
+const char WIDTH_TRACK = 47; //0-46        centro 23
 
 
 #ifndef GAME_H
@@ -27,7 +27,7 @@ const char WIDTH_TRACK = 47; //0-46        centro 24
 class game {
 
     protected:
-        int  start_Track = 0; //linea in cui starta la pista
+        int  start_Track; //linea in cui starta la pista
         level *currentLevel;
         car c;
 
@@ -56,6 +56,8 @@ class game {
         bool carRight();
 
         void carForward();
+
+        void printTrack();
 
         //Downs the obstacler of 1 line
         void downTrack();
