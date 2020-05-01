@@ -175,7 +175,7 @@ int main(int argc, char *argv[]){
             
             s.addScore(g.collisions() + 10 ); // + 25);
 
-            timer = 100; //!960 fa 3 secondi di pausa  
+            timer = 200; //!960 fa 3 secondi di pausa  
 
              
         } else

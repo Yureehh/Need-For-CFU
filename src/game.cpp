@@ -135,24 +135,21 @@ void game::downTrack(){
 
 int game::collisionCheck(int y, int x){
        
-    int malus = 0, bonus = 0;
+    int malus=0, bonus=0, score=0;
 
 
-    if( ! (currentLevel->isFree(y, x) && currentLevel->isVisible(y, x) ) ){
+    if( ! (currentLevel->isFree(y, x) )  && 
+        currentLevel->isVisible(y, x) ) {
 
-        currentLevel->setVisible( y, x, false);
+            currentLevel->setVisible(y, x, false);
 
-        if(currentLevel->getScore(y, x)  > 0)
-            bonus += currentLevel->getScore(y, x);
+            score = currentLevel->getScore(y, x);
 
+            if( score >= 0 )
+                bonus += score;
 
-    /*
-      
-        if( (abs (currentLevel->getScore( y, x) ) )  > ( abs(malus) ) )
-            malus = currentLevel->getScore(y, x);
-        */
-
-
+            else if( score < malus )
+                    malus = score;
     }
     
     
@@ -163,121 +160,36 @@ int game::collisionCheck(int y, int x){
 
 int game::collisions(){
     
-        /*    int tot=0;
-
-            tot = collisionCheck( abs(c.getPosition().y - 39 ), abs(c.getPosition().x  - 2) );  //ruota in alto a sx
-            //collisionCheck( abs(c.getPosition().y - 39 ) , c.getPosition().x , 0 ) +  //ruota in alto a dx
-
-            //collisionCheck( abs(c.getPosition().y - 37 ), c.getPosition().x , 2 ) +  //ruota in basso a sx
-            //collisionCheck( abs(c.getPosition().y - 37 ), c.getPosition().x , 0 ) +  //ruota in basso a dx
-
-            //collisionCheck( abs(c.getPosition().y - 38 ), c.getPosition().x , 1 );   //pilota
-      return tot;
-
-*/
-
-    int malus=0, bonus=0, score=0;
-
-    int x = c.getPosition().x;
+    //inizialized as pilot's coordinates
     int y = c.getPosition().y;
+    int x = c.getPosition().x;
+
+    int tot=0;
     
+
     mvprintw( 26, 66, "%d - %d ", x, y );
 
-    //pilota
-    if( ! (currentLevel->isFree(y, x) )  && 
-        currentLevel->isVisible(y, x) ) {
+    //pilot's collision
+    tot = collisionCheck(y, x);
 
-            currentLevel->setVisible(y, x, false );
-
-            score = currentLevel->getScore(y, x);
-
-            if( score >= 0 )
-                bonus += score;
-
-            else if( score < malus )
-                    malus = score;
-    }
-
+    //to avoid bugs when pilot is on the last line of the track and the forward wheels on the first new one
     if( y <= 0 )
         y = currentLevel->getLength();
 
-    // Up-Sx
-    if( ! (currentLevel->isFree(y - 1, x - 1) )  && 
-        currentLevel->isVisible(y - 1 , x - 1) ) {
+    //forward wheels collisions     
+    tot += collisionCheck(y-1, x-1) + collisionCheck(y-1, x+1);
 
-            currentLevel->setVisible(y - 1, x - 1, false );
-
-            score = currentLevel->getScore(y - 1, x - 1);            
-
-            if( score >= 0 )
-                    bonus += score;
-
-                else if( score < malus )
-                        malus = score;
-    }
-
-
-    // Up-Dx
-    if( ! (currentLevel->isFree(y - 1, x + 1) )  && 
-        currentLevel->isVisible(y - 1 , x + 1) ) {
-
-            currentLevel->setVisible(y - 1, x + 1, false );
-
-            score = currentLevel->getScore(y - 1, x + 1);
-
-            if( score >= 0 )
-                    bonus += score;
-
-                else if( score < malus )
-                        malus = score;
-    }
-
+    //to avoid bugs when pilot is on the first line of the track and the back wheels on the last new one
     y = c.getPosition().y;
     if( y >= currentLevel->getLength() - 1)
         y = -1;
-
-    // Down-Dx
-    if( ! (currentLevel->isFree(y + 1, x + 1) )  && 
-        currentLevel->isVisible(y + 1 , x + 1) ) {
-
-            currentLevel->setVisible(y + 1, x + 1, false );
-
-            score = currentLevel->getScore(y + 1, x + 1);
-
-            if( score >= 0 )
-                    bonus += score;
-
-                else if( score < malus )
-                        malus = score;
-    }
-
-    // Down-Sx
-    if( ! (currentLevel->isFree(y + 1, x - 1) )  && 
-        currentLevel->isVisible(y + 1 , x - 1) ) {
-
-            currentLevel->setVisible(y + 1, x - 1, false );
-
-            score = currentLevel->getScore(y + 1 , x - 1);
-
-            if( score >= 0 )
-                    bonus += score;
-
-                else if( score < malus )
-                        malus = score;
-    }
-
-    return malus + bonus; 
+    
+    //back wheels collisions
+    tot+= collisionCheck(y+1, x-1) + collisionCheck(y+1, x+1);
+    
+    return tot;
     
 }
-
-/*
-void game::forwardNewLevel(int s){
-    c = car();
-    currentLevel -> next = new level(s, HEIGHT_TRACK, currentLevel );
-    currentLevel = currentLevel -> next;
-    start_Track = currentLevel->getLength() - HEIGHT_TRACK;
-}
-*/
 
 void game::NewLevel(int s, bool b){
     if(b){
