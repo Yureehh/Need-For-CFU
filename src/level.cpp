@@ -50,16 +50,16 @@ level::level(int stage, int length, level *l, bool b){
 */
    
     int lastspawn=0;
-    int maxH=1+(stage/2);
+    int maxH=3+(stage/2);
     int maxHPerLine=1;
-    int maxK=20+(stage*3);
+    int maxK=40+(stage*10);
     int maxSpawnPerLine=3;
     for (int i = 0; i < length-1; i++){
         maxSpawnPerLine=1+(stage/3);
         maxHPerLine=1;
         for (int j = 0; j < 47; j++){
             influence=rand()%20;
-            if(i < length - 25 && i > 5){
+            if(true){       //f(i < length - (length/2) && i > 5)
                 switch (influence)
                 {
                 case 0:
@@ -70,14 +70,19 @@ level::level(int stage, int length, level *l, bool b){
                 case 1:
                     if(lastspawn==0 && maxK!=0 && maxSpawnPerLine!=0){
                         track[i][j] = {true, &oneXone};
+                        if(i<=length-1 && i> length-10)
+                            setVisible(i,j,false);
                         lastspawn=3;
                         maxK--;
                         maxSpawnPerLine--;
                     }
                     break;
+                
                 case 7:
                 if(maxH!=0 && maxHPerLine!=0){
                     track[i][j] = {true, &boost};
+                    if(i<=length-1 && i> length-10)
+                            setVisible(i,j,false);
                     maxH--;
                     maxHPerLine--;
                     }
@@ -94,8 +99,14 @@ level::level(int stage, int length, level *l, bool b){
            
                 
         }
+    }/*
+    for (int i = 0; i < length-1; i++){
+        for (int j = 0; j < 47; j++){
+            if(i<=length-1 && i> length-10)
+            setVisible(i,j,false);
+        }
     }
-
+*/
 //---------
 }
 

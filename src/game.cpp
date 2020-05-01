@@ -9,11 +9,13 @@ game::game(int s){
 }
 
 
-void game::clearLevel(){
-    for(int i=0;i<HEIGHT_TRACK;i++){
-        for(int j=0;j<WIDTH_TRACK;j++){
-            if(!currentLevel->isFree(i,j) && (i!= 22 && j!= 7 && j!=11) )
-                currentLevel->setVisible(i,j, true);  
+void game::clearLevel(){  
+    for (int i = 0; i < currentLevel->getLength()-1; i++){
+        for (int j = 0; j < 47; j++){
+            if(i<=currentLevel->getLength()-1 && i> currentLevel->getLength()-10)
+                currentLevel->setVisible(i,j,false);
+            else if(!currentLevel->isFree(i,j))
+                currentLevel->setVisible(i,j, true);
         }
     }
 }
