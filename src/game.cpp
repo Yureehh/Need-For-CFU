@@ -278,29 +278,28 @@ void game::forwardNewLevel(int s){
 */
 
 void game::NewLevel(int s, bool b){
-    c = car();
     if(b){
-        currentLevel -> next = new level(s, HEIGHT_TRACK, currentLevel, b );
+        currentLevel -> next = new level(s, HEIGHT_TRACK + (s*5), currentLevel, b );
         currentLevel = currentLevel -> next;
         }
     else{
         currentLevel -> prev = new level(s, HEIGHT_TRACK, currentLevel, b );
         currentLevel = currentLevel -> prev;
     }
-
+    c = car(currentLevel->getLength() - 2, 23);
     start_Track = currentLevel->getLength() - HEIGHT_TRACK;
 }
 
-void game::forwardLevel(){
-    c = car();
+void game::forwardLevel(){  
     currentLevel = currentLevel -> next;
     start_Track = currentLevel->getLength() - HEIGHT_TRACK;
+    c = car(currentLevel->getLength() - 2, 23);
 }
 
 void game::backLevel(){
-    c = car();
     currentLevel = currentLevel -> prev;
     start_Track = currentLevel->getLength() - HEIGHT_TRACK;
+    c = car(currentLevel->getLength() - 2, 23);
 }
 
 bool game::loss(scorestage s){

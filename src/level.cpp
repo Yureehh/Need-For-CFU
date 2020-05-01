@@ -10,9 +10,8 @@ level::level(){
 level::level(int stage, int length, level *l, bool b){ 
     srand((stage+time(0))/2);   
     int influence;
-    oneXone = obstacle("K", -100, 1);
-    twoXone = obstacle("T", -1500, 1);
-    boost = obstacle("H", 200, 2);
+    oneXone = obstacle("K", -(500+(stage*30)), 1);
+    boost = obstacle("H", (150+(stage*10)), 2);
 
     this->length = length;
     this->next = NULL;
@@ -50,14 +49,14 @@ level::level(int stage, int length, level *l, bool b){
     track[39][15*stage] = {true, &oneXone};
 */
    
-//-------start here
     int lastspawn=0;
-    int maxH=2;
-    int maxK=stage*3;
-    int maxT=stage;
-    int maxSpawnPerLine=2;
+    int maxH=1+(stage/2);
+    int maxHPerLine=1;
+    int maxK=20+(stage*3);
+    int maxSpawnPerLine=3;
     for (int i = 0; i < length-1; i++){
-        maxSpawnPerLine=3;
+        maxSpawnPerLine=1+(stage/3);
+        maxHPerLine=1;
         for (int j = 0; j < 47; j++){
             influence=rand()%20;
             if(i < length - 25 && i > 5){
@@ -76,39 +75,12 @@ level::level(int stage, int length, level *l, bool b){
                         maxSpawnPerLine--;
                     }
                     break;
-                case 2:
-                    if(lastspawn==0 && maxT!=0 && j<46 && maxSpawnPerLine!=0){
-                        track[i][j] = {true, &twoXone};
-                        switch (rand()%4)
-                        {
-                        case 0:
-                            track[i+1][j] = {false, NULL};
-                            track[i+1][j] = {true, &twoXone};
-                            break;
-                        case 1:
-                            track[i][j+1] = {false, NULL};
-                            track[i][j+1] = {true, &twoXone};
-                            break;
-                        case 2:
-                            track[i][j-1] = {false, NULL};
-                            track[i][j-1] = {true, &twoXone};
-                            break;
-                        case 3:
-                            track[i-1][j] = {false, NULL};
-                            track[i-1][j] = {true, &twoXone};
-                            break;
-                        default:
-                            break;
-                        }
-                        lastspawn=3;
-                        maxT--;
-                        maxSpawnPerLine--;
-                    }
-                    break;
                 case 7:
-                if(maxH!=0){
+                if(maxH!=0 && maxHPerLine!=0){
                     track[i][j] = {true, &boost};
-                    maxH--;}
+                    maxH--;
+                    maxHPerLine--;
+                    }
                      if(lastspawn>0)
                         lastspawn--;
                     break;
@@ -120,10 +92,6 @@ level::level(int stage, int length, level *l, bool b){
                 }
             }
            
-            if ( i%12 == 0 && i!=0 && j == 23)
-                track[i][j] = {true, &oneXone};
-            else
-                track[i][j] = {false, NULL};
                 
         }
     }
