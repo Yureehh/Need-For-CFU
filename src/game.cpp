@@ -202,7 +202,7 @@ int game::collisions(){
     }
 
     if( y <= 0 )
-        y = currentLevel->getLength() - 1;
+        y = currentLevel->getLength();
 
     // Up-Sx
     if( ! (currentLevel->isFree(y - 1, x - 1) )  && 
@@ -237,7 +237,7 @@ int game::collisions(){
 
     y = c.getPosition().y;
     if( y >= currentLevel->getLength() - 1)
-        y = 0;
+        y = -1;
 
     // Down-Dx
     if( ! (currentLevel->isFree(y + 1, x + 1) )  && 

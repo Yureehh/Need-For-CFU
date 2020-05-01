@@ -37,6 +37,8 @@ level::level(int stage, int length, level *prev){
     track[length/2 - 1][28] = {true, &oneXone};
     track[length/2 + 1][16] = {true, &oneXone};
     track[length/2 + 1][30] = {true, &oneXone};
+    track[0][20] = {true, &oneXone};
+    track[39][30] = {true, &oneXone};
 
   /*  
 //-------start here

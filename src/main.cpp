@@ -180,7 +180,7 @@ int main(int argc, char *argv[]){
         } else
             timer--;
 
-/*
+
         if(s.getStage() != s.getLastLevel()){
             g.clearLevel();
             erase();
@@ -193,16 +193,14 @@ int main(int argc, char *argv[]){
                     g.forwardLevel();
             }
 
-            else{
+            else
                 g.backLevel();
-            }
 
             s.setlastLevel();
         }
         else
-        
             g.clearLine();
-*/        
+     
 
 
 
