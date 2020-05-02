@@ -6,12 +6,19 @@ game::game(int s){
     currentLevel = new level(s, HEIGHT_TRACK, NULL, true);
     start_Track = currentLevel->getLength() - HEIGHT_TRACK;
     c = car(currentLevel->getLength() - 2, 23);
+
+    uiWin = newwin(HEIGHT_UI, WIDTH_UI, 0, 0);
+    trackWin = newwin(HEIGHT_TRACK, WIDTH_TRACK + 2, 1, 1);
+    refresh();
+
+    printUI();
+
 }
 
 
 void game::clearLevel(){  
     for (int i = 0; i < currentLevel->getLength()-1; i++){
-        for (int j = 0; j < 47; j++){
+        for (int j = 0; j < WIDTH_TRACK; j++){
             if(i<=currentLevel->getLength()-1 && i> currentLevel->getLength()-10)
                 currentLevel->setVisible(i,j,false);
             else if(!currentLevel->isFree(i,j))
@@ -33,27 +40,18 @@ void game::clearLine(){
 //prints the game
 void game::printUI(){
 
-    for(int i = 0; i< HEIGHT_UI; i++) {
-        for (int j = 0; j < WIDTH_UI; j++) {
-            if(i == 0 || i == HEIGHT_UI-1) {
-                mvprintw(i, j, new char('-'));
-            }
-            else {
-                if(j == 0 || j == WIDTH_UI - 1)
-                    mvprintw(i, j, new char('|'));
-                else if(j == 1 || j == WIDTH_TRACK + 2 )
-                    mvprintw(i, j, new char('#'));
-                else
-                    mvprintw(i, j, new char(' ')); 
-            }
-        }
-    }
+    box(uiWin, '|', '-');
+    wborder(trackWin, '#', '#', ' ', ' ', '#', '#', '#', '#');
+    
+    wrefresh(uiWin);
+    wrefresh(trackWin);
+
 }
 
 //Prints the words
 void game::printScore(){
-    mvprintw(20,58,"Stage: ");
-    mvprintw(22,58,"Score: ");
+    mvwprintw(uiWin,20,58,"Stage: ");
+    mvwprintw(uiWin,22,58,"Score: ");
 }
 
 void game::carPrint(){
@@ -93,8 +91,6 @@ void game::printTrack(){
 
     int r = start_Track;
 
-    mvprintw( 24, 66, "%d ", start_Track);
-
     for (int i = 0; i < HEIGHT_TRACK; i++){
         for (int j = 0; j < WIDTH_TRACK; j++){
             // Loop when u finish the map
@@ -102,20 +98,21 @@ void game::printTrack(){
                 r = 0;
             // Stamp the CHAR only when there is an obstacle -> !isFree
             if ( currentLevel->isFree(r, j) )
-                mvprintw( i+1, j+2, " " );
+                mvwprintw(trackWin, i, j+1, " " );
             else{
                 if ( currentLevel->isVisible(r, j) ){
-                    attron(COLOR_PAIR(currentLevel->getColor(r, j)));
-                    mvprintw(i+1, j+2, currentLevel->getChar(r, j) );
-                    attroff(COLOR_PAIR(currentLevel->getColor(r, j)));
+                    wattron(trackWin, COLOR_PAIR(currentLevel->getColor(r, j)));
+                    mvwprintw(trackWin, i, j+1, currentLevel->getChar(r, j) );
+                    wattroff(trackWin, COLOR_PAIR(currentLevel->getColor(r, j)));
                 }
             }
         }
 
-        mvprintw(i + 1, WIDTH_TRACK + 2, "%d ", r);
         r++;
 
     }
+
+    wrefresh(trackWin);
 
 }
 
@@ -165,9 +162,6 @@ int game::collisions(){
     int x = c.getPosition().x;
 
     int tot=0;
-    
-
-    mvprintw( 26, 66, "%d - %d ", x, y );
 
     //pilot's collision
     tot = collisionCheck(y, x);

@@ -28,9 +28,9 @@ class game {
 
     protected:
         int  start_Track; //linea in cui starta la pista
+        WINDOW *uiWin, *trackWin;
         level *currentLevel;
         car c;
-
 
     public:
         //Initialize the game
