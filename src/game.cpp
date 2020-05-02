@@ -225,6 +225,7 @@ void game::changeLevel(){
     start_Track = currentLevel->getLength() - HEIGHT_TRACK;
     c = car(currentLevel->getLength() - 2, 23);
     werase(trackWin);
+    wrefresh(trackWin);
 }
 
 void game::pause(){
@@ -244,7 +245,11 @@ void game::pause(){
 
 bool game::loss(scorestage s){
     if(s.getScore() <= 0){
-        erase();
+        
+        werase(trackWin);
+        printUI();
+        wrefresh(trackWin);
+
         mvprintw(21, 17, "Take the L!");
         mvprintw(23, 5, "Your record this run has been %d points!", s.getMaxScore());
         while(!kbhit());
