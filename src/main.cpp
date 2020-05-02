@@ -1,11 +1,8 @@
-#include <ncurses.h>
-#include <menu.h>
 #include <iostream>
+#include <menu.h>
 #include <cstdlib>
 #include <unistd.h>
 #include "game.h"
-#include "level.h"
-#include "utilities.h"
 
 // ! Usare mvinch(x,y) per sapere che char è fatto vedere in x,y
 
@@ -17,32 +14,16 @@ const char *choices[] = {
                         "Quit",
                   };
 
-int main(int argc, char *argv[]){
+bool mainMenu(){
 
     int termX, termY;
-
-    ITEM** my_items;
-	int c;				
-	MENU *my_menu;
-	int n_choices, i;
-	ITEM *cur_item;
-
-    // _ Setup ncurses
-    setlocale( LC_ALL, "" );
-    initscr();
-
-    // Setup Colors
-    start_color();
-    use_default_colors();
-    init_pair(1, COLOR_RED, -1);
-    init_pair(2, COLOR_GREEN, -1);
-
-    noecho();
-    curs_set(FALSE);
-    nodelay(stdscr, TRUE);
-    keypad(stdscr, TRUE);
-
     getmaxyx(stdscr, termY, termX);
+    
+	int c;
+	int n_choices, i;
+    MENU *my_menu;
+    ITEM** my_items;
+	ITEM *cur_item;
 
     // _ Title
     mvprintw(termY/4 - 2, termX/2 - 42, "_____   __         _________   __________                 ______________________  __");
@@ -97,8 +78,7 @@ int main(int argc, char *argv[]){
                         startgame = true;
                         break;
                     case 1:
-                        endwin();
-                        exit(0);
+                        return false; // Aka quit
                         break;
                 }
 		}
@@ -110,11 +90,17 @@ int main(int argc, char *argv[]){
     free_menu(my_menu);
     for(i = 0; i < n_choices; ++i)
             free_item(my_items[i]);
-
+            
     erase();
 
+    return true;
+
+}
+
+void startGame(){
+    
     //inizialize points and game
-    scorestage s = scorestage(1950);
+    scorestage s = scorestage(300);
     game g = game( s.getStage() );
 
     //Print the UI
@@ -224,14 +210,39 @@ int main(int argc, char *argv[]){
         else
             g.clearLine();
 
+
         s.printScoreStage();
         g.carPrint();
         refresh();
         if( g.loss(s) )
             break;
-
     }
 
+    erase();
+
+}
+
+int main(int argc, char *argv[]){
+
+    // _ Setup ncurses
+    setlocale( LC_ALL, "" );
+    initscr();
+
+    // Setup Colors
+    start_color();
+    use_default_colors();
+    init_pair(1, COLOR_RED, -1);
+    init_pair(2, COLOR_GREEN, -1);
+
+    noecho();
+    curs_set(FALSE);
+    nodelay(stdscr, TRUE);
+    keypad(stdscr, TRUE);
+
+    // Start the game, quit only if when specified
+    while(mainMenu())
+        startGame();  
 
     endwin();
+
 }
