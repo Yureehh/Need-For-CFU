@@ -6,6 +6,8 @@ scorestage::scorestage(int s){
     score = s;
     record = lowest = score;
     lastLevel = getStage();
+    scoreWin = newwin(3, 20, 20, 58);
+    refresh();
 }
 
 //getter for the score
@@ -43,9 +45,17 @@ void scorestage::addScore(int x){
         lowest = score;
 }
 
+//Prints the words
+void scorestage::printScoreText(){
+    mvwprintw(scoreWin,0,0,"Stage: ");
+    mvwprintw(scoreWin,2,0,"Score: ");
+    wrefresh(scoreWin);
+}
+
 //prints score and level
 void scorestage::printScoreStage(){
-    mvprintw(20 ,66, "%d", getStage());
-    mvprintw(22 ,66, "%d ",this->score);
+    mvwprintw(scoreWin, 0 ,8, "%d", getStage());
+    mvwprintw(scoreWin, 2 ,8, "%d ",this->score);
+    wrefresh(scoreWin);
 }
 

@@ -12,6 +12,7 @@ protected:
     int record;
     int lowest;
     int lastLevel;
+    WINDOW *scoreWin;
 public:
     //constructor to inizialize points
    scorestage(int);
@@ -26,6 +27,7 @@ public:
     //add points
     void addScore(int);
     //prints score and level
+    void printScoreText();
     void printScoreStage();
 
     void setlastLevel();

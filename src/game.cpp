@@ -48,12 +48,6 @@ void game::printUI(){
 
 }
 
-//Prints the words
-void game::printScore(){
-    mvwprintw(uiWin,20,58,"Stage: ");
-    mvwprintw(uiWin,22,58,"Score: ");
-}
-
 void game::carPrint(){
     c.stampa();
 }

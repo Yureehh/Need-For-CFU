@@ -110,14 +110,14 @@ int main(int argc, char *argv[]){
 
     erase();
 
-    //inizialize points
+    //inizialize points and game
     scorestage s = scorestage(1500);
-    s.printScoreStage();
+    game g = game( s.getStage() );
 
     //Print the UI
-    game g = game( s.getStage() );
     g.printUI();
-    g.printScore();
+    s.printScoreText();
+    s.printScoreStage();
 
 
     //countdown

@@ -43,9 +43,6 @@ class game {
 
         void clearLine();
 
-        //Prints the words
-        void printScore();
-
         // Car controls and Render
         void carPrint();
 
