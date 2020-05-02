@@ -9,7 +9,7 @@ game::game(int s){
 
     uiWin = newwin(HEIGHT_UI, WIDTH_UI, 0, 0);
     trackWin = newwin(HEIGHT_TRACK, WIDTH_TRACK + 2, 1, 1);
-    pauseWin = newwin(5, 13, HEIGHT_TRACK/2, WIDTH_TRACK/2);
+    pauseWin = newwin(5, 15, HEIGHT_TRACK/2, WIDTH_TRACK/2);
 
     refresh();
 
@@ -184,33 +184,54 @@ int game::collisions(){
 void game::NewLevel(int s, bool b){
     if(b){
         currentLevel -> next = new level(s, HEIGHT_TRACK + (s*5), currentLevel, b );
-        currentLevel = currentLevel -> next;
-        }
+        forwardLevel();
+    }
     else{
         currentLevel -> prev = new level(s, HEIGHT_TRACK, currentLevel, b );
-        currentLevel = currentLevel -> prev;
+        backLevel();
     }
-    c = car(currentLevel->getLength() - 2, 23);
-    start_Track = currentLevel->getLength() - HEIGHT_TRACK;
+
 }
 
-void game::forwardLevel(){  
+void game::forwardLevel(){
     currentLevel = currentLevel -> next;
-    start_Track = currentLevel->getLength() - HEIGHT_TRACK;
-    c = car(currentLevel->getLength() - 2, 23);
+
+    box(pauseWin, 0, 0);
+    wattron(pauseWin, COLOR_PAIR(2));
+    mvwprintw(pauseWin, 2, 4, "LEVEL %d", currentLevel->getStage());
+    wattroff(pauseWin, COLOR_PAIR(2));
+    wrefresh(pauseWin);
+
+    sleep(3);
+
+    changeLevel();
 }
 
 void game::backLevel(){
     currentLevel = currentLevel -> prev;
+
+    box(pauseWin, 0, 0);
+    wattron(pauseWin, COLOR_PAIR(1));
+    mvwprintw(pauseWin, 2, 4, "LEVEL %d", currentLevel->getStage());
+    wattroff(pauseWin, COLOR_PAIR(1));
+    wrefresh(pauseWin);
+
+    sleep(3);
+
+    changeLevel();
+}
+
+void game::changeLevel(){
     start_Track = currentLevel->getLength() - HEIGHT_TRACK;
     c = car(currentLevel->getLength() - 2, 23);
+    werase(trackWin);
 }
 
 void game::pause(){
     int c;
 
     box(pauseWin, 0, 0);
-    mvwprintw(pauseWin, 2, 4, "PAUSE");
+    mvwprintw(pauseWin, 2, 5, "PAUSE");
 
     wrefresh(pauseWin);
 

@@ -114,7 +114,7 @@ int main(int argc, char *argv[]){
     erase();
 
     //inizialize points and game
-    scorestage s = scorestage(1500);
+    scorestage s = scorestage(1950);
     game g = game( s.getStage() );
 
     //Print the UI
@@ -195,10 +195,10 @@ int main(int argc, char *argv[]){
 
         //checks if u have enough points to swap level
         if(s.getStage() != s.getLastLevel()){
+            
             g.clearLevel();
-            erase();
-            g.printUI();
-
+            g.carPrint();
+            
             if(s.getStage() > s.getLastLevel()){
                 if(s.getScore() == s.getMaxScore() )
                     g.NewLevel(s.getStage(), true );
@@ -214,21 +214,18 @@ int main(int argc, char *argv[]){
                 else
                     g.backLevel();
             }
+            // Reprint everything inside the trackWindow
+            g.printUI();
+            g.printTrack();
+            s.printScoreText();
 
             s.setlastLevel();
         }
         else
             g.clearLine();
-        
-     
-
-
-
-         //inserire animazione cambio livello w la figa O:
-
 
         s.printScoreStage();
-        g.carPrint();    
+        g.carPrint();
         refresh();
         if( g.loss(s) )
             break;

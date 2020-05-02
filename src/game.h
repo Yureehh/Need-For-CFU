@@ -69,6 +69,8 @@ class game {
 
         void backLevel();
 
+        void changeLevel();
+
         void pause();
 
         bool loss(scorestage);

@@ -18,6 +18,7 @@ class level{
             obstacle *obst;
         };
 
+        int stage;
         int length;
         // this->prev->next = this;
         obstacle oneXone;
@@ -45,6 +46,8 @@ class level{
 
         int getColor(int, int);
         
+        int getStage();
+
         int getLength();
 
 };

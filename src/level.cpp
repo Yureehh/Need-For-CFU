@@ -8,11 +8,12 @@ level::level(){
 }
 
 level::level(int stage, int length, level *l, bool b){ 
-    srand((stage+time(0))/2);   
+    srand((stage+time(0))/2);
     int influence;
     oneXone = obstacle("K", -(500+(stage*30)), 1);
     boost = obstacle("H", (150+(stage*10)), 2);
 
+    this->stage = stage;
     this->length = length;
     this->next = NULL;
     this->prev = NULL;
@@ -132,6 +133,10 @@ int level::getScore(int y, int x){
 
 int level::getColor(int y, int x){
     return track[y][x].obst->getColor();
+}
+
+int level::getStage(){
+    return stage;
 }
 
 int level::getLength(){
