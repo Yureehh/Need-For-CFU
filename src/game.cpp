@@ -9,7 +9,10 @@ game::game(int s){
 
     uiWin = newwin(HEIGHT_UI, WIDTH_UI, 0, 0);
     trackWin = newwin(HEIGHT_TRACK, WIDTH_TRACK + 2, 1, 1);
-    pauseWin = newwin(5, 15, HEIGHT_TRACK/2, WIDTH_TRACK/2);
+
+    int y,x;
+    getmaxyx(trackWin, y, x);
+    pauseWin = derwin(trackWin, 5, 15, y/2 - 2, x/2 - 8);
 
     refresh();
 
@@ -196,6 +199,7 @@ void game::NewLevel(int s, bool b){
 void game::forwardLevel(){
     currentLevel = currentLevel -> next;
 
+    werase(pauseWin);
     box(pauseWin, 0, 0);
     wattron(pauseWin, COLOR_PAIR(2));
     mvwprintw(pauseWin, 2, 4, "LEVEL %d", currentLevel->getStage());
@@ -210,6 +214,7 @@ void game::forwardLevel(){
 void game::backLevel(){
     currentLevel = currentLevel -> prev;
 
+    werase(pauseWin);
     box(pauseWin, 0, 0);
     wattron(pauseWin, COLOR_PAIR(1));
     mvwprintw(pauseWin, 2, 4, "LEVEL %d", currentLevel->getStage());
@@ -231,15 +236,12 @@ void game::changeLevel(){
 void game::pause(){
     int c;
 
+    werase(pauseWin);
     box(pauseWin, 0, 0);
     mvwprintw(pauseWin, 2, 5, "PAUSE");
-
     wrefresh(pauseWin);
 
     while((c = wgetch(pauseWin)) != 27);
-
-    werase(pauseWin);
-    printTrack();
 
 }
 

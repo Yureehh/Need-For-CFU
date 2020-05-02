@@ -158,6 +158,8 @@ void startGame(){
                 
                 case 27:
                     g.pause();
+                    g.printTrack();
+                    break;
             }
 
             s.addScore( g.collisions() );
