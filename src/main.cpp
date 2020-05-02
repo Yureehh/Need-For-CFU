@@ -28,6 +28,7 @@ int main(int argc, char *argv[]){
 	ITEM *cur_item;
 
     // _ Setup ncurses
+    setlocale( LC_ALL, "" );
     initscr();
 
     // Setup Colors
@@ -43,20 +44,22 @@ int main(int argc, char *argv[]){
 
     getmaxyx(stdscr, termY, termX);
 
+    // _ Title
+    mvprintw(termY/4 - 2, termX/2 - 42, "_____   __         _________   __________                 ______________________  __");
+    mvprintw(termY/4 - 1, termX/2 - 42, "___  | / /_______________  /   ___  ____/_____________    __  ____/__  ____/_  / / /");
+    mvprintw(termY/4    , termX/2 - 42, "__   |/ /_  _ \\  _ \\  __  /    __  /_   _  __ \\_  ___/    _  /    __  /_   _  / / /");
+    mvprintw(termY/4 + 1, termX/2 - 42, "_  /|  / /  __/  __/ /_/ /     _  __/   / /_/ /  /        / /___  _  __/   / /_/ /");
+    mvprintw(termY/4 + 2, termX/2 - 42, "/_/ |_/  \\___/\\___/\\__,_/      /_/      \\____//_/         \\____/  /_/      \\____/");
+
+    box(stdscr, '|', '-');
+    refresh();
+
     // _ Menù
     // ? Set window
-    WINDOW *my_menu_win = newwin(termY, termX, 0, 0);
+    WINDOW *my_menu_win = newwin(8, 16, termY/4*3, termX/2 - 6);
+    box(my_menu_win, 0, 0);
 
     keypad(my_menu_win, TRUE);
-
-    // ? Print title
-    mvwprintw(my_menu_win, termY/4 - 2, termX/2 - 42, "_____   __         _________   __________                 ______________________  __");
-    mvwprintw(my_menu_win, termY/4 - 1, termX/2 - 42, "___  | / /_______________  /   ___  ____/_____________    __  ____/__  ____/_  / / /");
-    mvwprintw(my_menu_win, termY/4    , termX/2 - 42, "__   |/ /_  _ \\  _ \\  __  /    __  /_   _  __ \\_  ___/    _  /    __  /_   _  / / /");
-    mvwprintw(my_menu_win, termY/4 + 1, termX/2 - 42, "_  /|  / /  __/  __/ /_/ /     _  __/   / /_/ /  /        / /___  _  __/   / /_/ /");
-    mvwprintw(my_menu_win, termY/4 + 2, termX/2 - 42, "/_/ |_/  \\___/\\___/\\__,_/      /_/      \\____//_/         \\____/  /_/      \\____/");
-
-    box(my_menu_win, '|', '-');
 
     // ? Set up menu choices
     n_choices = ARRAY_SIZE(choices);
@@ -70,9 +73,9 @@ int main(int argc, char *argv[]){
 
     // ? Menu's Windows
     set_menu_win(my_menu, my_menu_win);
-    set_menu_sub(my_menu, derwin(my_menu_win, 6, 13, termY/4*3, termX/2 - 6));
+    set_menu_sub(my_menu, derwin(my_menu_win, 6, 13, 1, 1));
     
-    set_menu_mark(my_menu, " * ");
+    set_menu_mark(my_menu, " > ");
 
     // ? Post-it
 	post_menu(my_menu);
