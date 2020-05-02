@@ -21,9 +21,9 @@ bool mainMenu(){
     
 	int c;
 	int n_choices, i;
-    MENU *my_menu;
-    ITEM** my_items;
-	ITEM *cur_item;
+    MENU *menu;
+    ITEM** items;
+	ITEM *currentIitem;
 
     // _ Title
     mvprintw(termY/4 - 2, termX/2 - 42, "_____   __         _________   __________                 ______________________  __");
@@ -37,43 +37,43 @@ bool mainMenu(){
 
     // _ Menù
     // ? Set window
-    WINDOW *my_menu_win = newwin(8, 16, termY/4*3, termX/2 - 6);
-    box(my_menu_win, 0, 0);
+    WINDOW *menuWin = newwin(8, 16, termY/4*3, termX/2 - 6);
+    box(menuWin, 0, 0);
 
-    keypad(my_menu_win, TRUE);
+    keypad(menuWin, TRUE);
 
     // ? Set up menu choices
     n_choices = ARRAY_SIZE(choices);
-	my_items = new ITEM*[n_choices + 1];
+	items = new ITEM*[n_choices + 1];
 
 	for(i = 0; i < n_choices; ++i)
-	        my_items[i] = new_item(choices[i],"");
-	my_items[n_choices] = (ITEM *)NULL;
+	        items[i] = new_item(choices[i],"");
+	items[n_choices] = (ITEM *)NULL;
 
-	my_menu = new_menu(my_items);
+	menu = new_menu(items);
 
     // ? Menu's Windows
-    set_menu_win(my_menu, my_menu_win);
-    set_menu_sub(my_menu, derwin(my_menu_win, 6, 13, 1, 1));
+    set_menu_win(menu, menuWin);
+    set_menu_sub(menu, derwin(menuWin, 6, 13, 1, 1));
     
-    set_menu_mark(my_menu, " > ");
+    set_menu_mark(menu, " > ");
 
     // ? Post-it
-	post_menu(my_menu);
-	wrefresh(my_menu_win);
+	post_menu(menu);
+	wrefresh(menuWin);
 
     int startgame = false;
 
-	while(!startgame && (c = tolower(wgetch(my_menu_win))) != KEY_F(1)){
+	while(!startgame && (c = tolower(wgetch(menuWin))) != KEY_F(1)){
         switch(c){
             case 's':
-		        menu_driver(my_menu, REQ_DOWN_ITEM);
+		        menu_driver(menu, REQ_DOWN_ITEM);
 				break;
 			case 'w':
-				menu_driver(my_menu, REQ_UP_ITEM);
+				menu_driver(menu, REQ_UP_ITEM);
 				break;
             case 10: // ENTER
-                switch(item_index(current_item(my_menu))){
+                switch(item_index(current_item(menu))){
                     case 0:
                         startgame = true;
                         break;
@@ -82,14 +82,14 @@ bool mainMenu(){
                         break;
                 }
 		}
-        wrefresh(my_menu_win);
+        wrefresh(menuWin);
 	}
     
     // ? Clear all the menu
-    unpost_menu(my_menu);
-    free_menu(my_menu);
+    unpost_menu(menu);
+    free_menu(menu);
     for(i = 0; i < n_choices; ++i)
-            free_item(my_items[i]);
+            free_item(items[i]);
             
     erase();
 
