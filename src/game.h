@@ -28,7 +28,7 @@ class game {
 
     protected:
         int  start_Track; //linea in cui starta la pista
-        WINDOW *uiWin, *trackWin;
+        WINDOW *uiWin, *trackWin, *pauseWin;
         level *currentLevel;
         car c;
 
@@ -68,6 +68,8 @@ class game {
         void forwardLevel();
 
         void backLevel();
+
+        void pause();
 
         bool loss(scorestage);
 

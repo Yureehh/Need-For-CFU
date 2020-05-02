@@ -155,16 +155,23 @@ int main(int argc, char *argv[]){
         //checks if lateral displacements collides with walls or obstacles
         if(kbhit()){
             ch = tolower(getch()); // Avoids mis match with 'A' and 'a'
-            if(ch == 'a'){
-                g.carClean();
-                if(!g.carLeft())
-                    s.addScore(-500);   
-            }  
 
-            if(ch == 'd'){
-                g.carClean();
-                if(!g.carRight())
-                    s.addScore(-500);
+            switch(ch){
+            
+                case 'a':
+                    g.carClean();
+                    if(!g.carLeft())
+                        s.addScore(-500);
+                    break;
+            
+                case 'd':
+                    g.carClean();
+                    if(!g.carRight())
+                        s.addScore(-500);
+                    break;
+                
+                case 27:
+                    g.pause();
             }
 
             s.addScore( g.collisions() );

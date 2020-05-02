@@ -9,6 +9,8 @@ game::game(int s){
 
     uiWin = newwin(HEIGHT_UI, WIDTH_UI, 0, 0);
     trackWin = newwin(HEIGHT_TRACK, WIDTH_TRACK + 2, 1, 1);
+    pauseWin = newwin(5, 13, HEIGHT_TRACK/2, WIDTH_TRACK/2);
+
     refresh();
 
     printUI();
@@ -202,6 +204,21 @@ void game::backLevel(){
     currentLevel = currentLevel -> prev;
     start_Track = currentLevel->getLength() - HEIGHT_TRACK;
     c = car(currentLevel->getLength() - 2, 23);
+}
+
+void game::pause(){
+    int c;
+
+    box(pauseWin, 0, 0);
+    mvwprintw(pauseWin, 2, 4, "PAUSE");
+
+    wrefresh(pauseWin);
+
+    while((c = wgetch(pauseWin)) != 27);
+
+    werase(pauseWin);
+    printTrack();
+
 }
 
 bool game::loss(scorestage s){
