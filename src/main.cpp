@@ -154,7 +154,7 @@ int main(int argc, char *argv[]){
 
         //checks if lateral displacements collides with walls or obstacles
         if(kbhit()){
-            ch = getch();
+            ch = tolower(getch()); // Avoids mis match with 'A' and 'a'
             if(ch == 'a'){
                 g.carClean();
                 if(!g.carLeft())
