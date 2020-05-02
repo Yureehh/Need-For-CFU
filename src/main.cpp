@@ -83,12 +83,12 @@ int main(int argc, char *argv[]){
 
     int startgame = false;
 
-	while(!startgame && (c = wgetch(my_menu_win)) != KEY_F(1)){
+	while(!startgame && (c = tolower(wgetch(my_menu_win))) != KEY_F(1)){
         switch(c){
-            case KEY_DOWN:
+            case 's':
 		        menu_driver(my_menu, REQ_DOWN_ITEM);
 				break;
-			case KEY_UP:
+			case 'w':
 				menu_driver(my_menu, REQ_UP_ITEM);
 				break;
             case 10: // ENTER
