@@ -56,6 +56,8 @@ int main(int argc, char *argv[]){
     mvwprintw(my_menu_win, termY/4 + 1, termX/2 - 42, "_  /|  / /  __/  __/ /_/ /     _  __/   / /_/ /  /        / /___  _  __/   / /_/ /");
     mvwprintw(my_menu_win, termY/4 + 2, termX/2 - 42, "/_/ |_/  \\___/\\___/\\__,_/      /_/      \\____//_/         \\____/  /_/      \\____/");
 
+    box(my_menu_win, '|', '-');
+
     // ? Set up menu choices
     n_choices = ARRAY_SIZE(choices);
 	my_items = new ITEM*[n_choices + 1];
@@ -117,7 +119,7 @@ int main(int argc, char *argv[]){
     g.printUI();
     g.printScore();
 
-  
+
     //countdown
     mvprintw(21, 22, "Ready");
     refresh();
