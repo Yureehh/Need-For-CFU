@@ -11,7 +11,7 @@ level::level(int stage, int length, level *l, bool b){
     srand((stage+time(0))/2);
     int influence;
     oneXone = obstacle("K", -(500+(stage*30)), 1);
-    boost = obstacle("H", (150+(stage*10)), 2);
+    boost = obstacle("H", (150+(stage*50)), 2);
 
     this->stage = stage;
     this->length = length;
@@ -51,13 +51,14 @@ level::level(int stage, int length, level *l, bool b){
 */
    
     int lastspawn=0;
-    int maxH=3+(stage/2);
-    int maxHPerLine=1;
-    int maxK=40+(stage*10);
+    int maxK=40+(stage*20);
     int maxSpawnPerLine=3;
+    int maxH=3+(length / (stage*2));
+    int hDistancing=5;
     for (int i = 0; i < length-1; i++){
         maxSpawnPerLine=1+(stage/3);
-        maxHPerLine=1;
+        if(hDistancing>0)
+            hDistancing--;
         for (int j = 0; j < 47; j++){
             influence=rand()%20;
             if(true){       //f(i < length - (length/2) && i > 5)
@@ -80,12 +81,12 @@ level::level(int stage, int length, level *l, bool b){
                     break;
                 
                 case 7:
-                if(maxH!=0 && maxHPerLine!=0){
+                if(maxH!=0 && hDistancing==0){
                     track[i][j] = {true, &boost};
                     if(i<=length-1 && i> length-10)
                             setVisible(i,j,false);
                     maxH--;
-                    maxHPerLine--;
+                    hDistancing=5;
                     }
                      if(lastspawn>0)
                         lastspawn--;
