@@ -175,7 +175,7 @@ void startGame(){
             
             s.addScore(g.collisions() + 10 ); // + 25);
 
-            timer = 200; //!960 fa 3 secondi di pausa  
+            timer = g.clock(); //!960 fa 3 secondi di pausa  
 
              
         } else

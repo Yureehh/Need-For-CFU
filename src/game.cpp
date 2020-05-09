@@ -1,5 +1,5 @@
 #include "game.h"
-
+#include "math.h"
 
 //Initialize the game
 game::game(int s){
@@ -258,4 +258,8 @@ bool game::loss(scorestage s){
         return true;
     }
     return false;
+}
+
+int game::clock(){
+    return 272+(190/pow(1.6,currentLevel->getStage()));
 }

@@ -74,6 +74,8 @@ class game {
         void pause();
 
         bool loss(scorestage);
+    
+        int clock();
 
 };
 
