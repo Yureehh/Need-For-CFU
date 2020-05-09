@@ -16,9 +16,11 @@ const char *choices[] = {
 
 bool mainMenu(){
 
+    flushinp(); // Discard any keyboard input
+
     int termX, termY;
     getmaxyx(stdscr, termY, termX);
-    
+
 	int c;
 	int n_choices, i;
     MENU *menu;
@@ -120,11 +122,11 @@ void startGame(){
     refresh();
     sleep(1);
     //mvprintw(21, 24, " ");
-    
+
+    flushinp(); // Discard any keyboard input
 
     //prints the starting Track with the car and obstacles
     g.printTrack();
-    //g.primaStampa();
     g.carPrint();
     refresh();
 

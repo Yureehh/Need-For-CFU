@@ -254,6 +254,12 @@ bool game::loss(scorestage s){
 
         mvprintw(21, 17, "Take the L!");
         mvprintw(23, 5, "Your record this run has been %d points!", s.getMaxScore());
+        
+        refresh();
+
+        sleep(1);
+        flushinp(); // Discard any keyboard input
+        
         while(!kbhit());
         return true;
     }
