@@ -186,7 +186,7 @@ int game::collisions(){
 
 void game::NewLevel(int s, bool b){
     if(b){
-        currentLevel -> next = new level(s, HEIGHT_TRACK + (s*5), currentLevel, b );
+        currentLevel -> next = new level(s, HEIGHT_TRACK + (s*10), currentLevel, b );
         forwardLevel();
     }
     else{
