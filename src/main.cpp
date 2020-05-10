@@ -103,6 +103,7 @@ bool mainMenu(){
     set_menu_sub(menu, derwin(menuWin, 6, 13, 1, 1));
     
     set_menu_mark(menu, " > ");
+    set_menu_spacing(menu, 0, 2, 0);
 
     // ? Post-it
 	post_menu(menu);
