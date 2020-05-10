@@ -11,6 +11,7 @@
 
 const char *choices[] = {
                         "Start Game",
+                        "Credits",
                         "Quit",
                   };
 
@@ -81,9 +82,9 @@ bool mainMenu(){
     refresh();
 
     // _ Menù
-    // ? Set window
+    // ? Set windows
     WINDOW *menuWin = newwin(8, 16, termY/4*3, termX/2 - 6);
-    box(menuWin, 0, 0);
+    WINDOW *creditsWin = newwin(5, 20,termY/4*3, termX/2 - 9);
 
     keypad(menuWin, TRUE);
 
@@ -122,7 +123,31 @@ bool mainMenu(){
                     case 0:
                         startgame = true;
                         break;
-                    case 1:
+                    case 1:                      
+                        unpost_menu(menu);
+                        wclear(menuWin);
+                        wrefresh(menuWin);
+
+                        mvwprintw(creditsWin, 0, 0, "Alessandro Filippini");
+                        mvwprintw(creditsWin, 2, 0, "   Filippo Bertozzi");
+                        mvwprintw(creditsWin, 4, 0, "      Juri Fabbri");
+                        wrefresh(creditsWin);
+                        refresh();
+
+                        sleep(1);
+                        flushinp();
+                        while(!kbhit());
+
+                        // Restamp the menu
+                        wclear(creditsWin);
+                        wrefresh(creditsWin);
+                        post_menu(menu);
+                        wrefresh(menuWin);
+                        refresh();
+
+                        flushinp();
+                        break;
+                    case 2:
                         return false; // Aka quit
                         break;
                 }
