@@ -86,7 +86,7 @@ bool mainMenu(){
     // _ Menù
     // ? Set windows
     WINDOW *menuWin = newwin(8, 16, termY/4*3, termX/2 - 6);
-    WINDOW *creditsWin = newwin(5, 20,termY/4*3, termX/2 - 9);
+    WINDOW *creditsWin = newwin(5, 20, termY/4*3 + 1, termX/2 - 9);
 
     keypad(menuWin, TRUE);
 
