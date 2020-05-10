@@ -28,11 +28,54 @@ bool mainMenu(){
 	ITEM *currentIitem;
 
     // _ Title
+    attron(COLOR_PAIR(4));
     mvprintw(termY/4 - 2, termX/2 - 42, "_____   __         _________   __________                 ______________________  __");
     mvprintw(termY/4 - 1, termX/2 - 42, "___  | / /_______________  /   ___  ____/_____________    __  ____/__  ____/_  / / /");
     mvprintw(termY/4    , termX/2 - 42, "__   |/ /_  _ \\  _ \\  __  /    __  /_   _  __ \\_  ___/    _  /    __  /_   _  / / /");
     mvprintw(termY/4 + 1, termX/2 - 42, "_  /|  / /  __/  __/ /_/ /     _  __/   / /_/ /  /        / /___  _  __/   / /_/ /");
     mvprintw(termY/4 + 2, termX/2 - 42, "/_/ |_/  \\___/\\___/\\__,_/      /_/      \\____//_/         \\____/  /_/      \\____/");
+    attroff(COLOR_PAIR(4));
+
+    // ? Color
+    attron(COLOR_PAIR(3));
+
+    // First line
+    mvprintw(termY/4 - 2, termX/2 - 42, "___");
+    mvprintw(termY/4 - 2, termX/2 - 42 + 19, "_______");
+    mvprintw(termY/4 - 2, termX/2 - 42 + 31, "____");
+    mvprintw(termY/4 - 2, termX/2 - 42 + 58, "___");
+    mvprintw(termY/4 - 2, termX/2 - 42 + 67, "___");
+    mvprintw(termY/4 - 2, termX/2 - 42 + 76, "__");
+
+    // Second Line
+    mvprintw(termY/4 - 1, termX/2 - 42, "___");
+    mvprintw(termY/4 - 1, termX/2 - 42 + 10, "__");
+    mvprintw(termY/4 - 1, termX/2 - 42 + 14, "___");
+    mvprintw(termY/4 - 1, termX/2 - 42 + 19, "___");
+    mvprintw(termY/4 - 1, termX/2 - 42 + 31, "___");
+    mvprintw(termY/4 - 1, termX/2 - 42 + 41, "__");
+    mvprintw(termY/4 - 1, termX/2 - 42 + 45,"____");
+    mvprintw(termY/4 - 1, termX/2 - 42 + 58, "__");
+    mvprintw(termY/4 - 1, termX/2 - 42 + 67, "__");
+    mvprintw(termY/4 - 1, termX/2 - 42 + 76, "_");
+
+    // Third Line
+    mvprintw(termY/4, termX/2 - 42, "__");
+    mvprintw(termY/4, termX/2 - 42 + 9, "_");
+    mvprintw(termY/4, termX/2 - 42 + 31, "__");
+    mvprintw(termY/4, termX/2 - 42 + 40, "_");
+    mvprintw(termY/4, termX/2 - 42 + 58, "_");
+    mvprintw(termY/4, termX/2 - 42 + 66, "__");
+    mvprintw(termY/4, termX/2 - 42 + 75, "_");
+
+
+    // Fourth Line
+    mvprintw(termY/4 + 1, termX/2 - 42, "");
+    mvprintw(termY/4 + 1, termX/2 - 42, "_");
+    mvprintw(termY/4 + 1, termX/2 - 42 + 31, "_");
+    mvprintw(termY/4 + 1, termX/2 - 42 + 66, "_");
+
+    attroff(COLOR_PAIR(3));
 
     box(stdscr, '|', '-');
     refresh();
@@ -237,6 +280,9 @@ int main(int argc, char *argv[]){
     use_default_colors();
     init_pair(1, COLOR_RED, -1);
     init_pair(2, COLOR_GREEN, -1);
+
+    init_pair(3, COLOR_MAGENTA, -1);
+    init_pair(4, COLOR_CYAN, -1);
 
     noecho();
     curs_set(FALSE);
