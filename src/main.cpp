@@ -78,6 +78,8 @@ bool mainMenu(){
 
     attroff(COLOR_PAIR(3));
 
+    mvprintw(termY/4 + 6, termX/2 - 13,"\"See You At The Finish Line\"");
+
     box(stdscr, '|', '-');
     refresh();
 
