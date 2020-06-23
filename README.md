@@ -1,6 +1,13 @@
 # Need-For-CFU
 Endless Racing Game sviluppato per ambiente Linux
 
+## Comandi
+**WASD** - Movimento Macchina  
+**Enter** - Seleziona  
+**Esc** - Pausa  
+**Q** - Esce dalla partita corrente e torna al menù principale
+
+
 ## Installazione
 Per essere compilato richiede la seguente libreria
 
@@ -29,6 +36,10 @@ Oppure usando make
 ```bash
 make run
 ```
+## Screenshots
+![Game](https://i.imgur.com/VrMczYC.png)
+![Level UP](https://i.imgur.com/L5sekBl.png)
+
 ## Autori
 [Alessandro Filippini](https://github.com/AlePini)  
 [Filippo Bertozzi](https://github.com/FilippoBertozzi)  
