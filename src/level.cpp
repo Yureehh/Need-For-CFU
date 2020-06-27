@@ -10,7 +10,7 @@ level::level(){
 level::level(int stage, int length, level *l, bool b){ 
     srand((stage+time(0))/2);
     int influence;
-    oneXone = obstacle("K", -(500+(stage*30)), 1);
+    oneXone = obstacle("K", -(200+(stage*200)), 1);
     boost = obstacle("H", (150+(stage*50)), 2);
 
     this->stage = stage;

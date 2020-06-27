@@ -266,6 +266,6 @@ bool game::loss(scorestage s){
     return false;
 }
 
-int game::clock(){
-    return 100+(190/pow(1.6,currentLevel->getStage()));
+int game::clock(int difficulty){
+    return 100+(190/pow(1.6,difficulty));
 }

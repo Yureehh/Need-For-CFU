@@ -75,7 +75,7 @@ class game {
 
         bool loss(scorestage);
     
-        int clock();
+        int clock(int maxstage);
 
 };
 

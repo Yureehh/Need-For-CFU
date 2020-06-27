@@ -7,7 +7,7 @@
 void startGame(){
     
     //inizialize points and game
-    scorestage s = scorestage(1900);
+    scorestage s = scorestage(4900);
     game g = game( s.getStage() );
 
     //Print the UI
@@ -53,13 +53,13 @@ void startGame(){
                 case 'a':
                     g.carClean();
                     if(!g.carLeft())
-                        s.addScore(-500);
+                        s.addScore(-1000);
                     break;
             
                 case 'd':
                     g.carClean();
                     if(!g.carRight())
-                        s.addScore(-500);
+                        s.addScore(-1000);
                     break;
                 
                 case 27:
@@ -81,7 +81,7 @@ void startGame(){
             
             s.addScore(g.collisions() + 10 ); // + 25);
 
-            timer = g.clock(); //!960 fa 3 secondi di pausa  
+            timer = g.clock(s.getMaxScore()/1000); //!960 fa 3 secondi di pausa  
 
              
         } else
