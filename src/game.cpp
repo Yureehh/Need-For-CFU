@@ -3,7 +3,7 @@
 
 //Initialize the game
 game::game(int s){
-    currentLevel = new level(s, HEIGHT_TRACK, NULL, true);
+    currentLevel = new level(s, HEIGHT_TRACK + 10, NULL, true);
     start_Track = currentLevel->getLength() - HEIGHT_TRACK;
     c = car(currentLevel->getLength() - 2, 23);
 
@@ -186,11 +186,11 @@ int game::collisions(){
 
 void game::NewLevel(int s, bool b){
     if(b){
-        currentLevel -> next = new level(s, HEIGHT_TRACK + (s*10), currentLevel, b );
+        currentLevel -> next = new level(s, HEIGHT_TRACK + 10, currentLevel, b );
         forwardLevel();
     }
     else{
-        currentLevel -> prev = new level(s, HEIGHT_TRACK, currentLevel, b );
+        currentLevel -> prev = new level(s, HEIGHT_TRACK + 10, currentLevel, b );
         backLevel();
     }
 
@@ -267,5 +267,5 @@ bool game::loss(scorestage s){
 }
 
 int game::clock(int difficulty){
-    return 100+(190/pow(1.6,difficulty));
+    return 64+(100/pow(1.4,difficulty));
 }

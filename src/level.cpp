@@ -9,9 +9,12 @@ level::level(){
 
 level::level(int stage, int length, level *l, bool b){ 
     srand((stage+time(0))/2);
+    int cap=stage;
+    if(cap>8)
+        cap = 8;
     int influence;
-    oneXone = obstacle("K", -(200+(stage*200)), 1);
-    boost = obstacle("H", (150+(stage*50)), 2);
+    oneXone = obstacle("K", -(200+(cap*100)), 1);
+    boost = obstacle("H", 200, 2);
 
     this->stage = stage;
     this->length = length;

@@ -7,7 +7,7 @@
 void startGame(){
     
     //inizialize points and game
-    scorestage s = scorestage(4900);
+    scorestage s = scorestage(4000);
     game g = game( s.getStage() );
 
     //Print the UI
@@ -42,7 +42,7 @@ void startGame(){
     while(ch != 113){
         
         //number of milliseconds the game gets paused every cicle
-        usleep(3125);
+        usleep(3125); //3125
 
         //checks if lateral displacements collides with walls or obstacles
         if(kbhit()){
@@ -79,7 +79,7 @@ void startGame(){
         if(timer<=0){
             g.downTrack();
             
-            s.addScore(g.collisions() + 10 ); // + 25);
+            s.addScore(g.collisions() + 15 ); // + 25);
 
             timer = g.clock(s.getMaxScore()/1000); //!960 fa 3 secondi di pausa  
 
