@@ -3,21 +3,12 @@
 #include <menu.h>
 #include "game.h"
 
-#define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
-#define CTRLD 	4
-
 bool mainMenu(){
 
     flushinp(); // Discard any keyboard input
 
     int termX, termY;
     getmaxyx(stdscr, termY, termX);
-
-	int c;
-	int n_choices, i;
-    MENU *menu;
-    ITEM** items;
-	ITEM *currentIitem;
 
     // _ Title
     attron(COLOR_PAIR(4));
@@ -80,7 +71,6 @@ bool mainMenu(){
     WINDOW *creditsWin = newwin(5, 20, termY/4*3 + 1, termX/2 - 9);
 
     keypad(menuWin, TRUE);
-
     
     const char *choices[] = {
                         "Start Game",
@@ -89,14 +79,14 @@ bool mainMenu(){
                   };
 
     // ? Set up menu choices
-    n_choices = ARRAY_SIZE(choices);
-	items = new ITEM*[n_choices + 1];
+    int n_choices = sizeof(choices) / sizeof(choices[0]);
+	ITEM** items = new ITEM*[n_choices + 1];
 
-	for(i = 0; i < n_choices; ++i)
+	for(int i = 0; i < n_choices; ++i)
 	        items[i] = new_item(choices[i],"");
 	items[n_choices] = (ITEM *)NULL;
 
-	menu = new_menu(items);
+	MENU *menu = new_menu(items);
 
     // ? Menu's Windows
     set_menu_win(menu, menuWin);
@@ -110,6 +100,7 @@ bool mainMenu(){
 	wrefresh(menuWin);
 
     int startgame = false;
+    int c;
 
 	while(!startgame && (c = tolower(wgetch(menuWin))) != KEY_F(1)){
         switch(c){
@@ -159,7 +150,7 @@ bool mainMenu(){
     // ? Clear all the menu
     unpost_menu(menu);
     free_menu(menu);
-    for(i = 0; i < n_choices; ++i)
+    for(int i = 0; i < n_choices; ++i)
             free_item(items[i]);
             
     erase();
