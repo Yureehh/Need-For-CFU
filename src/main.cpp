@@ -4,12 +4,14 @@
 #include "game.h"
 
 
+
+
 void startGame(){
     
     //inizialize points and game
-    scorestage s = scorestage(4000);
+    scorestage s = scorestage(0);
     game g = game( s.getStage() );
-
+    
     //Print the UI
     g.printUI();
     s.printScoreText();
