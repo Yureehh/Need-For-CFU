@@ -1,17 +1,14 @@
 #include "car.h"
 
-// O O
-//  X
-// O O
-// x verticale - y orizzontale
 
 //Initialize the car
 car::car(){
-    c.y = 38;
+    c.y = 48;
     c.x = 23;
 }
 
-car::car(int cy, int cx) {
+
+car::car(int cy, int cx){
     c.y = cy;
     c.x = cx;
 }

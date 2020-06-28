@@ -8,14 +8,13 @@ using namespace std;
 class scorestage{
 protected:
     int score;
-    int stage;
     int record;
     int lowest;
     int lastLevel;
     WINDOW *scoreWin;
 public:
     //constructor to inizialize points
-   scorestage(int);
+    scorestage(int);
     //getter for the score
     int getScore();
     //getter for the stage
@@ -24,15 +23,19 @@ public:
     int getMaxScore();
     //Lowest record
     int getLowestScore();
+
+    void setlastLevel();
+
+    int getLastLevel ();
     //add points
     void addScore(int);
     //prints score and level
     void printScoreText();
     void printScoreStage();
 
-    void setlastLevel();
+
     
-    int getLastLevel ();
+
 };
 
 

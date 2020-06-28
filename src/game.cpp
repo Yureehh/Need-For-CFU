@@ -1,5 +1,14 @@
 #include "game.h"
-#include "math.h"
+
+bool kbhit()
+{
+    int ch = getch();
+    if (ch != ERR) {
+        ungetch(ch);
+        return true;
+    } else 
+        return false;
+}
 
 //Initialize the game
 game::game(int s){
@@ -15,11 +24,55 @@ game::game(int s){
     pauseWin = derwin(trackWin, 5, 15, y/2 - 2, x/2 - 8);
 
     refresh();
-
     printUI();
-
 }
 
+//prints the game
+void game::printUI(){
+
+    box(uiWin, '|', '-');
+    wborder(trackWin, '#', '#', ' ', ' ', '#', '#', '#', '#');
+    
+    wrefresh(uiWin);
+    wrefresh(trackWin);
+}
+
+void game::printTrack(){
+
+    int r = start_Track;
+
+    for (int i = 0; i < HEIGHT_TRACK; i++){
+        for (int j = 0; j < WIDTH_TRACK; j++){
+            // Loop when u finish the map
+            if ( r >= currentLevel->getLength() )
+                r = 0;
+            // Stamp the CHAR only when there is an obstacle -> !isFree
+            if ( currentLevel->isFree(r, j) )
+                mvwprintw(trackWin, i, j+1, " " );
+            else{
+                if ( currentLevel->isVisible(r, j) ){
+                    wattron(trackWin, COLOR_PAIR(currentLevel->getColor(r, j)));
+                    mvwprintw(trackWin, i, j+1, currentLevel->getChar(r, j) );
+                    wattroff(trackWin, COLOR_PAIR(currentLevel->getColor(r, j)));
+                }
+            }
+        }
+        r++;
+    }
+    wrefresh(trackWin);
+}
+
+//Downs the obstacles of 1 line
+void game::downTrack(){
+
+    start_Track --;
+
+    if( start_Track < 0)
+        start_Track = currentLevel->getLength() - 1;
+
+    printTrack();
+    carForward();
+}
 
 void game::clearLevel(){  
     for (int i = 0; i < currentLevel->getLength()-1; i++){
@@ -38,19 +91,6 @@ void game::clearLine(){
         if(!currentLevel->isFree(i,j))
                 currentLevel->setVisible(i,j, true);
     }
-}
-
-
-
-//prints the game
-void game::printUI(){
-
-    box(uiWin, '|', '-');
-    wborder(trackWin, '#', '#', ' ', ' ', '#', '#', '#', '#');
-    
-    wrefresh(uiWin);
-    wrefresh(trackWin);
-
 }
 
 void game::carPrint(){
@@ -86,53 +126,9 @@ void game::carForward(){
         c.move(HEIGHT_TRACK - 1, 0);
 }
 
-void game::printTrack(){
-
-    int r = start_Track;
-
-    for (int i = 0; i < HEIGHT_TRACK; i++){
-        for (int j = 0; j < WIDTH_TRACK; j++){
-            // Loop when u finish the map
-            if ( r >= currentLevel->getLength() )
-                r = 0;
-            // Stamp the CHAR only when there is an obstacle -> !isFree
-            if ( currentLevel->isFree(r, j) )
-                mvwprintw(trackWin, i, j+1, " " );
-            else{
-                if ( currentLevel->isVisible(r, j) ){
-                    wattron(trackWin, COLOR_PAIR(currentLevel->getColor(r, j)));
-                    mvwprintw(trackWin, i, j+1, currentLevel->getChar(r, j) );
-                    wattroff(trackWin, COLOR_PAIR(currentLevel->getColor(r, j)));
-                }
-            }
-        }
-
-        r++;
-
-    }
-
-    wrefresh(trackWin);
-
-}
-
-//Downs the obstacles of 1 line
-void game::downTrack(){
-
-    start_Track --;
-
-    if( start_Track < 0)
-        start_Track = currentLevel->getLength() - 1;
-
-    printTrack();
-    carForward();
-}
-
-
-
 int game::collisionCheck(int y, int x){
        
     int malus=0, bonus=0, score=0;
-
 
     if( ! (currentLevel->isFree(y, x) )  && 
         currentLevel->isVisible(y, x) ) {
@@ -147,10 +143,7 @@ int game::collisionCheck(int y, int x){
             else if( score < malus )
                     malus = score;
     }
-    
-    
     return malus + bonus;   
-    
 }
 
 
@@ -184,7 +177,7 @@ int game::collisions(){
     
 }
 
-void game::NewLevel(int s, bool b){
+void game::newLevel(int s, bool b){
     if(b){
         currentLevel -> next = new level(s, HEIGHT_TRACK + 10, currentLevel, b );
         forwardLevel();
@@ -233,6 +226,10 @@ void game::changeLevel(){
     wrefresh(trackWin);
 }
 
+int game::clock(int difficulty){
+    return 64+(100/pow(1.4,difficulty));
+}
+
 void game::pause(){
     int c;
 
@@ -266,6 +263,3 @@ bool game::loss(scorestage s){
     return false;
 }
 
-int game::clock(int difficulty){
-    return 64+(100/pow(1.4,difficulty));
-}

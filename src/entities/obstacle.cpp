@@ -1,10 +1,12 @@
 #include "obstacle.h"
 
+
 obstacle::obstacle(){
     this->c = " ";
     this->score = 0;
     this->color = 1;
 }
+
 
 obstacle::obstacle(const char *c = " ", int score=0, int color=1){
     this->c = c;

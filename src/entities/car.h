@@ -1,7 +1,5 @@
 #include <iostream>
-#include <stdlib.h>
 #include <ncurses.h>
-
 using namespace std;
 
 #ifndef CAR_H
@@ -13,25 +11,22 @@ struct posizione{
 };
 
 class car{
+protected:
+    posizione c;
+public:
+    // Default Constructor
+    car();
 
-    protected:
-        posizione c;
+    car(int, int);
+    
+    posizione getPosition();
+    //prints the car
+    void stampa();
+    
+    //deletes the car
+    void clean();
 
-    public:
-        // Default Constructor
-        car();
-
-        car(int, int);
-        
-        posizione getPosition();
-
-        //prints the car
-        void stampa();
-        
-        //deletes the car
-        void clean();
-
-        void move(int, int);
+    void move(int, int);
 };
 
 #endif

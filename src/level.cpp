@@ -33,26 +33,11 @@ level::level(int stage, int length, level *l, bool b){
         }
     }
 
-
     track = new ptrObstacle*[length];
     for (int i = 0; i < length; i++){
         track[i] = new ptrObstacle[47];
     }
-/*
 
-    // Test Pilota
-    track[length/2][20] = {true, &oneXone};
-    track[length/2][26] = {true, &oneXone};
-
-    // Test Route
-    track[length/2 - 1][18] = {true, &oneXone};
-    track[length/2 - 1][28] = {true, &oneXone};
-    track[length/2 + 1][16] = {true, &oneXone};
-    track[length/2 + 1][30] = {true, &oneXone};
-    track[0][10 * stage] = {true, &oneXone};
-    track[39][15*stage] = {true, &oneXone};
-*/
-   
     int lastspawn=0;
     int maxK=40+(stage*20);
     int maxSpawnPerLine=3;
@@ -100,19 +85,17 @@ level::level(int stage, int length, level *l, bool b){
                         lastspawn--;
                     break;
                 }
-            }
-           
-                
-        }
-    }/*
-    for (int i = 0; i < length-1; i++){
-        for (int j = 0; j < 47; j++){
-            if(i<=length-1 && i> length-10)
-            setVisible(i,j,false);
+            }    
         }
     }
-*/
-//---------
+}
+
+int level::getStage(){
+    return stage;
+}
+
+int level::getLength(){
+    return length;
 }
 
 bool level::isFree(int y, int x){
@@ -139,10 +122,3 @@ int level::getColor(int y, int x){
     return track[y][x].obst->getColor();
 }
 
-int level::getStage(){
-    return stage;
-}
-
-int level::getLength(){
-    return length;
-}

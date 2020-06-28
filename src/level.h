@@ -4,35 +4,32 @@
 #else
     #include "entities\obstacle.h"
 #endif
+using namespace std;
 
 #ifndef LEVEL_H
 #define LEVEL_H
 
-using namespace std;
-
 class level{
-
-    protected:
+protected:
         struct ptrObstacle{
             bool visible;
             obstacle *obst;
         };
-
         int stage;
         int length;
-        // this->prev->next = this;
         obstacle oneXone;
         obstacle boost;
-        obstacle twoXone;
         ptrObstacle** track;
-
-    public:
-        
+public:
         level *prev;
         level *next;
-        
-        level(int, int, level*, bool);
+
         level();
+        level(int, int, level*, bool);
+        
+        int getStage();
+
+        int getLength();
         
         bool isFree(int, int);
 
@@ -46,9 +43,7 @@ class level{
 
         int getColor(int, int);
         
-        int getStage();
-
-        int getLength();
+        
 
 };
 

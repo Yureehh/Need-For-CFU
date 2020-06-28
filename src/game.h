@@ -1,33 +1,31 @@
-#include <iostream>
-#include <ncurses.h>
 #include <unistd.h>
 #include "level.h"
 #include "scorestage.h"
 #include "math.h"
-#include "utilities.h"
 #ifdef __linux__ 
     #include "entities/car.h"
 #else
     #include "entities\car.h"
 #endif
-
 using namespace std;
 
 // # User Interface geometry (UI)
-const char HEIGHT_UI = 42;
-const char WIDTH_UI = 80;
+const int HEIGHT_UI = 42;
+const int WIDTH_UI = 80;
 
-const char HEIGHT_TRACK = 40; // 0-39      centro 19
-const char WIDTH_TRACK = 47; //0-46        centro 23
-
+const int HEIGHT_TRACK = 40;
+const int WIDTH_TRACK = 47;
 
 #ifndef GAME_H
 #define GAME_H
 
+
+bool kbhit();
+
 class game {
 
     protected:
-        int  start_Track; //linea in cui starta la pista
+        int  start_Track; 
         WINDOW *uiWin, *trackWin, *pauseWin;
         level *currentLevel;
         car c;
@@ -35,14 +33,16 @@ class game {
     public:
         //Initialize the game
         game(int);
-        
         //prints the game
         void printUI();
+
+        void printTrack();
+        //Downs the obstacler of 1 line
+        void downTrack();
 
         void clearLevel();
 
         void clearLine();
-
         // Car controls and Render
         void carPrint();
 
@@ -54,16 +54,11 @@ class game {
 
         void carForward();
 
-        void printTrack();
-
-        //Downs the obstacler of 1 line
-        void downTrack();
-
         int collisionCheck(int, int);
 
         int collisions();
 
-        void NewLevel(int, bool);
+        void newLevel(int, bool);
 
         void forwardLevel();
 
@@ -71,11 +66,13 @@ class game {
 
         void changeLevel();
 
+        int clock(int);
+        
         void pause();
 
         bool loss(scorestage);
     
-        int clock(int maxstage);
+
 
 };
 
