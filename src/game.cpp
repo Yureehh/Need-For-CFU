@@ -224,6 +224,7 @@ void game::changeLevel(){
     c = car(currentLevel->getLength() - 2, 23);
     werase(trackWin);
     wrefresh(trackWin);
+    flushinp();
 }
 
 int game::clock(int difficulty){
