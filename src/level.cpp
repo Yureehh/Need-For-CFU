@@ -141,3 +141,18 @@ int level::getColor(int y, int x){
     return track[y][x].obst->getColor();
 }
 
+level *level::getPrev(){
+    return prev;
+}
+
+level *level::getNext(){
+    return next;
+}
+
+void level::setPrev(level *prev){
+    this->prev = prev;
+}
+
+void level::setNext(level *next){
+    this->next = next;
+}

@@ -10,7 +10,7 @@ using namespace std;
 #define LEVEL_H
 
 class level{
-protected:
+    protected:
         struct ptrObstacle{
             bool visible;
             obstacle *obst;
@@ -20,10 +20,8 @@ protected:
         obstacle oneXone;
         obstacle boost;
         ptrObstacle** track;
-public:
-        level *prev;
-        level *next;
-
+        level *prev, *next;
+    public:
         level();
         level(int, int, level*, bool);
         
@@ -43,7 +41,13 @@ public:
 
         int getColor(int, int);
         
-        
+        level *getPrev();
+
+        level *getNext();
+
+        void setPrev(level *prev);
+
+        void setNext(level *next);
 
 };
 

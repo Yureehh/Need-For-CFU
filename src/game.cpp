@@ -179,18 +179,18 @@ int game::collisions(){
 
 void game::newLevel(int s, bool b){
     if(b){
-        currentLevel -> next = new level(s, HEIGHT_TRACK + 10, currentLevel, b );
+        currentLevel -> setNext(new level(s, HEIGHT_TRACK + 10, currentLevel, b ));
         forwardLevel();
     }
     else{
-        currentLevel -> prev = new level(s, HEIGHT_TRACK + 10, currentLevel, b );
+        currentLevel -> setPrev(new level(s, HEIGHT_TRACK + 10, currentLevel, b ));
         backLevel();
     }
 
 }
 
 void game::forwardLevel(){
-    currentLevel = currentLevel -> next;
+    currentLevel = currentLevel -> getNext();
 
     werase(pauseWin);
     box(pauseWin, 0, 0);
@@ -205,7 +205,7 @@ void game::forwardLevel(){
 }
 
 void game::backLevel(){
-    currentLevel = currentLevel -> prev;
+    currentLevel = currentLevel -> getPrev();
 
     werase(pauseWin);
     box(pauseWin, 0, 0);
