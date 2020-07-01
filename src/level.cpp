@@ -9,11 +9,13 @@ level::level(){
 
 level::level(int stage, int length, level *l, bool b){ 
     srand((stage+time(0))/2);
-    int cap=stage;
-    if(cap>8)
-        cap = 8;
+    
     int influence;
-    oneXone = obstacle("K", -(200+(cap*100)), 1);
+    if(stage>8)
+        oneXone = obstacle("K", -(200+(8*100)), 1);
+    else
+        oneXone = obstacle("K", -(200+(stage*100)), 1);
+    
     boost = obstacle("H", 200, 2);
 
     this->stage = stage;
@@ -41,51 +43,68 @@ level::level(int stage, int length, level *l, bool b){
     int lastspawn=0;
     int maxK=40+(stage*20);
     int maxSpawnPerLine=3;
-    int maxH=3+(length / (stage*2));
+    int maxH=0;
+    bool posH=true;
+    if(stage<9)
+        maxH=3+(length / (stage*2));
+    else
+        maxH=12;
     int hDistancing=5;
     for (int i = 0; i < length-1; i++){
         maxSpawnPerLine=1+(stage/3);
         if(hDistancing>0)
             hDistancing--;
         for (int j = 0; j < 47; j++){
-            influence=rand()%20;
-            if(true){       //f(i < length - (length/2) && i > 5)
-                switch (influence)
-                {
-                case 0:
-                    track[i][j] = {false, NULL};
-                    if(lastspawn>0)
-                        lastspawn--;
-                    break;
-                case 1:
-                    if(lastspawn==0 && maxK!=0 && maxSpawnPerLine!=0){
-                        track[i][j] = {true, &oneXone};
-                        if(i<=length-1 && i> length-10)
-                            setVisible(i,j,false);
-                        lastspawn=3;
-                        maxK--;
-                        maxSpawnPerLine--;
-                    }
-                    break;
+            influence=rand()%20;      
+            switch (influence)
+            {
+            case 0:
+                track[i][j] = {false, NULL};
+                if(lastspawn>0)
+                    lastspawn--;
+                break;
+            case 1:
+                if(lastspawn==0 && maxK!=0 && maxSpawnPerLine!=0){
+                    track[i][j] = {true, &oneXone};
+                    if(i<=length-1 && i> length-10)
+                        setVisible(i,j,false);
+                    lastspawn=3;
+                    maxK--;
+                    maxSpawnPerLine--;
+                }
+                break;
                 
-                case 7:
-                if(maxH!=0 && hDistancing==0){
+            case 7:
+            if(maxH!=0 && hDistancing==0){
+                if(j>22 && posH){
                     track[i][j] = {true, &boost};
                     if(i<=length-1 && i> length-10)
                             setVisible(i,j,false);
                     maxH--;
+                    posH=false;
                     hDistancing=5;
+                    if(lastspawn>0)
+                        lastspawn--;
                     }
-                     if(lastspawn>0)
+                if(j<22 && !posH){
+                    track[i][j] = {true, &boost};
+                    if(i<=length-1 && i> length-10)
+                            setVisible(i,j,false);
+                    maxH--;
+                    posH=true;
+                    hDistancing=5;
+                    if(lastspawn>0)
                         lastspawn--;
-                    break;
-                default:
-                    track[i][j] = {false, NULL};
-                     if(lastspawn>0)
-                        lastspawn--;
-                    break;
+                    }
                 }
-            }    
+                break;
+            default:
+                track[i][j] = {false, NULL};
+                    if(lastspawn>0)
+                    lastspawn--;
+                break;
+            }
+            
         }
     }
 }
