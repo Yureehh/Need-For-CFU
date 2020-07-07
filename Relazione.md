@@ -2,17 +2,18 @@
 
 ## Table of contents
 1. [ Descrizione ](#Descrizione)
-2. [ Main ](#Main)  
-3. [ Game ](#Game)
-4. [ Scorestage ](#Scorestage)
-5. [ Level ](#Level)
-6. [ Car ](#Car)
-7. [ Obstacle ](#Obstacle)
+2. [Perchè NNcurses?](#Perchè_NCurses?)
+3. [ Main ](#Main)  
+4. [ Game ](#Game)
+5. [ Scorestage ](#Scorestage)
+6. [ Level ](#Level)
+7. [ Car ](#Car)
+8. [ Obstacle ](#Obstacle)
 
 ## Descrizione
 Il gioco consiste nell'ottenere il maggior punteggio possibili muovendo una macchina di dimensioni 3x3 in una pista delimitata, evitando gli ostacoli per non perdere punti e raccogliendo i bonus per aumentarli. Ad ogni nuova partita i livelli vengono ri-generati randomicamente.
 
-## Perchè NCurses?
+## Perchè_NCurses?
 Sappiamo che ncurses è esclusivamente su ambienti Linux (anche se esistono alcuni porting per Windows ), ma è stato facile sviluppare su Windows grazie alla teconologia [WSL](https://docs.microsoft.com/it-it/windows/wsl/install-win10). In oltre, l'aver lavorato in precedenza con questa libreria, ha semplificato lo sviluppo della parte di rendering.
 
 ## Main
