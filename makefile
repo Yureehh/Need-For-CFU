@@ -3,10 +3,10 @@ CFLAGS = -c
 SRC = scorestage level game main
 SRC_ENT = car obstacle
 
-all : clean outrun
+all : clean initalc
 
-outrun : $(addprefix entities/,$(SRC_ENT)) $(SRC)	
-	$(CC) bin/*.o -o outrun -lncurses -lmenu
+initalc : $(addprefix entities/,$(SRC_ENT)) $(SRC)	
+	$(CC) bin/*.o -o initalc -lncurses -lmenu
 
 %: src/%.cpp
 	$(CC) $(CFLAGS) $< -o bin/$@.o -lncurses -lmenu
@@ -15,7 +15,7 @@ entities/% : src/entities/%.cpp
 	$(CC) $(CFLAGS) $< -o bin/$(subst entities/,,$@).o -lncurses
 
 run : 
-	./outrun
+	./initalc
 
 clean :
 	rm -rf bin
