@@ -1,11 +1,11 @@
 #include <unistd.h>
-#include "level.h"
-#include "scorestage.h"
+#include "level.hpp"
+#include "scorestage.hpp"
 #include "math.h"
 #ifdef __linux__ 
-    #include "entities/car.h"
+    #include "entities/car.hpp"
 #else
-    #include "entities\car.h"
+    #include "entities\car.hpp"
 #endif
 using namespace std;
 

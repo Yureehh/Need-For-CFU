@@ -1,4 +1,4 @@
-#include "scorestage.h"
+#include "scorestage.hpp"
 
 //constructor to inizialize points
 scorestage::scorestage(int s){
@@ -19,23 +19,25 @@ int scorestage::getStage(){
     return score/1000 + 1;
 }
 
+//getter for the record
 int scorestage::getMaxScore(){
     return record;
 }
 
+//getter for the lowest record
 int scorestage::getLowestScore(){
     return lowest;
 }
-
+//setter for the lastLevel
 void scorestage::setlastLevel(){
     lastLevel = getStage();
 }
-
+//getter for the lastLevel
 int scorestage::getLastLevel(){
     return lastLevel;
 }
 
-//add points
+//setter for the points
 void scorestage::addScore(int x){
     score = score + x;
     if(score > record)

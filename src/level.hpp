@@ -1,8 +1,8 @@
 #include <iostream>
 #ifdef __linux__ 
-    #include "entities/obstacle.h"
+    #include "entities/obstacle.hpp"
 #else
-    #include "entities\obstacle.h"
+    #include "entities\obstacle.hpp"
 #endif
 using namespace std;
 

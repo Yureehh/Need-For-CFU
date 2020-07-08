@@ -1,4 +1,4 @@
-#include "car.h"
+#include "car.hpp"
 
 
 //Initialize the car
@@ -34,7 +34,7 @@ void car::clean(){
     mvprintw(40, c.x - 1 + 2, "   ");
     refresh();
 }
-
+//changes car coordinates
 void car::move(int y, int x){
     c.y = c.y + y;
     c.x = c.x + x;

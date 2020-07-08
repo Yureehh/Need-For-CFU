@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <menu.h>
-#include "game.h"
+#include "game.hpp"
 
 bool mainMenu(){
 
@@ -171,7 +171,7 @@ void startGame(){
     s.printScoreStage();
 
 
-    //countdown
+    //Countdown
     mvprintw(21, 22, "Ready");
     refresh();
     sleep(1);
@@ -184,16 +184,17 @@ void startGame(){
 
     flushinp(); // Discard any keyboard input
 
-    //prints the starting Track with the car and obstacles
+    //Prints the starting Track with the car and obstacles
     g.printTrack();
     g.carPrint();
     refresh();
+
 
     int timer = 0;
     char ch=' ';
 
 
-    //the game itself, for now u can only move the car
+    //the cicle is the game itself
     while(ch != 113){
         
         //number of milliseconds the game gets paused every cicle
@@ -203,8 +204,9 @@ void startGame(){
         if(kbhit()){
             ch = tolower(getch()); // Avoids mis match with 'A' and 'a'
 
+            //check if player wants to move laterally, if u collide points are subtracted/added.
             switch(ch){
-            
+                
                 case 'a':
                     g.carClean();
                     if(!g.carLeft())
@@ -216,7 +218,7 @@ void startGame(){
                     if(!g.carRight())
                         s.addScore(-1000);
                     break;
-                
+                //if the input is "q" the game gets paused
                 case 27:
                     g.pause();
                     g.printTrack();
@@ -224,7 +226,7 @@ void startGame(){
             }
 
             s.addScore( g.collisions() );
-
+            //check if the player has lost
             if(s.getScore() <= 0)
                 if( g.loss(s) )
                     break;
@@ -244,10 +246,10 @@ void startGame(){
 
         //checks if u have enough points to swap level
         if(s.getStage() != s.getLastLevel()){
-            
+            //level gets resetted for the future
             g.clearLevel();
             g.carPrint();
-            
+            //check if u have to move to next or previous level
             if(s.getStage() > s.getLastLevel()){
                 if(s.getScore() == s.getMaxScore() )
                     g.newLevel(s.getStage(), true );
@@ -299,7 +301,7 @@ int main(int argc, char *argv[]){
 
     init_pair(3, COLOR_MAGENTA, -1);
     init_pair(4, COLOR_CYAN, -1);
-
+    
     noecho();
     curs_set(FALSE);
     nodelay(stdscr, TRUE);

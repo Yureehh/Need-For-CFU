@@ -1,5 +1,6 @@
-#include "game.h"
+#include "game.hpp"
 
+//function to check if user sends input from keyboard
 bool kbhit()
 {
     int ch = getch();
@@ -10,7 +11,7 @@ bool kbhit()
         return false;
 }
 
-//Initialize the game
+//Initialize the level, the car and the track
 game::game(int s){
     currentLevel = new level(s, HEIGHT_TRACK + 10, NULL, true);
     start_Track = currentLevel->getLength() - HEIGHT_TRACK;
@@ -27,7 +28,7 @@ game::game(int s){
     printUI();
 }
 
-//prints the game
+//prints UI
 void game::printUI(){
 
     box(uiWin, '|', '-');
@@ -37,6 +38,7 @@ void game::printUI(){
     wrefresh(trackWin);
 }
 
+//prints the visible part of the track
 void game::printTrack(){
 
     int r = start_Track;
@@ -74,6 +76,7 @@ void game::downTrack(){
     carForward();
 }
 
+//resets the current level setting all obstacles to visible except for the first 10 lines from the bottom
 void game::clearLevel(){  
     for (int i = 0; i < currentLevel->getLength()-1; i++){
         for (int j = 0; j < WIDTH_TRACK; j++){
@@ -85,6 +88,7 @@ void game::clearLevel(){
     }
 }
 
+//reset the line who just exited fromt the visible part of the track to visible
 void game::clearLine(){
     int i = (c.getPosition().y + 2) % currentLevel->getLength();
     for(int j=0; j<WIDTH_TRACK; j++){
@@ -92,15 +96,15 @@ void game::clearLine(){
                 currentLevel->setVisible(i,j, true);
     }
 }
-
+//prints the car
 void game::carPrint(){
     c.stampa();
 }
-
+//erases the car
 void game::carClean(){
     c.clean();
 }
-
+//moves the car to the left, not printing it yet
 bool game::carLeft(){
     // Actually move if not going outside the map
     if ( c.getPosition().x > 1 ){
@@ -109,7 +113,7 @@ bool game::carLeft(){
     } else
         return false;
 }
-
+//moves the car to the right, not printing it yet
 bool game::carRight(){
     // Actually move if not going outside the map
     if ( c.getPosition().x < 45 ){
@@ -118,14 +122,14 @@ bool game::carRight(){
     } else
         return false;
 }
-
+//moves the car 1 row ahead
 void game::carForward(){
     if(c.getPosition().y > 0)
         c.move( -1, 0);
     else
         c.move(HEIGHT_TRACK - 1, 0);
 }
-
+//check if there's an obstacle in a certain point of the track
 int game::collisionCheck(int y, int x){
        
     int malus=0, bonus=0, score=0;
@@ -146,7 +150,7 @@ int game::collisionCheck(int y, int x){
     return malus + bonus;   
 }
 
-
+//calls collisionsCheck in every part of the car
 int game::collisions(){
     
     //inizialized as pilot's coordinates
@@ -176,7 +180,7 @@ int game::collisions(){
     return tot;
     
 }
-
+//creates a new level, next or previous based on the boolean
 void game::newLevel(int s, bool b){
     if(b){
         currentLevel -> setNext(new level(s, HEIGHT_TRACK + 10, currentLevel, b ));
@@ -186,9 +190,8 @@ void game::newLevel(int s, bool b){
         currentLevel -> setPrev(new level(s, HEIGHT_TRACK + 10, currentLevel, b ));
         backLevel();
     }
-
 }
-
+//goes to the next level
 void game::forwardLevel(){
     currentLevel = currentLevel -> getNext();
 
@@ -203,7 +206,7 @@ void game::forwardLevel(){
 
     changeLevel();
 }
-
+//goes to the previos level
 void game::backLevel(){
     currentLevel = currentLevel -> getPrev();
 
@@ -218,7 +221,7 @@ void game::backLevel(){
 
     changeLevel();
 }
-
+//reset the car and track positions
 void game::changeLevel(){
     start_Track = currentLevel->getLength() - HEIGHT_TRACK;
     c = car(currentLevel->getLength() - 2, 23);
@@ -226,11 +229,11 @@ void game::changeLevel(){
     wrefresh(trackWin);
     flushinp();
 }
-
+//timer for the track movement
 int game::clock(int difficulty){
     return 64+(100/pow(1.4,difficulty));
 }
-
+//function to pause the game
 void game::pause(){
     int c;
 
@@ -242,7 +245,7 @@ void game::pause(){
     while((c = wgetch(pauseWin)) != 27);
 
 }
-
+//checks if u have lost.
 bool game::loss(scorestage s){
     if(s.getScore() <= 0){
         
@@ -250,7 +253,7 @@ bool game::loss(scorestage s){
         printUI();
         wrefresh(trackWin);
 
-        mvprintw(21, 17, "Take the L!");
+        mvprintw(21, 17, "Take the L !");
         mvprintw(23, 5, "Your record this run has been %d points!", s.getMaxScore());
         
         refresh();
