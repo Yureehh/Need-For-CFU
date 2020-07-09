@@ -5,28 +5,28 @@ using namespace std;
 #ifndef CAR_H
 #define CAR_H
 
-struct posizione{
-    int x;
-    int y;
-};
-
 class car{
-protected:
-    posizione c;
-public:
-    // Default Constructor
-    car();
 
-    car(int, int);
+    protected:
+        int x, y;
     
-    posizione getPosition();
-    //prints the car
-    void stampa();
-    
-    //deletes the car
-    void clean();
+    public:
 
-    void move(int, int);
+        car();
+        car(int, int);
+
+        // Getters
+        int getX();
+        int getY();
+
+        //prints the car
+        void stampa();
+        
+        //deletes the car
+        void clean();
+
+        void move(int, int);
+
 };
 
 #endif

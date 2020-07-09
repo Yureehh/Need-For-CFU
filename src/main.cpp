@@ -5,8 +5,7 @@
 
 bool mainMenu(){
 
-    flushinp(); // Discard any keyboard input
-
+    // ? Get Screen size
     int termX, termY;
     getmaxyx(stdscr, termY, termX);
 
@@ -19,7 +18,7 @@ bool mainMenu(){
     mvprintw(termY/4 + 2, termX/2 - 25, "/___/  /_/ /_//_/  \\__/ /_/  \\__,_/ /_/      \\____/   ");
     attroff(COLOR_PAIR(4));
 
-    // ? Color
+    // ? Colored Lines
     attron(COLOR_PAIR(3));
 
     // First line
@@ -61,7 +60,7 @@ bool mainMenu(){
 
     mvprintw(termY/4 + 6, termX/2 - 13,"\"See You At The Finish Line\"");
 
-    box(stdscr, '|', '-');
+    box(stdscr, '|', '-');  // Draw border around the screen
     refresh();
 
     // _ Menù
@@ -70,14 +69,14 @@ bool mainMenu(){
     WINDOW *creditsWin = newwin(5, 20, termY/4*3 + 1, termX/2 - 10);
 
     keypad(menuWin, TRUE);
-    
+
+    // ? Set up menu's choices
     const char *choices[] = {
                         "Start Game",
                         "Credits",
                         "Quit",
                   };
 
-    // ? Set up menu choices
     int n_choices = sizeof(choices) / sizeof(choices[0]);
 	ITEM** items = new ITEM*[n_choices + 1];
 
@@ -91,45 +90,53 @@ bool mainMenu(){
     set_menu_win(menu, menuWin);
     set_menu_sub(menu, derwin(menuWin, 6, 13, 1, 1));
     
+    // Set Menu's Cursor
     set_menu_mark(menu, " > ");
     set_menu_spacing(menu, 0, 2, 0);
 
-    // ? Post-it
+    // ? Stamp Menu
 	post_menu(menu);
 	wrefresh(menuWin);
+
+    flushinp(); // Discard any keyboard input
 
     int startgame = false;
     int c;
 
-	while(!startgame && (c = tolower(wgetch(menuWin))) != KEY_F(1)){
+	while(!startgame){
+        c = tolower(wgetch(menuWin)); // Get lowercase of the key pressed
         switch(c){
-            case 's':
+            case 's': // Down
 		        menu_driver(menu, REQ_DOWN_ITEM);
 				break;
-			case 'w':
+			case 'w': // Up
 				menu_driver(menu, REQ_UP_ITEM);
 				break;
             case 10: // ENTER
                 switch(item_index(current_item(menu))){
-                    case 0:
+                    case 0: // "Start"
                         startgame = true;
                         break;
-                    case 1:                      
+                    case 1: // "Credits"
+
+                        // Clear Menu    
                         unpost_menu(menu);
                         wclear(menuWin);
                         wrefresh(menuWin);
 
+                        // Stamp Credits
                         mvwprintw(creditsWin, 0, 0, "Alessandro Filippini");
                         mvwprintw(creditsWin, 2, 0, "   Filippo Bertozzi");
                         mvwprintw(creditsWin, 4, 0, "      Juri Fabbri");
                         wrefresh(creditsWin);
                         refresh();
 
+                        // Wait for any input
                         sleep(1);
                         flushinp();
                         while(!kbhit());
 
-                        // Restamp the menu
+                        // Restamp the Menu
                         wclear(creditsWin);
                         wrefresh(creditsWin);
                         post_menu(menu);
@@ -138,15 +145,15 @@ bool mainMenu(){
 
                         flushinp();
                         break;
-                    case 2:
-                        return false; // Aka quit
+                    case 2: // "Quit"
+                        return false;
                         break;
                 }
 		}
         wrefresh(menuWin);
 	}
     
-    // ? Clear all the menu
+    // ? Clear Menu and Items
     unpost_menu(menu);
     free_menu(menu);
     for(int i = 0; i < n_choices; ++i)
@@ -302,10 +309,11 @@ int main(int argc, char *argv[]){
     init_pair(3, COLOR_MAGENTA, -1);
     init_pair(4, COLOR_CYAN, -1);
     
-    noecho();
-    curs_set(FALSE);
-    nodelay(stdscr, TRUE);
-    keypad(stdscr, TRUE);
+    // ? Options
+    noecho();               // Disable echoing for key pressed
+    curs_set(FALSE);        // Disable cursor
+    nodelay(stdscr, TRUE);  // So getch() doesn't wait for a key
+    keypad(stdscr, TRUE);   // Enable keypad nums
 
     // Start the game, quit only if when specified
     while(mainMenu())

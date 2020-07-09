@@ -10,44 +10,40 @@ using namespace std;
 #define LEVEL_H
 
 class level{
+
     protected:
         struct ptrObstacle{
             bool visible;
             obstacle *obst;
         };
+
         int stage;
         int length;
         obstacle oneXone;
         obstacle boost;
         ptrObstacle** track;
         level *prev, *next;
+
     public:
         level();
         level(int, int, level*, bool);
         
-        int getStage();
-
-        int getLength();
-        
         bool isFree(int, int);
-
-        void setVisible(int, int, bool);
-
         bool isVisible(int, int);
 
+        // Getters
         const char* getChar(int, int);
-
+        int getColor(int, int);
+        int getLength();
+        level *getNext();
+        level *getPrev();
+        int getStage();
         int getScore(int, int);
 
-        int getColor(int, int);
-        
-        level *getPrev();
-
-        level *getNext();
-
-        void setPrev(level *prev);
-
+        // Setters
         void setNext(level *next);
+        void setPrev(level *prev);
+        void setVisible(int, int, bool);
 
 };
 

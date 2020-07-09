@@ -109,13 +109,8 @@ level::level(int stage, int length, level *l, bool b){
     }
 }
 
-
 bool level::isFree(int y, int x){   //restituisce true se lo slot in posizione (x,y) è vuoto
     return track[y][x].obst == NULL ;
-}
-
-void level::setVisible(int y, int x, bool b){   //cambia la visibilità di uno slot 
-     track[y][x].visible = b ;
 }
 
 bool level::isVisible(int y, int x){    //restituisce true o false se uno slot è visibile o no
@@ -123,39 +118,44 @@ bool level::isVisible(int y, int x){    //restituisce true o false se uno slot �
 }
 
 
-// getter e setter
-int level::getStage(){  
-    return stage;
-}
-
-int level::getLength(){
-    return length;
-}
-
+// Getters
 const char *level::getChar(int y, int x){
     return track[y][x].obst->getChar();
-}
-
-int level::getScore(int y, int x){
-    return track[y][x].obst->getScore();
 }
 
 int level::getColor(int y, int x){
     return track[y][x].obst->getColor();
 }
 
-level *level::getPrev(){
-    return prev;
+int level::getLength(){
+    return length;
 }
 
 level *level::getNext(){
     return next;
 }
 
+level *level::getPrev(){
+    return prev;
+}
+
+int level::getScore(int y, int x){
+    return track[y][x].obst->getScore();
+}
+
+int level::getStage(){  
+    return stage;
+}
+
+// Setters
+void level::setNext(level *next){
+    this->next = next;
+}
+
 void level::setPrev(level *prev){
     this->prev = prev;
 }
 
-void level::setNext(level *next){
-    this->next = next;
+void level::setVisible(int y, int x, bool b){   //cambia la visibilità di uno slot 
+     track[y][x].visible = b ;
 }

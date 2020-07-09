@@ -31,49 +31,39 @@ class game {
         car c;
 
     public:
+        
         //Initialize the game
         game(int);
+        
         //prints the game
         void printUI();
-
         void printTrack();
-        //Downs the obstacler of 1 line
         void downTrack();
-
-        void clearLevel();
-
         void clearLine();
+
         // Car controls and Render
         void carPrint();
-
         void carClean();
-
         bool carLeft();
-
         bool carRight();
-
         void carForward();
 
+        // Collision
         int collisionCheck(int, int);
-
         int collisions();
 
+        // Level's section
         void newLevel(int, bool);
-
+        void clearLevel();
         void forwardLevel();
-
         void backLevel();
-
         void changeLevel();
 
-        int clock(int);
-        
+        // Extra UI        
         void pause();
-
         bool loss(scorestage);
     
-
-
+        int clock(int);
 };
 
 #endif

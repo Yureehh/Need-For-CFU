@@ -14,6 +14,7 @@ obstacle::obstacle(const char *c = " ", int score=0, int color=1){
     this->color = color;
 }
 
+// Getters
 const char *obstacle::getChar(){
     return c;
 }

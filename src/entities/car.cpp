@@ -1,41 +1,43 @@
 #include "car.hpp"
 
-
-//Initialize the car
 car::car(){
-    c.y = 48;
-    c.x = 23;
+    this->y = 48;
+    this->x = 23;
 }
 
-
-car::car(int cy, int cx){
-    c.y = cy;
-    c.x = cx;
+car::car(int y, int x){
+    this->y = y;
+    this->x = x;
 }
 
-posizione car::getPosition(){
-    return c;
+// Getters
+int car::getX(){
+    return x;
 }
 
-//prints the car
+int car::getY(){
+    return y;
+}
+
+// Prints the car
 void car::stampa(){
-    mvprintw(38, c.x - 1 + 2, "O");
-    mvprintw(38, c.x + 1 + 2, "O");
-    mvprintw(39, c.x + 2, "X");
-    mvprintw(40, c.x - 1 + 2, "O");
-    mvprintw(40, c.x + 1 + 2, "O");
+    mvprintw(38, x - 1 + 2, "O");
+    mvprintw(38, x + 1 + 2, "O");
+    mvprintw(39, x + 2, "X");
+    mvprintw(40, x - 1 + 2, "O");
+    mvprintw(40, x + 1 + 2, "O");
     refresh();
 }
 
-//deletes the car
+// Deletes the car
 void car::clean(){
-    mvprintw(38, c.x - 1 + 2, "   ");
-    mvprintw(39, c.x + 2, " ");
-    mvprintw(40, c.x - 1 + 2, "   ");
+    mvprintw(38, x - 1 + 2, "   ");
+    mvprintw(39, x + 2, " ");
+    mvprintw(40, x - 1 + 2, "   ");
     refresh();
 }
-//changes car coordinates
+// Changes car coordinates
 void car::move(int y, int x){
-    c.y = c.y + y;
-    c.x = c.x + x;
+    this->y = this->y + y;
+    this->x = this->x + x;
 }

@@ -1,6 +1,6 @@
 #include "game.hpp"
 
-//function to check if user sends input from keyboard
+// Check if user pressed any key
 bool kbhit()
 {
     int ch = getch();
@@ -11,7 +11,7 @@ bool kbhit()
         return false;
 }
 
-//Initialize the level, the car and the track
+// Initialize the level, the car and the track
 game::game(int s){
     currentLevel = new level(s, HEIGHT_TRACK + 10, NULL, true);
     start_Track = currentLevel->getLength() - HEIGHT_TRACK;
@@ -28,7 +28,6 @@ game::game(int s){
     printUI();
 }
 
-//prints UI
 void game::printUI(){
 
     box(uiWin, '|', '-');
@@ -38,10 +37,15 @@ void game::printUI(){
     wrefresh(trackWin);
 }
 
-//prints the visible part of the track
+// Prints the visible section of the track
 void game::printTrack(){
 
     int r = start_Track;
+
+    /*
+    ** r is used to access to the matrix track[][]
+    ** i is used to stamp in the correct place on the terminal
+    */
 
     for (int i = 0; i < HEIGHT_TRACK; i++){
         for (int j = 0; j < WIDTH_TRACK; j++){
@@ -52,6 +56,7 @@ void game::printTrack(){
             if ( currentLevel->isFree(r, j) )
                 mvwprintw(trackWin, i, j+1, " " );
             else{
+                // If the obstacle is visible, stamp with the corresponding color
                 if ( currentLevel->isVisible(r, j) ){
                     wattron(trackWin, COLOR_PAIR(currentLevel->getColor(r, j)));
                     mvwprintw(trackWin, i, j+1, currentLevel->getChar(r, j) );
@@ -64,7 +69,7 @@ void game::printTrack(){
     wrefresh(trackWin);
 }
 
-//Downs the obstacles of 1 line
+// Scroll down the track
 void game::downTrack(){
 
     start_Track --;
@@ -76,60 +81,53 @@ void game::downTrack(){
     carForward();
 }
 
-//resets the current level setting all obstacles to visible except for the first 10 lines from the bottom
-void game::clearLevel(){  
-    for (int i = 0; i < currentLevel->getLength()-1; i++){
-        for (int j = 0; j < WIDTH_TRACK; j++){
-            if(i<=currentLevel->getLength()-1 && i> currentLevel->getLength()-10)
-                currentLevel->setVisible(i,j,false);
-            else if(!currentLevel->isFree(i,j))
-                currentLevel->setVisible(i,j, true);
-        }
-    }
-}
-
-//reset the line who just exited fromt the visible part of the track to visible
+// Reset the line who just exited fromt the visible part of the track to visible
 void game::clearLine(){
-    int i = (c.getPosition().y + 2) % currentLevel->getLength();
+    int i = (c.getY() + 2) % currentLevel->getLength();
     for(int j=0; j<WIDTH_TRACK; j++){
         if(!currentLevel->isFree(i,j))
                 currentLevel->setVisible(i,j, true);
     }
 }
-//prints the car
+
 void game::carPrint(){
     c.stampa();
 }
-//erases the car
+
+// Erases the car
 void game::carClean(){
     c.clean();
 }
-//moves the car to the left, not printing it yet
+
+// Moves the car to the left, not printing it yet
 bool game::carLeft(){
-    // Actually move if not going outside the map
-    if ( c.getPosition().x > 1 ){
+    // Move only if isn't on the map's left border
+    if ( c.getX() > 1 ){
         c.move( 0, -1 );
         return true;
     } else
         return false;
 }
-//moves the car to the right, not printing it yet
+
+// Moves the car to the right, not printing it yet
 bool game::carRight(){
-    // Actually move if not going outside the map
-    if ( c.getPosition().x < 45 ){
+    // Move only if isn't on the map's right border
+    if ( c.getX() < 45 ){
         c.move( 0, +1);
         return true;
     } else
         return false;
 }
-//moves the car 1 row ahead
+
+// Moves the car 1 row up
 void game::carForward(){
-    if(c.getPosition().y > 0)
+    if(c.getY() > 0)
         c.move( -1, 0);
     else
         c.move(HEIGHT_TRACK - 1, 0);
 }
-//check if there's an obstacle in a certain point of the track
+
+// Check if there's an obstacle in a certain point of the track
 int game::collisionCheck(int y, int x){
        
     int malus=0, bonus=0, score=0;
@@ -150,37 +148,38 @@ int game::collisionCheck(int y, int x){
     return malus + bonus;   
 }
 
-//calls collisionsCheck in every part of the car
+// Calls collisionsCheck in every part of the car
 int game::collisions(){
     
-    //inizialized as pilot's coordinates
-    int y = c.getPosition().y;
-    int x = c.getPosition().x;
+    // Inizialized as pilot's coordinates
+    int y = c.getY();
+    int x = c.getX();
 
     int tot=0;
 
-    //pilot's collision
+    // Pilot's collision
     tot = collisionCheck(y, x);
 
-    //to avoid bugs when pilot is on the last line of the track and the forward wheels on the first new one
+    // To avoid bugs when pilot is on the last line of the track and the forward wheels on the first new one
     if( y <= 0 )
         y = currentLevel->getLength();
 
-    //forward wheels collisions     
+    // Forward wheels collisions     
     tot += collisionCheck(y-1, x-1) + collisionCheck(y-1, x+1);
 
-    //to avoid bugs when pilot is on the first line of the track and the back wheels on the last new one
-    y = c.getPosition().y;
+    // To avoid bugs when pilot is on the first line of the track and the back wheels on the last new one
+    y = c.getY();
     if( y >= currentLevel->getLength() - 1)
         y = -1;
     
-    //back wheels collisions
+    // Back wheels collisions
     tot+= collisionCheck(y+1, x-1) + collisionCheck(y+1, x+1);
     
     return tot;
     
 }
-//creates a new level, next or previous based on the boolean
+
+// Creates a new level, next or previous based on the boolean
 void game::newLevel(int s, bool b){
     if(b){
         currentLevel -> setNext(new level(s, HEIGHT_TRACK + 10, currentLevel, b ));
@@ -191,7 +190,20 @@ void game::newLevel(int s, bool b){
         backLevel();
     }
 }
-//goes to the next level
+
+// Resets the current level setting all obstacles to visible except for the first 10 lines from the bottom
+void game::clearLevel(){  
+    for (int i = 0; i < currentLevel->getLength()-1; i++){
+        for (int j = 0; j < WIDTH_TRACK; j++){
+            if(i<=currentLevel->getLength()-1 && i> currentLevel->getLength()-10)
+                currentLevel->setVisible(i,j,false);
+            else if(!currentLevel->isFree(i,j))
+                currentLevel->setVisible(i,j, true);
+        }
+    }
+}
+
+// Goes to the next level
 void game::forwardLevel(){
     currentLevel = currentLevel -> getNext();
 
@@ -206,7 +218,8 @@ void game::forwardLevel(){
 
     changeLevel();
 }
-//goes to the previos level
+
+// Goes to the previous level
 void game::backLevel(){
     currentLevel = currentLevel -> getPrev();
 
@@ -221,7 +234,8 @@ void game::backLevel(){
 
     changeLevel();
 }
-//reset the car and track positions
+
+// Reset the car and track positions
 void game::changeLevel(){
     start_Track = currentLevel->getLength() - HEIGHT_TRACK;
     c = car(currentLevel->getLength() - 2, 23);
@@ -229,11 +243,13 @@ void game::changeLevel(){
     wrefresh(trackWin);
     flushinp();
 }
-//timer for the track movement
+
+// Timer for the track movement
 int game::clock(int difficulty){
     return 64+(100/pow(1.4,difficulty));
 }
-//function to pause the game
+
+// Pause the game and stamp "Pause" window
 void game::pause(){
     int c;
 
@@ -245,7 +261,8 @@ void game::pause(){
     while((c = wgetch(pauseWin)) != 27);
 
 }
-//checks if u have lost.
+
+// Checks if you lost
 bool game::loss(scorestage s){
     if(s.getScore() <= 0){
         

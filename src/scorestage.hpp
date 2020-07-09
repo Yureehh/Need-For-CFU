@@ -6,35 +6,33 @@ using namespace std;
 #define scorestage_H
 
 class scorestage{
-protected:
-    int score;
-    int record;
-    int lowest;
-    int lastLevel;
-    WINDOW *scoreWin;
-public:
-    //constructor to inizialize points
-    scorestage(int);
-    //getter for the score
-    int getScore();
-    //getter for the stage
-    int getStage();
-    //Record of the run
-    int getMaxScore();
-    //Lowest record
-    int getLowestScore();
 
-    void setlastLevel();
+    protected:
+        int score;
+        int record;
+        int lowest;
+        int lastLevel;
+        WINDOW *scoreWin;
 
-    int getLastLevel ();
-    //add points
-    void addScore(int);
-    //prints score and level
-    void printScoreText();
-    void printScoreStage();
+    public:
+        scorestage(int);
+        
+        // Add x point to score
+        void addScore(int);
 
+        // Print UI
+        void printScoreText();
+        void printScoreStage();
 
-    
+        // Getters
+        int getLastLevel ();
+        int getLowestScore();
+        int getMaxScore();
+        int getScore();
+        int getStage();
+        
+        // Setters
+        void setlastLevel();
 
 };
 
