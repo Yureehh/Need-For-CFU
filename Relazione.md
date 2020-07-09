@@ -40,7 +40,7 @@ La classe Scorestage ha il compito di gestire il punteggio, da cui viene ricavat
 * Si è scelto di rappresentare la pista come una matrice di dimensione fissata che una volta percorsa nella sua interezza, evitando ostacoli e boost , permette il passaggio al livello successivo. La matrice di ogni livello viene generata una volta raggiunto tale livello e non varierà proseguendo nella partita, è stata fatta questa scelta per far si che in caso di perdita di punti e di retrocessione di livello gli ostacoli dei livelli precedenti rimangano nella stessa posizione di quando li si è incontrati in precedenza. 
 
 ## Car
-La classe Car ha il compito di inizializzare la macchina, permette di stamparla ed eliminarla dallo schermo o di cambiarne le coordinate. Al suo interno viene definita la struttura "posizione" che viene poi utilizzata nell' unico attributo privato della classe : __posizione c__ che corrisponde alle coordinate del pilota dell'auto da cui poi si può facilmente risalire anche a quelle delle ruote che si trovano in diagonale rispetto ad esso.
+La classe Car ha il compito di inizializzare la macchina, permette di stamparla ed eliminarla dallo schermo o di cambiarne le coordinate. sono presenti inoltre 2 metodi per ritornare le coordinate x/y della posizione del pilota da cui si risale anche a quella delle ruote.
 
 ## Obstacle
 La classe Obstacle è utilizzata per definire le entità che assieme alla macchina si trovano sul percorso che il giocatore deve percorrere, infatti in questa classe possiamo definire sia ostacoli che danneggiano il giocatore sia ostacoli che invece premiano il giocatore (boost).
