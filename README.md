@@ -18,6 +18,7 @@ Ad ogni tick di gioco l'automobile guidata dal giocatore si sposta di una riga i
 
 
 ## Comandi
+**W/S** - Spostamento nel Menù  
 **A/D** - Movimento Macchina  
 **Enter** - Seleziona  
 **Esc** - Pausa  
@@ -28,6 +29,14 @@ Ad ogni tick di gioco l'automobile guidata dal giocatore si sposta di una riga i
 Per essere compilato richiede la seguente libreria
 
 * [ncurses o lib32-ncurses](https://invisible-island.net/ncurses/ncurses.html)
+
+**Windows**    
+Seguire [questa guida](https://docs.microsoft.com/it-it/windows/wsl/install-win10) per abilitare WSL. In seguito, cercare su "Microsoft Store" e installare "Debian" o "Ubuntu".
+```bash
+sudo apt update
+sudo apt upgrade
+sudo apt install build-essential g++ make
+```
 
 **Arch Linux**
 ```bash
@@ -46,15 +55,18 @@ make all
 
 ## Utilizzo
 ```bash
-./outrun
+./initialc
 ```
 Oppure usando make
 ```bash
 make run
 ```
 ## Screenshots
-![Game](https://i.imgur.com/VrMczYC.png)
-![Level UP](https://i.imgur.com/L5sekBl.png)
+![Title](https://imgur.com/uwFvPrA.png)
+![Game](https://i.imgur.com/UKVYpqR.png)
+![Level UP](https://i.imgur.com/ssW2F89.png)
+![Level DOWN](https://i.imgur.com/k88VAiA.png)
+![Pause](https://i.imgur.com/EnK603m.png)
 
 ## Autori
 [Alessandro Filippini](https://github.com/AlePini)  

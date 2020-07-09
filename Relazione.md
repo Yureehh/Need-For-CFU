@@ -2,7 +2,7 @@
 
 ## Table of contents
 1. [ Descrizione ](#Descrizione)
-2. [Perchè NNcurses?](#Perchè_NCurses?)
+2. [Perchè Ncurses?](#Perchè-NCurses?)
 3. [ Main ](#Main)  
 4. [ Game ](#Game)
 5. [ Scorestage ](#Scorestage)
@@ -13,8 +13,8 @@
 ## Descrizione
 Il gioco consiste nell'ottenere il maggior punteggio possibile muovendo una macchina di dimensioni 3x3 in una pista delimitata, evitando gli ostacoli per non perdere punti e raccogliendo i bonus per aumentarli. Non esiste un traguardo finale e il gioco prosegue finchè non si perde o si decide di finire la corsa. Ad ogni nuovo gioco i livelli vengono ri-generati randomicamente ma rimangono gli stessi durante la singola partita.
 
-## Perchè_NCurses?
-Sappiamo che ncurses è esclusivamente su ambienti Linux (anche se esistono alcuni porting per Windows ), ma è stato facile sviluppare su Windows grazie alla teconologia [WSL](https://docs.microsoft.com/it-it/windows/wsl/install-win10). In oltre, l'aver lavorato in precedenza con questa libreria, ha semplificato lo sviluppo della parte di rendering.
+## Perchè NCurses?
+Siccome il responsabile alla sezione di rendering del gioco aveva già lavorato con __ncurses__, lo abbiamo scelto in favore di conio.h. Per poter sviluppare anche in ambiente Windows, ci ha aiutati la teconlogia [WSL](https://docs.microsoft.com/it-it/windows/wsl/install-win10), che mette a disposizione una simil "VM" di Linux su Windows. In oltre abbiamo provato a portare conio.h su Linux, ma non abbiamo trovato un modo.
 
 ## Main
 Si occupa di gestire Input dell'utente e la logica del gioco. Il suo compito principale è di avviare il gioco, impostando alcune opzioni per ncurses, e di farlo comunicare con l'utente. Continene unicamente due funzioni:
