@@ -8,22 +8,22 @@ level::level(){
 }
 
 level::level(int stage, int length, level *l, bool b){ 
-    srand((stage+time(0))/2);   //creating seed for the random number we will generate
+    srand((stage+time(0))/2);   //generiamo il seed che influenzerà il nostro numero casuale
     
     int influence;
-    if(stage>8)             //initialization obstacle and it's dmg based on the stage 
+    if(stage>8)             //vengono inizializzati gli ostacoli impostando il loro danno
         oneXone = obstacle("K", -(200+(8*100)), 1);
     else
         oneXone = obstacle("K", -(200+(stage*100)), 1);
     
-    boost = obstacle("H", 200, 2); //Creating boost entity
+    boost = obstacle("H", 200, 2); //inizializziamo i boost
 
     this->stage = stage;
     this->length = length;
     this->next = NULL;
     this->prev = NULL;
 
-    if(b){      //assigning previous level/ next level 
+    if(b){      //assegnamo eventuali livelli precedenti/successivi
         if(l!=NULL){
         this->prev = new level;
         this->prev = l;
@@ -35,12 +35,12 @@ level::level(int stage, int length, level *l, bool b){
         }
     }
 
-    track = new ptrObstacle*[length];   //creating entities's slots
+    track = new ptrObstacle*[length];   //creiamio gli slot per le entità
     for (int i = 0; i < length; i++){
         track[i] = new ptrObstacle[47];
     }
 
-    int lastspawn=0;    //initializing game balancing variable to regolate entity spawn
+    int lastspawn=0;    //assegnamo le variabili che bilanciano lo spawn delle entità
     int maxK=40+(stage*20);
     int maxSpawnPerLine=3;
     int maxH=0;
@@ -56,14 +56,14 @@ level::level(int stage, int length, level *l, bool b){
             hDistancing--;
         for (int j = 0; j < 47; j++){
             influence=rand()%20;     
-            switch (influence) //switch with 4 different cases to chose what will fill the entity slots
+            switch (influence) //lo switch tramite il numero generato casualmente ha 4 possibili casi
             {
-            case 0: //blank slot
+            case 0: //in questo caso lo spazio rimane vuoto
                 track[i][j] = {false, NULL};
                 if(lastspawn>0)
                     lastspawn--;
                 break;
-            case 1: //damaging obstacle
+            case 1: // in questo caso viene creato un ostacolo
                 if(lastspawn==0 && maxK!=0 && maxSpawnPerLine!=0){
                     track[i][j] = {true, &oneXone};
                     if(i<=length-1 && i> length-10)
@@ -74,9 +74,9 @@ level::level(int stage, int length, level *l, bool b){
                 }
                 break;
                 
-            case 7: // creates boost entity
+            case 7: // in questo caso viene creato un boost
             if(maxH!=0 && hDistancing==0){
-                if(j>22 && posH){   //this is used to differentiate the spawn of the boosts
+                if(j>22 && posH){   //questo if in particolare bilancia lo spawn dei boost per tutta la larghezza della mappa
                     track[i][j] = {true, &boost};
                     if(i<=length-1 && i> length-10)
                             setVisible(i,j,false);
@@ -86,7 +86,7 @@ level::level(int stage, int length, level *l, bool b){
                     if(lastspawn>0)
                         lastspawn--;
                     }
-                if(j<22 && !posH){  //this is used to differentiate the spawn of the boosts
+                if(j<22 && !posH){  //questo if in particolare bilancia lo spawn dei boost per tutta la larghezza della mappa
                     track[i][j] = {true, &boost};
                     if(i<=length-1 && i> length-10)
                             setVisible(i,j,false);
@@ -98,7 +98,7 @@ level::level(int stage, int length, level *l, bool b){
                     }
                 }
                 break;
-            default:    // the default case is a black slot too
+            default:    // il caso default lascia la cella vuota
                 track[i][j] = {false, NULL};
                     if(lastspawn>0)
                     lastspawn--;
@@ -109,17 +109,14 @@ level::level(int stage, int length, level *l, bool b){
     }
 }
 
-bool level::isFree(int y, int x){   //true if the slot in position (x,y) is empty
+bool level::isFree(int y, int x){   //restituisce true se lo slot in posizione (x,y) è vuoto
     return track[y][x].obst == NULL ;
 }
 
-bool level::isVisible(int y, int x){    //true or false if the slot is visible or not
+bool level::isVisible(int y, int x){    //restituisce true o false se uno slot è visibile o no
     return track[y][x].visible ;
 }
 
-void level::setVisible(int y, int x, bool b){   //changes a slot's visibility 
-     track[y][x].visible = b ;
-}
 
 // Getters
 const char *level::getChar(int y, int x){
@@ -157,4 +154,8 @@ void level::setNext(level *next){
 
 void level::setPrev(level *prev){
     this->prev = prev;
+}
+
+void level::setVisible(int y, int x, bool b){   //cambia la visibilità di uno slot 
+     track[y][x].visible = b ;
 }
