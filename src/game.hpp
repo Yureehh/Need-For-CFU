@@ -12,7 +12,7 @@ using namespace std;
 // # User Interface geometry (UI)
 const int HEIGHT_UI = 42;
 const int WIDTH_UI = 80;
-
+// Track dimensions
 const int HEIGHT_TRACK = 40;
 const int WIDTH_TRACK = 47;
 
@@ -63,6 +63,7 @@ class game {
         void pause();
         bool loss(scorestage);
     
+        //timer
         int clock(int);
 };
 
