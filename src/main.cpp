@@ -243,13 +243,13 @@ void startGame(){
         if(timer<=0){
             g.downTrack();
             
-            s.addScore(g.collisions() + 20 ); // + 25);
+            s.addScore(g.collisions() + 20 );
 
             timer = g.clock(s.getMaxScore()/1000);
 
              
         } else
-            timer--;    //combination of timer and usleep creates the clock of the map's sliding
+            timer--;    //combination of timer and usleep creates the timer of the map's sliding
 
         //checks if u have enough points to swap level
         if(s.getStage() != s.getLastLevel()){
@@ -263,21 +263,21 @@ void startGame(){
                 else
                     g.forwardLevel();
             }
-
-            else{
-                if(s.getScore() == s.getLowestScore() ){
-                    g.newLevel(s.getStage(), false );
-                }
-
-                else
-                    g.backLevel();
+        //if the actual score is the lowest ever registered the game has to create a new previous level
+        else{
+            if(s.getScore() == s.getLowestScore() ){
+                g.newLevel(s.getStage(), false );
             }
-            // Reprint everything inside the trackWindow
-            g.printUI();
-            g.printTrack();
-            s.printScoreText();
 
-            s.setlastLevel();
+            else
+                g.backLevel();
+        }
+        //Prints everything inside the trackWindow
+        g.printUI();
+        g.printTrack();
+        s.printScoreText();
+
+        s.setlastLevel();
         }
         else
             g.clearLine();
