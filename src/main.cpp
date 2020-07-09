@@ -243,7 +243,7 @@ void startGame(){
         if(timer<=0){
             g.downTrack();
             
-            s.addScore(g.collisions() + 20 );
+            s.addScore(g.collisions() + 10 );
 
             timer = g.clock(s.getMaxScore()/1000);
 

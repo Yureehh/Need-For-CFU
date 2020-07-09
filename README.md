@@ -5,7 +5,7 @@ Endless Racing Game sviluppato in C++ per ambiente Linux.
 L'obiettivo è raggiungere il punteggio più alto possibile, si perde raggiungendo un punteggio minore o uguale a 0.
 
 ## Punteggio
-Il punteggio parte da 0 e ogni tick di gioco viene incrementato di 20 punti, può diminuire collidendo con un ostacolo o con i bordi laterali e può aumentare ulteriormente raccogliendo i boost. Ogni 1000 punti si passa al livello successivo e si può retrocedere ai livelli precedenti in caso di collisioni.
+Il punteggio parte da 0 e ogni tick di gioco viene incrementato di 10 punti, può diminuire collidendo con un ostacolo o con i bordi laterali e può aumentare ulteriormente raccogliendo i boost. Ogni 1000 punti si passa al livello successivo e si può retrocedere ai livelli precedenti in caso di collisioni.
 
 ## Entità
 Sono presenti **barriere laterali** che delimitano la pista, collidendo con esse si perdono 1000 punti. Ci sono inoltre due tipi di entità sulla pista: 
